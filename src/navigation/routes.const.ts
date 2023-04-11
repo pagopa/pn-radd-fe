@@ -1,0 +1,1 @@
+export const DOCUMENT_INQUIRY_ACT = `/richiesta/atti-opponibili-terzi`;
