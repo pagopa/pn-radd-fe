@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { OperationAorDetailResponse } from './operation-aor-detail-response';
+import { OperationDetailResponse } from './operation-detail-response';
 // May contain unused imports in some cases
 // @ts-ignore
 import { OperationResponseStatus } from './operation-response-status';
@@ -23,25 +23,25 @@ import { OperationResponseStatus } from './operation-response-status';
 /**
  * Risposta della notifica
  * @export
- * @interface OperationAorResponse
+ * @interface OperationResponse
  */
-export interface OperationAorResponse {
+export interface OperationResponse {
     /**
      * 
-     * @type {OperationAorDetailResponse}
-     * @memberof OperationAorResponse
+     * @type {OperationDetailResponse}
+     * @memberof OperationResponse
      */
-    'element'?: OperationAorDetailResponse;
+    'element'?: OperationDetailResponse;
     /**
      * 
      * @type {boolean}
-     * @memberof OperationAorResponse
+     * @memberof OperationResponse
      */
     'result'?: boolean;
     /**
      * 
      * @type {OperationResponseStatus}
-     * @memberof OperationAorResponse
+     * @memberof OperationResponse
      */
     'status'?: OperationResponseStatus;
 }

@@ -32,7 +32,7 @@ const PrintAttachments = ({ onConfirm, inquiryType } : Props) => {
                     <TitleBox title={"Stampa atti"} variantTitle={"h6"} />
 
                     <ul>
-                        {attachments.map(attachmentUrl => <li key={attachmentUrl}><Link href={attachmentUrl}>{attachmentUrl}</Link></li>)}
+                        {attachments.map(attachmentUrl => <li key={attachmentUrl}><Link href={attachmentUrl} target="_blank">{attachmentUrl}</Link></li>)}
                     </ul>
 
                     <Alert severity="info">Prima di poter terminare la richiesta è necessario cliccare su tutti i link.</Alert>

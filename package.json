@@ -6,11 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "clean-api": "rimraf src/api/generated",
-    "generate-client-api": "yarn clean-api && openapi-generator-cli generate -i https://raw.githubusercontent.com/pagopa/pn-radd-fsu/develop/docs/openapi/pn-radd-fsu-v1.yaml -o src/api/generated -g typescript-axios --additional-properties=withSeparateModelsAndApi=true,apiPackage=services,modelPackage=types",
-    "generate-client-api2": "yarn clean-api && openapi-generator-cli generate -i docs/open-api.yaml -o src/api/generated -g typescript-axios --additional-properties=withSeparateModelsAndApi=true,apiPackage=services,modelPackage=types"
-
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -37,7 +33,6 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@types/file-saver": "^2.0.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",

@@ -17,9 +17,9 @@
 /**
  * Richiesta  di completamento operazione
  * @export
- * @interface ActStartTransactionRequest
+ * @interface StartTransactionRequest
  */
-export interface ActStartTransactionRequest {
+export interface StartTransactionRequest {
     /**
      * 
      * @type {string}
@@ -49,7 +49,7 @@ export interface ActStartTransactionRequest {
      * @type {string}
      * @memberof ActStartTransactionRequest
      */
-    'recipientType'?: ActStartTransactionRequestRecipientTypeEnum;
+    'recipientType'?: StartTransactionRequestRecipientTypeEnum;
     /**
      * 
      * @type {string}
@@ -73,14 +73,14 @@ export interface ActStartTransactionRequest {
      * @type {string}
      * @memberof ActStartTransactionRequest
      */
-    'qrCode': string;
+    'qrCode'?: string;
 }
 
-export const ActStartTransactionRequestRecipientTypeEnum = {
+export const StartTransactionRequestRecipientTypeEnum = {
     Pf: 'PF',
     Pg: 'PG'
 } as const;
 
-export type ActStartTransactionRequestRecipientTypeEnum = typeof ActStartTransactionRequestRecipientTypeEnum[keyof typeof ActStartTransactionRequestRecipientTypeEnum];
+export type StartTransactionRequestRecipientTypeEnum = typeof StartTransactionRequestRecipientTypeEnum[keyof typeof StartTransactionRequestRecipientTypeEnum];
 
 

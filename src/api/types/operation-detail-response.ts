@@ -15,87 +15,93 @@
 
 
 /**
- * Dettagli della response Act
+ * Dettagli della response
  * @export
- * @interface OperationAorDetailResponse
+ * @interface OperationDetailResponse
  */
-export interface OperationAorDetailResponse {
+export interface OperationDetailResponse {
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'operationStatus'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'operationType'?: string;
     /**
      * 
      * @type {Array<string>}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'iuns'?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
+     */
+    'iun'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OperationDetailResponse
      */
     'operationId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'fileKey'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'qrCode'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'recipientTaxId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'recipientType'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'delegateTaxId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'uid'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'operationStartDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'operationEndDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationAorDetailResponse
+     * @memberof OperationDetailResponse
      */
     'errorReason'?: string;
 }
