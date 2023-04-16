@@ -23,6 +23,17 @@ const InquiryFilesWaitTransaction = ({parentDispatch, onConfirm, inquiryType, re
     const calculateTimeLeft = () => {
         if(remainingTime > 0) {
             setRemainingTime(remainingTime => remainingTime - 1);
+        } else {
+            dispatch(startTransaction({inquiryType, previousOperationId }))
+                .unwrap()
+                .then((res) => {
+                    if(res.status?.code === 2 && res.status.retryAfter !== 0) {
+                        parentDispatch(waitTransactionAction(res.status.retryAfter!))
+                        return;
+                    }
+                        
+                    onConfirm();
+                });
         }
     }
 
@@ -62,7 +73,7 @@ const InquiryFilesWaitTransaction = ({parentDispatch, onConfirm, inquiryType, re
                     </Typography>
                 </Box>
             </Box>
-            <Grid container mt={2} direction="row-reverse">
+            {/* <Grid container mt={2} direction="row-reverse">
                 <LoadingButton
                     loading={isTimerActive}
                     variant="contained" 
@@ -72,7 +83,7 @@ const InquiryFilesWaitTransaction = ({parentDispatch, onConfirm, inquiryType, re
                 >
                     Riprova
                 </LoadingButton>
-            </Grid>
+            </Grid> */}
         </>
     )
 }

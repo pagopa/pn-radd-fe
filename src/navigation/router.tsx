@@ -13,20 +13,25 @@ import { DOCUMENT_INQUIRY_ACT } from "./routes.const";
 
 export const router = createBrowserRouter([
     {
-        element: <Layout />,
+        path: "/",
+        element: <Layout/>,
+        children: [
+            {
+                index: true,
+                element: <HomePage />
+            }
+        ]
+    },
+    {
+        element: <Layout showSideMenu />,
         errorElement: <ErrorBoundary children={undefined} />,
         children: [
             {
-                path: "/",
-                element: <HomePage />
-            },
-            {
                 path: DOCUMENT_INQUIRY_ACT,
                 element: <DocumentInquiryActPage />
-            },
-            { path: "*", element: <NotFoundPage /> },
+            }
         ]
-        
-    }
+    },
+    { path: "*", element: <NotFoundPage /> },
     
 ]);

@@ -1,5 +1,5 @@
 import { SideMenuItem } from "../types/SideMenuItem"
-import { DOCUMENT_INQUIRY_ACT } from "../navigation/routes.const"
+import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from "../navigation/routes.const"
 import MailIcon from '@mui/icons-material/Mail';
 
 export const getDefaultMenuItems = () : Array<SideMenuItem> => {
@@ -9,13 +9,13 @@ export const getDefaultMenuItems = () : Array<SideMenuItem> => {
             route: "/",
             children: [
                 {
-                    label: "Richiesta di atti e attestazioni opponibili a terzi",
+                    label: "Documenti allegati e attestazioni opponibili a terzi",
                     route: DOCUMENT_INQUIRY_ACT,
                     icon: MailIcon
                 },
                 {
-                    label: "Richiesta di avvisi di avvenuta ricezione",
-                    route: "tbd2",
+                    label: "Avvisi di avvenuta ricezione",
+                    route: DOCUMENT_INQUIRY_AOR,
                     icon: MailIcon
                 }
             ]

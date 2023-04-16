@@ -44,7 +44,7 @@ export const handlers = [
         );
     }),
     rest.post(`${BASE_PATH}/radd-private/api/v1/act/transaction/start`, (req, res, ctx) => {
-        const retryAfter = Math.random() * 5000;
+        const retryAfter = Math.random() * 7000;
         let response;
 
         if(retryAfter > 2000) {

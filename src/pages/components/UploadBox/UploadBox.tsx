@@ -172,20 +172,17 @@ function UploadBox({
             boxContainerRef.current.style.borderStyle = "solid";
             boxContainerRef.current.style.backgroundColor = "white";
         }
-        console.log("HANDLE DRAG LEAVE");
     };
 
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
         e.dataTransfer.dropEffect = 'copy';
-        console.log("HANDLE DRAG OVER", e.dataTransfer);
     };
 
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("HANDLE DROP", e.dataTransfer != null ? e.dataTransfer.files : null);
         if(boxContainerRef != undefined && boxContainerRef.current != undefined) {
             boxContainerRef.current.style.borderStyle = "solid";
             boxContainerRef.current.style.backgroundColor = "white";

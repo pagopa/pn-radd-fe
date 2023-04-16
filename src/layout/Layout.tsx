@@ -14,9 +14,10 @@ import AppMessage from '../pages/components/AppMessage/AppMessage'
 
 type Props = {
   children?: ReactNode;
+  showSideMenu?: boolean
 }
 
-const Layout = ({ children } : Props) => {
+const Layout = ({ children, showSideMenu = false } : Props) => {
   const menuItems = getDefaultMenuItems();
   return (
     <ErrorBoundary eventTrackingCallback={handleEventTrackingCallbackAppCrash}>
@@ -27,9 +28,9 @@ const Layout = ({ children } : Props) => {
         <Header />
         
         <Stack direction={{ lg: 'row' }} sx={{ flexGrow: 1 }}>
-          <Box sx={{ width: { lg: 300 }, flexShrink: '0' }} component="nav">
+          {showSideMenu && <Box sx={{ width: { lg: 300 }, flexShrink: '0' }} component="nav">
             <SideMenu menuItems={menuItems} />
-          </Box>
+          </Box>}
           <ErrorBoundary eventTrackingCallback={handleEventTrackingCallbackAppCrash}>
             <Box sx={{ flexGrow: 1}} p={2} component="main">
               <Outlet />
