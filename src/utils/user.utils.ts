@@ -1,12 +1,14 @@
 import { User } from "../redux/user/types";
 import MOCKS from "../mocks/data";
 import * as yup from 'yup';
+import { __DEV__ } from "./const";
 
 const userSchemaValidator = yup.object({
     name: yup.string().required()
 })
 
 const NOT_LOGGED_USER : User = {
+    id: "",
     name: "",
     email: "",
     uid: "",
@@ -14,7 +16,7 @@ const NOT_LOGGED_USER : User = {
 } 
 
 export const currentUser = () : User => {
-    if(import.meta.env.DEV) {
+    if(__DEV__) {
         return MOCKS.USER;
     }
 

@@ -1,7 +1,8 @@
 import { rest } from 'msw';
 import data from './data';
+import { API_BASE_URL } from '../utils/const';
 
-const BASE_PATH = import.meta.env.VITE_API_BASE_PATH;
+const BASE_PATH = API_BASE_URL;
 
 export const handlers = [
     rest.get(`${BASE_PATH}/radd-private/api/v1/act/inquiry`, (req, res, ctx) => {
