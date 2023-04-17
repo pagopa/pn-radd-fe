@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { S3UploadRequest } from '../../api/types';
 import { setInquiryFileData, setInquiryFormData, setTransactionData } from './slice';
 import { ActDocumentInquiryApi, AorDocumentInquiryApi, TransactionApi, UploadApi } from '../../api';
+import { setLoadingStatus } from '../app/slice';
 
 type InquiryRequest = {
     inquiryType: DocumentInquiryType
@@ -16,7 +17,7 @@ export const startInquiry = createAppAsyncThunk<
     DocumentInquiryFormAction
 >('startInquiry', async (params: DocumentInquiryFormAction, { rejectWithValue, getState, dispatch }) => {
     try {
-
+        dispatch(setLoadingStatus());
         const state = getState();
         const uid = state.user.user.uid;
         const { recipientTaxId, recipientType, qrCode, delegateTaxId } = params;
@@ -87,18 +88,18 @@ const s3Upload = async ({url, file, secret}: S3UploadArgs) => {
 }
 
 type TransactionArgs = {
-    inquiryType: DocumentInquiryType,
-    previousOperationId?: string
+    inquiryType: DocumentInquiryType
 }
 export const startTransaction = createAppAsyncThunk<
     StartTransactionResponse, 
     TransactionArgs
->('startTransaction', async ({ inquiryType, previousOperationId } : TransactionArgs, {getState, rejectWithValue, dispatch}) => {
+>('startTransaction', async ({ inquiryType } : TransactionArgs, {getState, rejectWithValue, dispatch}) => {
     try {
         const state = getState();
         const uid = state.user.user.uid;
         const { checksum, fileKey} = state.documentInquiry.fileData;
         const { delegateTaxId, recipientTaxId, recipientType, qrCode } = state.documentInquiry.formData;
+        const previousOperationId = state.documentInquiry.transactionData.operationId;
 
         const operationId = previousOperationId ?? uuidv4();
         const operationDate = new Date().toISOString();
@@ -125,7 +126,8 @@ export const startTransaction = createAppAsyncThunk<
 export const completeTransaction = createAppAsyncThunk<
     CompleteTransactionResponse, 
     InquiryRequest
->('completeTransaction', async (params: InquiryRequest, {getState, rejectWithValue}) => {
+>('completeTransaction', async (params: InquiryRequest, {getState, rejectWithValue, dispatch}) => {
+    dispatch(setLoadingStatus());
     const state = getState();
     const uid = state.user.user.uid;
     try {
@@ -144,7 +146,8 @@ export const completeTransaction = createAppAsyncThunk<
 export const abortTransaction = createAppAsyncThunk<
     AbortTransactionResponse, 
     InquiryRequest
->('abortTransaction', async (params: InquiryRequest, {getState, rejectWithValue}) => {
+>('abortTransaction', async (params: InquiryRequest, {getState, rejectWithValue, dispatch}) => {
+    dispatch(setLoadingStatus());
     const state = getState();
     const uid = state.user.user.uid;
     try {

@@ -1,25 +1,61 @@
 export enum Phases {
     UPLOAD_PHASE = ("UPLOAD_PHASE"),
-    START_TRANSACTION = ("START_TRANSACTION"),
-    WAIT_TRANSACTION = ("WAIT_TRANSACTION")
+    WAITING_PHASE = ("WAITING_PHASE")
 }
 
 export type InquiryFilesState = {
     phase: Phases,
-    retryAfter?: number
-}
-
-export type InquiryFilesAction = {
-    type: 'START_TRANSACTION' | 'WAIT_TRANSACTION',
-    payload?: {
-        retryAfter?: number
+    uploadData?: WaitingPhasePayload,
+    files: {
+        [key in DocumentOwner]?: File
     }
 }
 
-export const inquiryFilesReducer = (state: InquiryFilesState, action: InquiryFilesAction) => {
-    switch(action.type) {
-        case "START_TRANSACTION": return {...state, phase: Phases.START_TRANSACTION};
-        case "WAIT_TRANSACTION": return {...state, phase: Phases.WAIT_TRANSACTION, retryAfter: action.payload?.retryAfter};
+export type DocumentOwner = "delegate" | "recipient"
+
+export type UploadFilePayload = {
+    owner: DocumentOwner,
+    file: File
+}
+export type UploadFileAction = {
+    type: 'FILE_UPLOAD',
+    payload: UploadFilePayload
+}
+
+export type RemoveFileAction = {
+    type: 'FILE_REMOVE',
+    payload: DocumentOwner
+}
+
+export type UploadPhaseAction = {
+    type: 'UPLOAD_PHASE',
+    payload?: undefined
+}
+
+export type WaitingPhasePayload = {
+    checksum: string,
+    bundleId: string,
+    zip: Blob
+}
+export type WaitingPhaseAction = {
+    type: 'WAITING_PHASE',
+    payload: WaitingPhasePayload
+}
+
+type ActionsType = UploadFileAction| RemoveFileAction | UploadPhaseAction | WaitingPhaseAction;
+
+export const inquiryFilesReducer = (state: InquiryFilesState, action: ActionsType) => {
+    const { type, payload } = action;
+    switch(type) {
+        case "FILE_UPLOAD": {
+            const {file, owner} = payload;
+            return {...state, files: {[owner]: file}};
+        }
+        case "FILE_REMOVE": return {...state, files:{[payload]: undefined}};
+        case "UPLOAD_PHASE": return {...state, phase: Phases.UPLOAD_PHASE};
+        case "WAITING_PHASE": {
+            return {...state, phase: Phases.WAITING_PHASE, uploadData: payload };
+        }
         default: {
             console.error("Invalid Phase"); 
             return state;
@@ -27,6 +63,10 @@ export const inquiryFilesReducer = (state: InquiryFilesState, action: InquiryFil
     }
 }
 
-export const startTransactionAction = () : InquiryFilesAction => ({ type: "START_TRANSACTION" });
+export const uploadPhaseAction = () : UploadPhaseAction => ({ type: "UPLOAD_PHASE" });
 
-export const waitTransactionAction = (retryAfter: number) : InquiryFilesAction => ({ type: "WAIT_TRANSACTION", payload: { retryAfter }});
+export const waitingPhaseAction = ({bundleId, checksum, zip}: WaitingPhasePayload) : WaitingPhaseAction => ({ type: "WAITING_PHASE", payload: { bundleId, checksum, zip }});
+
+export const uploadFileAction = (payload: UploadFilePayload) : UploadFileAction => ({type: "FILE_UPLOAD", payload});
+
+export const removeFileAction = (payload: DocumentOwner) : RemoveFileAction => ({type: "FILE_REMOVE", payload});

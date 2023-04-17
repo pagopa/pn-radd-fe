@@ -35,6 +35,13 @@ export const handlers = [
             ctx.delay(1200),
             ctx.json(response)
         );
+
+        /*
+            return res(
+                ctx.delay(1200),
+                ctx.status(500)
+            )
+        */
     }),
     rest.put(`${BASE_PATH}/mock/upload-s3`, (req, res, ctx) => {
         const response = data.UPLOAD.S3_OK;
@@ -47,6 +54,13 @@ export const handlers = [
         const retryAfter = Math.random() * 7000;
         let response;
 
+        if(retryAfter > 4000) {
+            return res(
+                ctx.delay(1200),
+                ctx.status(500),
+                ctx.json(response)
+            );
+        }
         if(retryAfter > 2000) {
             response = data.ACT_TRANSACTION.START_ACT_TRANSACTION_OK_WITH_RETRY(retryAfter);
         } else {
