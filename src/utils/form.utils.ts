@@ -1,3 +1,1 @@
-export const defaultRequiredMessage = (fieldName: string = '') => {
-  return `Il campo ${fieldName} è obbligatorio.`;
-};
+export const defaultRequiredMessage = (fieldName: string = '') => `Il campo ${fieldName} è obbligatorio.`;

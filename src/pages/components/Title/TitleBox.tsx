@@ -32,8 +32,7 @@ const TitleBox = ({
   variantTitle = 'h1',
   variantSubTitle = 'h5',
   sx,
-}: Props) => {
-  return (
+}: Props) => (
     <Grid container mt={mtGrid} sx={sx}>
       {title && (
         <Grid item xs={12} mb={mbTitle}>
@@ -49,6 +48,5 @@ const TitleBox = ({
       )}
     </Grid>
   );
-};
 
 export default TitleBox;

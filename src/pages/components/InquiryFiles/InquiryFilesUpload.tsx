@@ -1,15 +1,15 @@
 import { Grid, Paper, Box, Button, Divider } from '@mui/material';
 import { useState } from 'react';
-import TitleBox from '../Title/TitleBox';
-import UploadBox from '../UploadBox/UploadBox';
-import AttachmentBox from './AttachmentBox';
-import { ALLOWED_MIME_TYPES, calcSha256String } from '../../../utils/file.utils';
-import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 import { v4 as uuidv4 } from 'uuid';
+import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
+import { ALLOWED_MIME_TYPES, calcSha256String } from '../../../utils/file.utils';
+import UploadBox from '../UploadBox/UploadBox';
+import TitleBox from '../Title/TitleBox';
 import { uploadFile } from '../../../redux/document-inquiry/actions';
 import { useAppDispatch } from '../../../redux/hooks';
+import AttachmentBox from './AttachmentBox';
 import AttachmentContainer from './AttachmentContainer';
 import { DocumentOwner, UploadFilePayload, WaitingPhasePayload } from './inquiryFilesReducer';
 
@@ -37,7 +37,7 @@ const InquiryFilesUpload = ({ onNext, onUpload, onRemove }: Props) => {
     });
 
     zip.generateAsync({ type: 'blob' }).then(async function (blob) {
-      //FileSaver.saveAs(blob, "hello.zip");
+      // FileSaver.saveAs(blob, "hello.zip");
       const checksum = await calcSha256String(blob).then((sha) => sha.hashBase64);
       const bundleId = uuidv4();
       onNext({ bundleId, checksum, zip: blob });

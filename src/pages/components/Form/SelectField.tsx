@@ -35,8 +35,7 @@ const SelectField = ({
   errors,
   firstItemEmpty = true,
   onChange,
-}: Props) => {
-  return (
+}: Props) => (
     <FormControl fullWidth variant="outlined">
       <InputLabel id={`label-${id}`} error={touched && Boolean(errors)}>
         {label}
@@ -62,6 +61,5 @@ const SelectField = ({
       {touched && errors && <FormHelperText error>{errors}</FormHelperText>}
     </FormControl>
   );
-};
 
 export default SelectField;

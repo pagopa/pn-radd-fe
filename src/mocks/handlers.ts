@@ -1,12 +1,12 @@
 import { rest } from 'msw';
-import data from './data';
 import { API_BASE_URL } from '../utils/const';
+import data from './data';
 
 const BASE_PATH = API_BASE_URL;
 
 export const handlers = [
   rest.get(`${BASE_PATH}/radd-private/api/v1/act/inquiry`, (req, res, ctx) => {
-    let qrCode = req.url.searchParams.get('qrCode');
+    const qrCode = req.url.searchParams.get('qrCode');
     if (qrCode == '404') {
       return res(ctx.delay(1200), ctx.status(404));
     }

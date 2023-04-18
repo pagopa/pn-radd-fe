@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+import { createAppAsyncThunk } from '../thunk';
 import {
   AORInquiryResponse,
   AbortTransactionResponse,
@@ -6,13 +8,11 @@ import {
   DocumentUploadRequest,
   StartTransactionResponse,
 } from '../../api/types';
-import { DocumentInquiryFile, DocumentInquiryForm, DocumentInquiryType } from './types';
-import { createAppAsyncThunk } from '../thunk';
-import { v4 as uuidv4 } from 'uuid';
 import { S3UploadRequest } from '../../api/types';
-import { setInquiryFileData, setInquiryFormData, setTransactionData } from './slice';
 import { ActDocumentInquiryApi, AorDocumentInquiryApi, TransactionApi, UploadApi } from '../../api';
 import { setLoadingStatus } from '../app/slice';
+import { DocumentInquiryFile, DocumentInquiryForm, DocumentInquiryType } from './types';
+import { setInquiryFileData, setInquiryFormData, setTransactionData } from './slice';
 
 type InquiryRequest = {
   inquiryType: DocumentInquiryType;
@@ -106,14 +106,10 @@ export const uploadFile = createAppAsyncThunk<void, UploadFileAndStartTransactio
 );
 
 type UploadFileArgs = DocumentUploadRequest & { uid: string };
-const raddDocumentUpload = async ({ contentType, bundleId, checksum, uid }: UploadFileArgs) => {
-  return await UploadApi.documentUpload(uid, { contentType, checksum, bundleId });
-};
+const raddDocumentUpload = async ({ contentType, bundleId, checksum, uid }: UploadFileArgs) => await UploadApi.documentUpload(uid, { contentType, checksum, bundleId });
 
 type S3UploadArgs = S3UploadRequest & { url: string };
-const s3Upload = async ({ url, file, secret }: S3UploadArgs) => {
-  return await UploadApi.s3Upload(url!, { secret, file });
-};
+const s3Upload = async ({ url, file, secret }: S3UploadArgs) => await UploadApi.s3Upload(url!, { secret, file });
 
 type TransactionArgs = {
   inquiryType: DocumentInquiryType;
@@ -129,7 +125,7 @@ export const startTransaction = createAppAsyncThunk<StartTransactionResponse, Tr
         state.documentInquiry.formData;
       const previousOperationId = state.documentInquiry.transactionData.operationId;
 
-      const operationId = previousOperationId ?? uuidv4();
+      const operationId = previousOperationId || uuidv4();
       const operationDate = new Date().toISOString();
 
       const res = await TransactionApi.startTransaction(

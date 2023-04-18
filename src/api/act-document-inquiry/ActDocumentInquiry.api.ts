@@ -7,11 +7,9 @@ export const ActDocumentInquiryApi = {
     recipientTaxId: string,
     recipientType: 'PF' | 'PG',
     qrCode: string
-  ): Promise<ActInquiryResponse> => {
-    return apiClient
+  ): Promise<ActInquiryResponse> => apiClient
       .get<ActInquiryResponse>(`/radd-private/api/v1/act/inquiry`, {
         params: { uid, recipientTaxId, recipientType, qrCode },
       })
-      .then((response) => response.data);
-  },
+      .then((response) => response.data),
 };

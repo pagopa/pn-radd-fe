@@ -6,13 +6,11 @@ type Props = {
   clicked: boolean;
   onClick: (e: any) => void;
 };
-const ControlledLink = ({ href, label, clicked, onClick }: Props) => {
-  return (
+const ControlledLink = ({ href, label, clicked, onClick }: Props) => (
     <Link href={href} onClick={onClick} target="_blank">
       {clicked && <CheckIcon />}
       {label}
     </Link>
   );
-};
 
 export default ControlledLink;

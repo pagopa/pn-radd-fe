@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <Layout showSideMenu />,
-    errorElement: <ErrorBoundary children={undefined} />,
+    errorElement: <ErrorBoundary><></></ErrorBoundary>,
     children: [
       {
         path: DOCUMENT_INQUIRY_ACT,

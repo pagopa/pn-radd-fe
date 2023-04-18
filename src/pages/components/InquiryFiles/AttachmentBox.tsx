@@ -9,9 +9,7 @@ type Props = {
 };
 
 const AttachmentBox = ({ file, onRemove }: Props) => {
-  const isFileImage = () => {
-    return true;
-  };
+  const isFileImage = () => true;
   return (
     <>
       <Box

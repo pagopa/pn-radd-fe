@@ -1,9 +1,8 @@
+import MailIcon from '@mui/icons-material/Mail';
 import { SideMenuItem } from '../types/SideMenuItem';
 import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from '../navigation/routes.const';
-import MailIcon from '@mui/icons-material/Mail';
 
-export const getDefaultMenuItems = (): Array<SideMenuItem> => {
-  return [
+export const getDefaultMenuItems = (): Array<SideMenuItem> => [
     {
       label: 'Richieste',
       route: '/',
@@ -21,4 +20,3 @@ export const getDefaultMenuItems = (): Array<SideMenuItem> => {
       ],
     },
   ];
-};

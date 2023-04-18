@@ -2,11 +2,11 @@ import { Box, Divider, Typography } from '@mui/material';
 import AttachmentBox from './AttachmentBox';
 
 type Props = {
-  fileList: File[];
+  fileList: Array<File>;
   onRemove: (file: File) => void;
 };
 const AttachmentContainer = ({ fileList, onRemove }: Props) => {
-  if (fileList.length === 0) return null;
+  if (fileList.length === 0) {return null;}
 
   return (
     <>

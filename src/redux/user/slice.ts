@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { User } from './types';
 import { currentUser } from '../../utils/user.utils';
 import { RootState } from '../store';
+import { User } from './types';
 
 interface UserState {
   user: User;
@@ -25,6 +25,6 @@ export const userSelector = (state: RootState) => state.user.user;
 
 const { actions, reducer } = slice;
 
-export const {} = actions;
+// export const {} = actions;
 
 export default reducer;

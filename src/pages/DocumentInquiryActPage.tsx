@@ -1,13 +1,13 @@
 import { Box, Grid, Link, Stack } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
+import { DocumentInquiryType } from '../redux/document-inquiry/types';
+import { useAppDispatch } from '../redux/hooks';
+import { reset } from '../redux/document-inquiry/slice';
 import InquiryFiles from './components/InquiryFiles/InquiryFiles';
 import PrintAttachments from './components/PrintAttachments/PrintAttachments';
 import InquiryForm from './components/InquiryForm/InquiryForm';
 import Stepper from './components/Stepper/Stepper';
 import TitleBox from './components/Title/TitleBox';
-import { DocumentInquiryType } from '../redux/document-inquiry/types';
-import { useAppDispatch } from '../redux/hooks';
-import { reset } from '../redux/document-inquiry/slice';
 import EndInquiry from './components/EndInquiry/EndInquiry';
 import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 
@@ -21,11 +21,9 @@ export const DocumentInquiryActPage = () => {
 
   const steps = ['Dati richiesta', 'Caricamento documenti', 'Stampa'];
 
-  useEffect(() => {
-    return () => {
+  useEffect(() => () => {
       dispatch(reset());
-    };
-  }, []);
+    }, []);
 
   if (activeStep === 3) {
     return <EndInquiry />;

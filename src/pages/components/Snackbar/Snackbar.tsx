@@ -1,7 +1,7 @@
 import React from 'react';
-import { AppMessage, MessageType } from '../../../redux/app/types';
 import { Alert, IconButton, Slide, SlideProps, Snackbar as Toast } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { AppMessage, MessageType } from '../../../redux/app/types';
 
 type TransitionProps = Omit<SlideProps, 'direction'>;
 

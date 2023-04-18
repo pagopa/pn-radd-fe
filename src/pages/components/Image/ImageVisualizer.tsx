@@ -7,8 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-const ImageVisualizer = ({ src, onClose }: Props): React.ReactElement => {
-  return (
+const ImageVisualizer = ({ src, onClose }: Props): React.ReactElement => (
     <Modal
       open={true}
       onClose={onClose}
@@ -33,6 +32,5 @@ const ImageVisualizer = ({ src, onClose }: Props): React.ReactElement => {
       </Grid>
     </Modal>
   );
-};
 
 export default ImageVisualizer;

@@ -3,9 +3,9 @@ import { useReducer, useRef } from 'react';
 import { Alert, Box, Input, LinearProgress, SxProps, Typography } from '@mui/material';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { calcUnit8Array, calcSha256String, calcBase64String } from '../../../utils/file.utils';
 import OrientedBox from './OrientedBlock';
 
-import { calcUnit8Array, calcSha256String, calcBase64String } from '../../../utils/file.utils';
 
 type Props = {
   uploadText: string;
@@ -117,10 +117,10 @@ function UploadBox({
   const boxContainerRef = useRef<HTMLDivElement>();
 
   const uploadFiles = async (files: FileList) => {
-    let unacceptedFileNames: Array<string> = [];
+    const unacceptedFileNames: Array<string> = [];
 
     for (let i = 0; i < files.length; i++) {
-      let file = files.item(i);
+      const file = files.item(i);
       if (file && file.type && accept.indexOf(file.type) > -1) {
         dispatch({ type: UploadActions.ADD_FILE, payload: file });
         try {
@@ -140,7 +140,7 @@ function UploadBox({
           dispatch({ type: UploadActions.UPLOAD_IN_ERROR });
         }
       } else {
-        let fileName = file && file.name;
+        const fileName = file && file.name;
         unacceptedFileNames.push(fileName || 'File numero ' + (i + 1));
       }
     }

@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 import {
   DocumentInquiryFile,
   DocumentInquiryForm,
   DocumentInquiryRequest,
   DocumentInquiryTransaction,
 } from './types';
-import { RootState } from '../store';
 
 const initialState: DocumentInquiryRequest = {
   formData: {

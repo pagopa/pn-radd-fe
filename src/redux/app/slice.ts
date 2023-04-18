@@ -1,7 +1,7 @@
 import { AnyAction, PayloadAction, createAction, createSlice } from '@reduxjs/toolkit';
-import { AppMessage, AppStatus } from './types';
 import { RootState } from '../store';
 import { createAppError } from '../../utils/messages.utils';
+import { AppMessage, AppStatus } from './types';
 
 interface AppState {
   status: AppStatus;
@@ -41,7 +41,7 @@ const slice = createSlice({
       state.status = AppStatus.ERROR;
       if (!action.payload || !action.payload.blockNotification) {
         const error = createAppError(action.payload);
-        //Reinitialize array, preventing multiple messages displayed
+        // Reinitialize array, preventing multiple messages displayed
         state.messages = [error];
       }
     });

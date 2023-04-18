@@ -1,8 +1,8 @@
 import { Box, Card, CardActions, CardContent, Fab, Grid, Typography } from '@mui/material';
-import TitleBox from './components/Title/TitleBox';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from 'react-router-dom';
 import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from '../navigation/routes.const';
+import TitleBox from './components/Title/TitleBox';
 
 const titleMessage = 'Che documenti vuoi ottenere?';
 const subTitleMessage =

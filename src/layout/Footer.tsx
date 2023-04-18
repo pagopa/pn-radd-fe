@@ -172,8 +172,7 @@ export const LANGUAGES = {
   it: { it: 'Italiano', en: 'Inglese' },
 };
 
-const Footer = () => {
-  return (
+const Footer = () => (
     <PagoPaFooter
       loggedUser
       companyLink={pagoPALink}
@@ -191,6 +190,5 @@ const Footer = () => {
       hideProductsColumn={false}
     />
   );
-};
 
 export default Footer;

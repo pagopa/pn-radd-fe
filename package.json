@@ -35,6 +35,10 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/uuid": "^9.0.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-functional": "^5.0.8",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-sonarjs": "^0.19.0",
     "file-saver": "^2.0.5",
     "jest-sonar-reporter": "^2.0.0",
     "msw": "^1.2.1",
@@ -48,7 +52,8 @@
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --watchAll=false --ci --coverage --testResultsProcessor=jest-sonar-reporter",
     "sonar": "node sonarqube-scanner.js",
-    "format": "prettier \"./**/*.{ts,tsx}\" --write"
+    "format": "prettier \"./**/*.{ts,tsx}\" --write",
+    "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix"
   },
   "eslintConfig": {
     "extends": [

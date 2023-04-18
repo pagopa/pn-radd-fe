@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
-import { AppMessage, MessageType } from '../redux/app/types';
 import { v1 as uidv1 } from 'uuid';
+import { AppMessage, MessageType } from '../redux/app/types';
 
 export const getErrorMessageByApiStatus = (status: number) => {
   switch (status) {
@@ -17,21 +17,19 @@ export const getErrorMessageByApiStatus = (status: number) => {
 type IError = Error | AxiosError | { status: { code: string; message: string } };
 
 export const createAppError = (error: IError) => {
-  if (error instanceof AxiosError) return handleAxiosError(error);
+  if (error instanceof AxiosError) {return handleAxiosError(error);}
 
-  if (error instanceof Error) return handleRuntimeError(error);
+  if (error instanceof Error) {return handleRuntimeError(error);}
 
   return handleApiResponse(error);
 };
 
-const createErrorMessage = (message: string): AppMessage => {
-  return {
+const createErrorMessage = (message: string): AppMessage => ({
     id: uidv1(),
     duration: null,
     type: MessageType.ERROR,
     message,
-  };
-};
+  });
 
 function handleAxiosError(error: AxiosError<unknown, any> | AxiosError<any, any>) {
   const status = error.response?.status ?? 500;

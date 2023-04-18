@@ -1,10 +1,5 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { defaultRequiredMessage } from '../../../utils/form.utils';
-import { useAppDispatch } from '../../../redux/hooks';
-import { startInquiry } from '../../../redux/document-inquiry/actions';
-import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
-
 import {
   Grid,
   TextField,
@@ -20,8 +15,13 @@ import {
   Tooltip,
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import TitleBox from '../Title/TitleBox';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { defaultRequiredMessage } from '../../../utils/form.utils';
+import { useAppDispatch } from '../../../redux/hooks';
+import { startInquiry } from '../../../redux/document-inquiry/actions';
+import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
+
+import TitleBox from '../Title/TitleBox';
 
 type Props = {
   onConfirm: () => void;
@@ -78,7 +78,7 @@ const InquiryForm = ({ onConfirm, inquiryType }: Props) => {
     )
       .unwrap()
       .then((res) => {
-        if (res.result) onConfirm();
+        if (res.result) {onConfirm();}
       });
   };
 

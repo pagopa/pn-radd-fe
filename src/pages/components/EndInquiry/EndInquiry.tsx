@@ -17,7 +17,7 @@ const EndInquiry = () => {
           La richiesta è stata completata con successo
         </Typography>
         <Typography variant="body2" color="text.primary">
-          Puoi ricercare le informazioni prodotte nella sezione "Operazioni".
+          Puoi ricercare le informazioni prodotte nella sezione &quot;Operazioni&quot;.
         </Typography>
         <Button variant="contained" sx={{ marginTop: '30px' }} onClick={handleNavigateToHome}>
           Torna alla home

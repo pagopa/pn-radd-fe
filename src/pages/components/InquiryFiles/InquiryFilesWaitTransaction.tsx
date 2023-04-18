@@ -1,10 +1,10 @@
 import { Typography, Box } from '@mui/material';
-import { WaitingPhasePayload } from './inquiryFilesReducer';
+import { useEffect, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
 import { useAppDispatch } from '../../../redux/hooks';
 import { startTransaction, uploadFile } from '../../../redux/document-inquiry/actions';
-import { useEffect, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
+import { WaitingPhasePayload } from './inquiryFilesReducer';
 
 type Props = {
   onError: () => void;

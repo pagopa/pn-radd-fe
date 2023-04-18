@@ -5,8 +5,7 @@ type Props = {
   activeStep: number;
 };
 
-const Stepper = ({ activeStep, steps }: Props) => {
-  return (
+const Stepper = ({ activeStep, steps }: Props) => (
     <Box sx={{ width: '100%' }}>
       <MuiStepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
@@ -17,6 +16,5 @@ const Stepper = ({ activeStep, steps }: Props) => {
       </MuiStepper>
     </Box>
   );
-};
 
 export default Stepper;
