@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\Users\PassaroEm\git\pago-pa\pn-radd-fe\src\pages\components\Breadcrumb\__test__\Breadcrumb.test.tsx">
+    <testCase name="BreadcrumbLink Component renders breadcrumb link" duration="209"/>
+  </file>
+</testExecutions>
