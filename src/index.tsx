@@ -1,3 +1,4 @@
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -7,8 +8,9 @@ import store from './redux/store'
 import { ThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import { theme } from '@pagopa/mui-italia'
+import { __DEV__ } from './utils/const';
 
-if (import.meta.env.DEV) {
+if (__DEV__) {
   worker.start()
 }
 

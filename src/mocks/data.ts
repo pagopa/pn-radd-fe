@@ -1,7 +1,8 @@
-import { ActInquiryResponse, StartTransactionResponse } from "../api/generated/types";
 import { User } from "../redux/user/types";
+import { API_BASE_URL } from "../utils/const";
 
 const USER : User = {
+    id: "id",
     name: "Emanuele",
     email: "Emanuele@pagopa.it",
     uid: "0000-0001",
@@ -49,7 +50,7 @@ const ACT_INQUIRY_RESPONSES = {
 
 const UPLOAD = {
     UPLOAD_OK : {
-        url: import.meta.env.VITE_API_BASE_PATH + "/mock/upload-s3",
+        url: API_BASE_URL + "/mock/upload-s3",
         secret: "secret",
         fileKey: "testFileKey",
         status: {

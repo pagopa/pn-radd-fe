@@ -1,7 +1,7 @@
 import { useState } from "react"
 import ImageVisualizer from "./ImageVisualizer";
 
-function ImageOverview({src, width, height, ...rest} : HTMLImageElement) {
+function ImageOverview({src, width, height, ...rest} : React.HTMLProps<HTMLImageElement>) {
 
     const [fullScreenMode, setFullScreenMode] = useState(false);
     
@@ -15,7 +15,7 @@ function ImageOverview({src, width, height, ...rest} : HTMLImageElement) {
     return (
         <>
             <img src={src} onClick={handleOpen} width={width} height={height} style={{cursor: "pointer"}} />
-            {fullScreenMode && <ImageVisualizer src={src} onClose={handleClose} />}
+            {fullScreenMode && <ImageVisualizer src={src!} onClose={handleClose} />}
         </>
     )
 }

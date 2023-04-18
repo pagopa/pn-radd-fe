@@ -27,7 +27,6 @@ const SideMenuList = ({ menuItems }: Props) => {
       setOpen(!open);
     } else {
       setOpenId(label);
-      /* eslint-disable functional/immutable-data */
       prevOpenId.current = label;
       /* eslint-enalbe functional/immutable-data */
       setOpen(true);

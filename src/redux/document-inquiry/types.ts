@@ -1,4 +1,3 @@
-import { DocumentUploadRequest, DocumentUploadResponse } from "../../api/generated";
 
 export type DocumentInquiryForm = {
 	recipientTaxId: string,

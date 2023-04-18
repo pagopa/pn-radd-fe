@@ -23,17 +23,17 @@ const slice = createSlice({
     name: "app",
     initialState,
     reducers: {
-        setStatus(state, action: PayloadAction<AppStatus>) {
-            state.status = action.payload;
+        setLoadingStatus(state) {
+            state.status = AppStatus.LOADING;
         },
         closeMessage(state, action: PayloadAction<string>) {
             state.messages = state.messages.filter((message) => message.id !== action.payload);
         }
     },
     extraReducers: (builder) => {
-        builder.addMatcher(isPending, (state, action) => {
-            state.status = AppStatus.LOADING; 
-        }),
+        // builder.addMatcher(isPending, (state, action) => {
+        //     state.status = AppStatus.LOADING; 
+        // }),
         builder.addMatcher(isFulfilled, (state, action) => {
             state.status = AppStatus.IDLE;
         })
@@ -54,6 +54,6 @@ export const messagesSelector = (state: RootState) => state.app.messages;
 
 const { actions, reducer } = slice
 
-export const { setStatus, closeMessage } = actions
+export const { setLoadingStatus, closeMessage } = actions
 
 export default reducer

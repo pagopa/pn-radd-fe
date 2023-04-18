@@ -11,14 +11,15 @@ import { v4 as uuidv4 } from 'uuid'
 import { uploadFile } from '../../../redux/document-inquiry/actions'
 import { useAppDispatch } from "../../../redux/hooks"
 import AttachmentContainer from "./AttachmentContainer"
-import { InquiryFilesAction, startTransactionAction } from "./inquiryFilesReducer"
+import { DocumentOwner, UploadFilePayload, WaitingPhasePayload } from "./inquiryFilesReducer"
 
 type Props = {
-    parentDispatch: React.Dispatch<InquiryFilesAction>
+    onNext: (payload: WaitingPhasePayload) => void,
+    onUpload: (payload: UploadFilePayload) => void,
+    onRemove: (payload: DocumentOwner) => void
 }
 
-const InquiryFilesUpload = ({ parentDispatch } : Props) => {
-    const dispatch = useAppDispatch();
+const InquiryFilesUpload = ({ onNext, onUpload, onRemove } : Props) => {
     const [fileList, setFileList] = useState<Array<File>>([]);
 
     const handleUpload = (file: File, sha256?: { hashBase64: string; hashHex: string }) => {
@@ -39,11 +40,12 @@ const InquiryFilesUpload = ({ parentDispatch } : Props) => {
                 //FileSaver.saveAs(blob, "hello.zip");
                 const checksum = await calcSha256String(blob).then(sha => sha.hashBase64);
                 const bundleId = uuidv4();
-                dispatch(uploadFile({ bundleId, checksum, zip: blob}))
-                    .unwrap()
-                    .then((response) => {
-                        parentDispatch(startTransactionAction());
-                    })
+                onNext({ bundleId, checksum, zip: blob});
+                // dispatch(uploadFile())
+                //     .unwrap()
+                //     .then((response) => {
+                //         parentDispatch(startTransactionAction());
+                //     })
             });
     }
 
@@ -68,7 +70,7 @@ const InquiryFilesUpload = ({ parentDispatch } : Props) => {
 
             <Grid container mt={2} direction="row-reverse">
                 <Button color="primary" variant="contained" onClick={handleSubmit} disabled={fileList.length == 0}>
-                    Carica documenti
+                    Continua
                 </Button>
             </Grid>
         </>

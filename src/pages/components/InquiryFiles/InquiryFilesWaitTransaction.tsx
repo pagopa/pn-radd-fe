@@ -1,89 +1,72 @@
-import { Typography, Button, Grid, Box } from "@mui/material"
-import { InquiryFilesAction, waitTransactionAction } from "./inquiryFilesReducer"
+import { Typography, Box } from "@mui/material"
+import { WaitingPhasePayload } from "./inquiryFilesReducer"
 import { DocumentInquiryType } from "../../../redux/document-inquiry/types"
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks"
-import { startTransaction } from "../../../redux/document-inquiry/actions"
+import { useAppDispatch } from "../../../redux/hooks"
+import { startTransaction, uploadFile } from "../../../redux/document-inquiry/actions"
 import { useEffect, useState } from "react"
-import { operationIdSelector } from "../../../redux/document-inquiry/slice"
-import { IllusQuick } from "@pagopa/mui-italia"
-import { LoadingButton } from "@mui/lab"
+import CircularProgress from '@mui/material/CircularProgress';
 
 type Props = {
-    parentDispatch: React.Dispatch<InquiryFilesAction>,
-    onConfirm: () => void,
+    onError: () => void,
+    onNext: () => void,
     inquiryType: DocumentInquiryType,
-    retryAfter: number
+    uploadData: WaitingPhasePayload
 }
 
-const InquiryFilesWaitTransaction = ({parentDispatch, onConfirm, inquiryType, retryAfter}: Props) => {
-    const previousOperationId = useAppSelector(operationIdSelector);
-    const [remainingTime, setRemainingTime] = useState<number>(Math.ceil(retryAfter/1000));
-    const isTimerActive = remainingTime > 0;
-
-    const calculateTimeLeft = () => {
-        if(remainingTime > 0) {
-            setRemainingTime(remainingTime => remainingTime - 1);
-        } else {
-            dispatch(startTransaction({inquiryType, previousOperationId }))
-                .unwrap()
-                .then((res) => {
-                    if(res.status?.code === 2 && res.status.retryAfter !== 0) {
-                        parentDispatch(waitTransactionAction(res.status.retryAfter!))
-                        return;
-                    }
-                        
-                    onConfirm();
-                });
-        }
-    }
-
-    useEffect(() => {
-        setRemainingTime(Math.ceil(retryAfter/1000));
-    }, [retryAfter])
-    
-    useEffect(() => {
-        const interval = setInterval(calculateTimeLeft, 1000);
-        return () => { clearInterval(interval) }
-    }, [remainingTime])
-
+const InquiryFilesWaitTransaction = ({onError, onNext, inquiryType, uploadData}: Props) => {
+    const [retries, setRetries] = useState<number>(0);
     const dispatch = useAppDispatch();
 
-    const handleClick = () => {
-        dispatch(startTransaction({inquiryType, previousOperationId }))
-            .unwrap()
-            .then((res) => {
-                if(res.status?.code === 2 && res.status.retryAfter !== 0) {
-                    parentDispatch(waitTransactionAction(res.status.retryAfter!))
-                    return;
+    useEffect(() => {
+        let didCancel = false;
+        const uploadProcess = async () => {
+            try {
+                await dispatch(uploadFile(uploadData)).unwrap();
+            } catch (error) {
+                onError();
+            }
+        }
+
+        const transactionProcess = async () => {
+            try {
+                const transactionResponse = await dispatch(startTransaction({inquiryType})).unwrap();
+
+                if(!didCancel) {
+                    if(transactionResponse.status?.code === 2 && transactionResponse.status.retryAfter !== 0) {
+                        window.setTimeout(() => setRetries((oldRetries) => oldRetries + 1), transactionResponse.status.retryAfter);
+                    } else {
+                        onNext();
+                    }
                 }
-                    
-                onConfirm();
-            });
-    }
+            } catch (error) {
+                onError();
+            }
+        }
+
+        if(retries == 0) {
+            uploadProcess();
+            transactionProcess();
+        } else {
+            transactionProcess();
+        }
+
+        return () => { didCancel = true; };
+        
+    }, [retries])
+
     return (
         <>
             <Box sx={{ minHeight: '300px', height: '100%', display: 'flex' }}>
                 <Box sx={{ margin: 'auto', textAlign: 'center' }}>
-                    <IllusQuick />
-                    <Typography variant="body1" color="text.primary" sx={{ margin: '20px 0 10px 0' }}>
-                        Ci scusiamo per il disagio
+                    <CircularProgress />
+                    <Typography variant="body1" color="text.primary" fontWeight={600} sx={{ margin: '20px 0 10px 0' }}>
+                        Stiamo caricando i documenti
                     </Typography>
                     <Typography variant="body2" color="text.primary">
-                        Per completare la richiesta è necessario attendere {remainingTime} secondi
+                        Attendi qualche secondo
                     </Typography>
                 </Box>
             </Box>
-            {/* <Grid container mt={2} direction="row-reverse">
-                <LoadingButton
-                    loading={isTimerActive}
-                    variant="contained" 
-                    sx={{ marginTop: '30px' }} 
-                    onClick={handleClick} 
-                    disabled={isTimerActive} 
-                >
-                    Riprova
-                </LoadingButton>
-            </Grid> */}
         </>
     )
 }

@@ -1,12 +1,14 @@
+import { __MODE__ } from "./const";
+
 export const calcBase64String = (file: any): Promise<string> => {
   // this is because test fails due to resolve in onload function
-  if (import.meta.env.MODE === 'test') {
+  if (__MODE__ === 'test') {
     return Promise.resolve('mocked-base64String');
   }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    /* eslint-disable functional/immutable-data */
+    /*  */
     reader.onload = () => {
       const base64String = (reader.result as string).split(';base64,');
       resolve(base64String[1]);
@@ -14,19 +16,19 @@ export const calcBase64String = (file: any): Promise<string> => {
     reader.onerror = () => {
       reject();
     };
-    /* eslint-enable functional/immutable-data */
+    
   });
 };
 
 export const calcUnit8Array = (file: any): Promise<Uint8Array> => {
   // this is because test fails due to resolve in onload function
-  if (import.meta.env.MODE === 'test') {
+  if (__MODE__ === 'test') {
     return Promise.resolve(new Uint8Array());
   }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
-    /* eslint-disable functional/immutable-data */
+    /*  */
     reader.onload = async () => {
       try {
         resolve(new Uint8Array(reader.result as ArrayBuffer));
@@ -37,19 +39,19 @@ export const calcUnit8Array = (file: any): Promise<Uint8Array> => {
     reader.onerror = () => {
       reject();
     };
-    /* eslint-enable functional/immutable-data */
+    
   });
 };
 
 export const calcSha256String = async (file: any): Promise<{ hashHex: string; hashBase64: string }> => {
   // this is because in jest crypto is undefined and test fails due to resolve in onload function
-  if (import.meta.env.MODE === 'test') {
+  if (__MODE__ === 'test') {
     return Promise.resolve({ hashHex: 'mocked-hashHex', hashBase64: 'mocked-hasBase64' });
   }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
-    /* eslint-disable functional/immutable-data */
+    /*  */
     reader.onload = async () => {
       try {
         const hashBuffer = await crypto.subtle.digest('SHA-256', reader.result as ArrayBuffer);
@@ -64,7 +66,7 @@ export const calcSha256String = async (file: any): Promise<{ hashHex: string; ha
     reader.onerror = () => {
       reject();
     };
-    /* eslint-enable functional/immutable-data */
+    
   });
 };
 

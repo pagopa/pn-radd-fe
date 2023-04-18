@@ -124,7 +124,6 @@ function UploadBox({
             if (file && file.type && accept.indexOf(file.type) > -1) {
                 dispatch({ type: UploadActions.ADD_FILE, payload: file });
                 try {
-                  /* eslint-disable-next-line functional/no-let */
                   let fileFormatted : any = file;
                   if (fileFormat === 'base64') {
                     fileFormatted = await calcBase64String(file);
