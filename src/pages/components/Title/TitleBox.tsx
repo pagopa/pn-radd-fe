@@ -24,27 +24,31 @@ type Props = {
  * TitleBox element. It renders a TitleBox (default variant is h1) and a subtitle (default variant is h5)
  */
 const TitleBox = ({
-    title,
-    subTitle,
-    mbTitle = 2,
-    mtGrid,
-    mbSubTitle,
-    variantTitle = 'h1',
-    variantSubTitle = 'h5',
-    sx
-  }: Props) => {
+  title,
+  subTitle,
+  mbTitle = 2,
+  mtGrid,
+  mbSubTitle,
+  variantTitle = 'h1',
+  variantSubTitle = 'h5',
+  sx,
+}: Props) => {
   return (
     <Grid container mt={mtGrid} sx={sx}>
-      {title && <Grid item xs={12} mb={mbTitle}>
-        <Typography variant={variantTitle}>{title}</Typography>
-      </Grid>}
-      {subTitle && <Grid item xs={12} mb={mbSubTitle}>
-        <Typography variant={variantSubTitle} sx={{ fontSize: '18px' }}>
-          {subTitle}
-        </Typography>
-      </Grid>}
+      {title && (
+        <Grid item xs={12} mb={mbTitle}>
+          <Typography variant={variantTitle}>{title}</Typography>
+        </Grid>
+      )}
+      {subTitle && (
+        <Grid item xs={12} mb={mbSubTitle}>
+          <Typography variant={variantSubTitle} sx={{ fontSize: '18px' }}>
+            {subTitle}
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
-}
+};
 
 export default TitleBox;

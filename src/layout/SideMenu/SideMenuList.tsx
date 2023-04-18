@@ -1,12 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
+import { Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import SideMenuListItem from './SideMenuListItem';
@@ -15,7 +8,6 @@ import { SideMenuItem } from '../../types/SideMenuItem';
 type Props = {
   menuItems: Array<SideMenuItem>;
 };
-
 
 const SideMenuList = ({ menuItems }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -40,17 +32,13 @@ const SideMenuList = ({ menuItems }: Props) => {
         backgroundColor: 'background.paper',
       }}
     >
-      <List
-        role="navigation"
-        data-testid="menu-list"
-        component="nav"
-        aria-label={"menu RADD"}
-      >
+      <List role="navigation" data-testid="menu-list" component="nav" aria-label={'menu RADD'}>
         {menuItems.map((item: SideMenuItem, index: number) =>
           item.children ? (
             // accordion se ci sono children
             <Fragment key={item.label}>
-              <ListItemButton onClick={() => {
+              <ListItemButton
+                onClick={() => {
                   handleClick(item.label);
                 }}
               >
@@ -70,20 +58,13 @@ const SideMenuList = ({ menuItems }: Props) => {
               >
                 <List disablePadding>
                   {item.children.map((child, childIndex) => (
-                    <SideMenuListItem
-                      key={child.label}
-                      item={child}
-                      style={{ pl: 4 }}
-                    />
+                    <SideMenuListItem key={child.label} item={child} style={{ pl: 4 }} />
                   ))}
                 </List>
               </Collapse>
             </Fragment>
           ) : (
-            <SideMenuListItem
-              key={item.label}
-              item={item}
-            />
+            <SideMenuListItem key={item.label} item={item} />
           )
         )}
       </List>

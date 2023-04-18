@@ -6,22 +6,14 @@ type Props = {
   menuItems: Array<SideMenuItem>;
 };
 
-const SideMenu = ({ menuItems } : Props) => {
-
+const SideMenu = ({ menuItems }: Props) => {
   return (
-    <Box
-      height={'100%'}
-      display="flex"
-      flexDirection="column"
-      bgcolor={'common.white'}
-    >
+    <Box height={'100%'} display="flex" flexDirection="column" bgcolor={'common.white'}>
       <Box alignItems="left" display="flex" flexDirection="column">
-        <SideMenuList
-          menuItems={menuItems}
-        />
+        <SideMenuList menuItems={menuItems} />
       </Box>
     </Box>
   );
 };
 
-export default SideMenu
+export default SideMenu;

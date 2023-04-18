@@ -14,16 +14,10 @@ type Props = {
  * @param item SideMenuItem
  * @param style optional
  */
-const SideMenuListItem = ({
-  item,
-  style
-}: Props) => (
+const SideMenuListItem = ({ item, style }: Props) => (
   <NavLink to={item.route} style={{ textDecoration: 'none' }}>
     {({ isActive, isPending }) => (
-      <ListItemButton 
-        selected={isActive} 
-        sx={style}
-      >
+      <ListItemButton selected={isActive} sx={style}>
         {item.icon && (
           <ListItemIcon>
             {item.dotBadge ? (

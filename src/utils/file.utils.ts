@@ -1,4 +1,4 @@
-import { __MODE__ } from "./const";
+import { __MODE__ } from './const';
 
 export const calcBase64String = (file: any): Promise<string> => {
   // this is because test fails due to resolve in onload function
@@ -16,7 +16,6 @@ export const calcBase64String = (file: any): Promise<string> => {
     reader.onerror = () => {
       reject();
     };
-    
   });
 };
 
@@ -39,11 +38,12 @@ export const calcUnit8Array = (file: any): Promise<Uint8Array> => {
     reader.onerror = () => {
       reject();
     };
-    
   });
 };
 
-export const calcSha256String = async (file: any): Promise<{ hashHex: string; hashBase64: string }> => {
+export const calcSha256String = async (
+  file: any
+): Promise<{ hashHex: string; hashBase64: string }> => {
   // this is because in jest crypto is undefined and test fails due to resolve in onload function
   if (__MODE__ === 'test') {
     return Promise.resolve({ hashHex: 'mocked-hashHex', hashBase64: 'mocked-hasBase64' });
@@ -66,8 +66,7 @@ export const calcSha256String = async (file: any): Promise<{ hashHex: string; ha
     reader.onerror = () => {
       reject();
     };
-    
   });
 };
 
-export const ALLOWED_MIME_TYPES = ["image/jpg", "image/png"];
+export const ALLOWED_MIME_TYPES = ['image/jpg', 'image/png'];

@@ -1,23 +1,28 @@
-import { useState } from "react"
-import ImageVisualizer from "./ImageVisualizer";
+import { useState } from 'react';
+import ImageVisualizer from './ImageVisualizer';
 
-function ImageOverview({src, width, height, ...rest} : React.HTMLProps<HTMLImageElement>) {
+function ImageOverview({ src, width, height, ...rest }: React.HTMLProps<HTMLImageElement>) {
+  const [fullScreenMode, setFullScreenMode] = useState(false);
 
-    const [fullScreenMode, setFullScreenMode] = useState(false);
-    
-    const handleClose = () => {
-        setFullScreenMode(false);
-    }
+  const handleClose = () => {
+    setFullScreenMode(false);
+  };
 
-    const handleOpen = () => {
-        setFullScreenMode(true);
-    }
-    return (
-        <>
-            <img src={src} onClick={handleOpen} width={width} height={height} style={{cursor: "pointer"}} />
-            {fullScreenMode && <ImageVisualizer src={src!} onClose={handleClose} />}
-        </>
-    )
+  const handleOpen = () => {
+    setFullScreenMode(true);
+  };
+  return (
+    <>
+      <img
+        src={src}
+        onClick={handleOpen}
+        width={width}
+        height={height}
+        style={{ cursor: 'pointer' }}
+      />
+      {fullScreenMode && <ImageVisualizer src={src!} onClose={handleClose} />}
+    </>
+  );
 }
 
-export default ImageOverview
+export default ImageOverview;

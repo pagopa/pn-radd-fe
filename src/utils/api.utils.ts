@@ -1,3 +1,4 @@
-import { DocumentInquiryType } from "../redux/document-inquiry/types";
+import { DocumentInquiryType } from '../redux/document-inquiry/types';
 
-export const getDomainByInquiryType = (inquiryType: DocumentInquiryType) => inquiryType === DocumentInquiryType.ACT ? "ACT" : "AOR";
+export const getDomainByInquiryType = (inquiryType: DocumentInquiryType) =>
+  inquiryType === DocumentInquiryType.ACT ? 'ACT' : 'AOR';

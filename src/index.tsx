@@ -1,17 +1,16 @@
-
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import { worker } from './mocks/browser'
-import { Provider } from 'react-redux'
-import store from './redux/store'
-import { ThemeProvider } from '@emotion/react'
-import { CssBaseline } from '@mui/material'
-import { theme } from '@pagopa/mui-italia'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { worker } from './mocks/browser';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+import { theme } from '@pagopa/mui-italia';
 import { __DEV__ } from './utils/const';
 
 if (__DEV__) {
-  worker.start()
+  worker.start();
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -22,5 +21,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <App />
       </ThemeProvider>
     </Provider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

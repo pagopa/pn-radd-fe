@@ -1,32 +1,30 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { User } from './types'
-import { currentUser } from '../../utils/user.utils'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { User } from './types';
+import { currentUser } from '../../utils/user.utils';
 import { RootState } from '../store';
 
 interface UserState {
-    user: User
+  user: User;
 }
 
 function getLoggedUser(): User {
-    return currentUser();
+  return currentUser();
 }
 
 const initialState: UserState = {
-    user: getLoggedUser()
-}
+  user: getLoggedUser(),
+};
 
 const slice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {
-
-    }
-})
+  name: 'user',
+  initialState,
+  reducers: {},
+});
 
 export const userSelector = (state: RootState) => state.user.user;
 
-const { actions, reducer } = slice
+const { actions, reducer } = slice;
 
-export const { } = actions
+export const {} = actions;
 
-export default reducer
+export default reducer;
