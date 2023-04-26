@@ -14,32 +14,38 @@ export const getErrorMessageByApiStatus = (status: number) => {
   }
 };
 
-type IError = Error | AxiosError | { status: { code: string; message: string } };
+type IError = Error | AxiosError | { status: { code: number; message: string } };
 
 export const createAppError = (error: IError) => {
-  if (error instanceof AxiosError) {return handleAxiosError(error);}
+  if (error instanceof AxiosError) {
+    return handleAxiosError(error);
+  }
 
-  if (error instanceof Error) {return handleRuntimeError(error);}
+  if (error instanceof Error) {
+    return handleRuntimeError();
+  }
 
   return handleApiResponse(error);
 };
 
-const createErrorMessage = (message: string): AppMessage => ({
-    id: uidv1(),
-    duration: null,
-    type: MessageType.ERROR,
-    message,
-  });
+const createErrorMessage = (message: string, status?: number): AppMessage => ({
+  id: uidv1(),
+  duration: null,
+  type: MessageType.ERROR,
+  message,
+  status,
+});
 
 function handleAxiosError(error: AxiosError<unknown, any> | AxiosError<any, any>) {
   const status = error.response?.status ?? 500;
   const message = getErrorMessageByApiStatus(status);
-  return createErrorMessage(message);
+  return createErrorMessage(message, status);
 }
-function handleRuntimeError(error: Error) {
+
+function handleRuntimeError() {
   return createErrorMessage(getErrorMessageByApiStatus(500));
 }
 
-function handleApiResponse(error: { status: { code: string; message: string } }) {
-  return createErrorMessage('TBD');
+function handleApiResponse(error: { status: { code: number; message: string } }) {
+  return createErrorMessage(error.status.message);
 }

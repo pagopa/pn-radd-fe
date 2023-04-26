@@ -7,10 +7,13 @@ import { theme } from '@pagopa/mui-italia';
 import store from './redux/store';
 import { worker } from './mocks/browser';
 import App from './App';
-import { _DEV_ } from './utils/const';
+import { DEV } from './utils/const';
 
-if (_DEV_) {
-  worker.start();
+if (DEV) {
+  void worker.start();
+  if (window.location.pathname === '/') {
+    window.location.hash = '#token=token-test';
+  }
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

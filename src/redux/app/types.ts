@@ -9,6 +9,7 @@ export type AppMessage = {
   message: string;
   type: MessageType;
   duration: number | null;
+  status?: number;
 };
 
 export enum MessageType {

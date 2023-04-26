@@ -2,11 +2,9 @@ import { apiClient } from '../axios';
 import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
 
 export const UploadApi = {
-  documentUpload: (
-    uid: string,
-    documentUploadRequest: DocumentUploadRequest
-  ): Promise<DocumentUploadResponse> => apiClient
-      .post(`/radd-private/api/v1/documents/upload`, documentUploadRequest, { params: { uid } })
+  documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
+    apiClient
+      .post(`/radd/documents/upload`, documentUploadRequest)
       .then((response) => response.data),
   s3Upload: (presignedUrl: string, payload: S3UploadRequest) => {
     const { file, secret } = payload;

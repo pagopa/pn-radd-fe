@@ -1,32 +1,67 @@
-import * as React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorBoundary from '../error/ErrorBoundary';
-import Layout from '../layout/Layout';
-import HomePage from '../pages/HomePage';
-import NotFoundPage from '../pages/NotFoundPage';
-import { DocumentInquiryActPage } from '../pages/DocumentInquiryActPage';
-import { DOCUMENT_INQUIRY_ACT } from './routes.const';
+import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import NotFound from '../pages/NotFound.page';
+import LoadingPage from '../components/LoadingPage/LoadingPage';
+import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from './routes.const';
+import { SessionGuard } from './SessionGuard';
+import RouteGuard from './RouteGuard';
+
+const Layout = React.lazy(() => import('../components/Layout/Layout'));
+const Home = React.lazy(() => import('../pages/Home.page'));
+const DocumentInquiryAct = React.lazy(() => import('../pages/DocumentInquiryAct.page'));
+const DocumentInquiryAor = React.lazy(() => import('../pages/DocumentInquiryAor.page'));
+
+const protectedRoutes = (children: Array<RouteObject>) => ({
+    element: <SessionGuard />,
+    children: [
+      {
+        element: <RouteGuard />,
+        children,
+      },
+    ],
+  });
+
+const basicLayout = (children: Array<RouteObject>) => ({
+    element: (
+      <Suspense fallback={<LoadingPage />}>
+        <Layout />
+      </Suspense>
+    ),
+    children,
+  });
+
+const layoutWithSideMenu = (children: Array<RouteObject>) => ({
+    element: (
+      <Suspense fallback={<LoadingPage renderType="whole" />}>
+        <Layout showSideMenu />
+      </Suspense>
+    ),
+    children,
+  });
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
+  basicLayout([
+    protectedRoutes([
       {
-        index: true,
-        element: <HomePage />,
+        path: '/',
+        element: <Home />,
       },
-    ],
-  },
-  {
-    element: <Layout showSideMenu />,
-    errorElement: <ErrorBoundary><></></ErrorBoundary>,
-    children: [
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ]),
+  ]),
+  layoutWithSideMenu([
+    protectedRoutes([
       {
         path: DOCUMENT_INQUIRY_ACT,
-        element: <DocumentInquiryActPage />,
+        element: <DocumentInquiryAct />,
       },
-    ],
-  },
-  { path: '*', element: <NotFoundPage /> },
+      {
+        path: DOCUMENT_INQUIRY_AOR,
+        element: <DocumentInquiryAor />,
+      },
+    ]),
+  ]),
 ]);

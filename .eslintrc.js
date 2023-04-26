@@ -80,7 +80,7 @@ module.exports = {
     'react/jsx-no-bind': ['error', { allowArrowFunctions: true }],
     'react-hooks/rules-of-hooks': 'warn',
     'functional/no-let': 'error',
-    'functional/immutable-data': 'error',
+    'functional/immutable-data': 'off',
     'sonarjs/no-small-switch': 'off',
     'sonarjs/no-duplicate-string': 'off',
     'sonarjs/no-nested-template-literals': 'warn',

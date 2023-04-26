@@ -33,7 +33,7 @@ export interface DocumentUploadResponse {
    * @type {string}
    * @memberof DocumentUploadResponse
    */
-  fileKey?: string;
+  fileKey: string;
   /**
    *
    * @type {string}

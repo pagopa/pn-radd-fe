@@ -12,45 +12,33 @@ import {
 
 export const TransactionApi = {
   startTransaction: (
-    uid: string,
     startTransactionRequest: StartTransactionRequest,
     inquiryType: DocumentInquiryType
   ): Promise<StartTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<StartTransactionResponse>(
-        `/radd-private/api/v1/${domain}/transaction/start`,
-        startTransactionRequest,
-        { params: { uid } }
-      )
+      .post<StartTransactionResponse>(`/radd/${domain}/transaction/start`, startTransactionRequest)
       .then((response) => response.data);
   },
   completeTransaction: (
-    uid: string,
     completeTransactionRequest: CompleteTransactionRequest,
     inquiryType: DocumentInquiryType
   ): Promise<CompleteTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
       .post<CompleteTransactionResponse>(
-        `/radd-private/api/v1/${domain}/transaction/complete`,
-        completeTransactionRequest,
-        { params: { uid } }
+        `/radd/${domain}/transaction/complete`,
+        completeTransactionRequest
       )
       .then((response) => response.data);
   },
   abortTransaction: (
-    uid: string,
     abortTransactionRequest: AbortTransactionRequest,
     inquiryType: DocumentInquiryType
   ): Promise<AbortTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<AbortTransactionResponse>(
-        `/radd-private/api/v1/${domain}/transaction/abort`,
-        abortTransactionRequest,
-        { params: { uid } }
-      )
+      .post<AbortTransactionResponse>(`/radd/${domain}/transaction/abort`, abortTransactionRequest)
       .then((response) => response.data);
   },
 };

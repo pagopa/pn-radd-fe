@@ -35,5 +35,5 @@ export interface DocumentUploadRequest {
    * @type {string}
    * @memberof DocumentUploadRequest
    */
-  checksum?: string;
+  checksum: string;
 }

@@ -1,3 +1,4 @@
-export const _DEV_ = process.env.NODE_ENV === 'development';
+export const DEV = process.env.NODE_ENV === 'development';
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-export const __MODE__ = process.env.REACT_APP_MODE;
+export const AUTH_API_BASE_URL = process.env.REACT_APP_AUTH_API_BASE_URL;
+export const MODE = process.env.REACT_APP_MODE;

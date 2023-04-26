@@ -9,18 +9,14 @@ export const NotificationInquiryApi = {
     inquiryType: DocumentInquiryType
   ): Promise<OperationsResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
-    return apiClient
-      .get(`/radd-private/api/v1/${domain}/operations/by-iun/${iun}`)
-      .then((res) => res.data);
+    return apiClient.get(`/radd/${domain}/operations/by-iun/${iun}`).then((res) => res.data);
   },
   getTransactionByOperationId: (
     operationId: string,
     inquiryType: DocumentInquiryType
   ): Promise<OperationResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
-    return apiClient
-      .get(`/radd-private/api/v1/${domain}/operations/by-id/${operationId}`)
-      .then((res) => res.data);
+    return apiClient.get(`/radd/${domain}/operations/by-id/${operationId}`).then((res) => res.data);
   },
   getPracticesByInternalId: (
     internalId: string,
@@ -29,7 +25,7 @@ export const NotificationInquiryApi = {
   ): Promise<OperationResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post(`/radd-private/api/v1/${domain}/operations/by-internalId/${internalId}`, filterRequest)
+      .post(`/radd/${domain}/operations/by-internalId/${internalId}`, filterRequest)
       .then((res) => res.data);
   },
 };

@@ -77,12 +77,6 @@ export interface OperationActDetailResponse {
    * @type {string}
    * @memberof OperationActDetailResponse
    */
-  uid?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof OperationActDetailResponse
-   */
   operationStartDate?: string;
   /**
    *

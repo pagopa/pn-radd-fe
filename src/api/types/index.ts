@@ -2,8 +2,6 @@ export * from './aorinquiry-response';
 export * from './abort-transaction-request';
 export * from './abort-transaction-response';
 export * from './act-inquiry-response';
-export * from './act-inquiry-response-status';
-export * from './act-inquiry-response-status-all-of';
 export * from './start-transaction-request';
 export * from './aor-start-transaction-request';
 export * from './complete-transaction-request';

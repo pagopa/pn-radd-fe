@@ -1,8 +1,16 @@
 export interface User {
-  id: string;
+  sessionToken: string;
   name: string;
-  email: string;
+  family_name: string;
+  fiscal_number: string;
+  email?: string;
   uid: string;
-  role?: string;
-  sessionToken?: string;
+  mobile_phone?: string;
+  from_aa: boolean;
+  aud: string;
+  level: string;
+  iat: number;
+  exp: number;
+  iss: string;
+  jti: string;
 }

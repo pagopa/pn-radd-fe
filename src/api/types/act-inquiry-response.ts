@@ -14,7 +14,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ActInquiryResponseStatus } from './act-inquiry-response-status';
+import { ResponseStatus } from './response-status';
 
 /**
  * Response di verifica presenza atto ed eventuali attestazione opponibili a terzi
@@ -30,8 +30,8 @@ export interface ActInquiryResponse {
   result?: boolean;
   /**
    *
-   * @type {ActInquiryResponseStatus}
+   * @type {ResponseStatus}
    * @memberof ActInquiryResponse
    */
-  status?: ActInquiryResponseStatus;
+  status?: ResponseStatus;
 }
