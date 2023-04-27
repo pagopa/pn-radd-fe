@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE_URL, AUTH_API_BASE_URL } from '../utils/const';
+import { API_BASE_URL, AUTH_API_BASE_URL, DEV } from '../utils/const';
 import store from '../redux/store';
 
 export const apiClient = axios.create({
@@ -18,9 +18,13 @@ export const authClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = store.getState().user.user.sessionToken;
-    if (token && config.headers) {
-      config.headers.Authorization = 'Bearer ' + token;
+    const { uid, sessionToken } = store.getState().user.user;
+    if (sessionToken && config.headers) {
+      config.headers.Authorization = 'Bearer ' + sessionToken;
+      if(DEV) {
+        config.headers["x-pagopa-pn-uid"] = uid;
+      }
+      
     }
     return config;
   },

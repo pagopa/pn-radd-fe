@@ -31,7 +31,6 @@ const InquiryFilesUpload = ({ files, onNext, onUpload, onRemove }: Props) => {
     zip
       .generateAsync({ type: 'blob' })
       .then(async function (blob) {
-        // FileSaver.saveAs(blob, "hello.zip");
         const checksum = await calcSha256String(blob).then((sha) => sha.hashBase64);
         const bundleId = uuidv4();
         onNext({ bundleId, checksum, zip: blob });

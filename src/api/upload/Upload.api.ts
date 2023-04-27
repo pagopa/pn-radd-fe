@@ -4,7 +4,7 @@ import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '
 export const UploadApi = {
   documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
     apiClient
-      .post(`/radd/documents/upload`, documentUploadRequest)
+      .post(`/radd-web/documents/upload`, documentUploadRequest)
       .then((response) => response.data),
   s3Upload: (presignedUrl: string, payload: S3UploadRequest) => {
     const { file, secret } = payload;

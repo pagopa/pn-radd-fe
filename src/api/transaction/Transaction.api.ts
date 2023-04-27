@@ -17,7 +17,7 @@ export const TransactionApi = {
   ): Promise<StartTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<StartTransactionResponse>(`/radd/${domain}/transaction/start`, startTransactionRequest)
+      .post<StartTransactionResponse>(`/radd-web/${domain}/transaction/start`, startTransactionRequest)
       .then((response) => response.data);
   },
   completeTransaction: (
@@ -27,7 +27,7 @@ export const TransactionApi = {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
       .post<CompleteTransactionResponse>(
-        `/radd/${domain}/transaction/complete`,
+        `/radd-web/${domain}/transaction/complete`,
         completeTransactionRequest
       )
       .then((response) => response.data);
@@ -38,7 +38,7 @@ export const TransactionApi = {
   ): Promise<AbortTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<AbortTransactionResponse>(`/radd/${domain}/transaction/abort`, abortTransactionRequest)
+      .post<AbortTransactionResponse>(`/radd-web/${domain}/transaction/abort`, abortTransactionRequest)
       .then((response) => response.data);
   },
 };

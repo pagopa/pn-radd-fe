@@ -69,7 +69,7 @@ export const calcSha256String = async (
   });
 };
 
-export const ALLOWED_MIME_TYPES = ['image/jpg', 'image/png'];
+export const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png'];
 
 export const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15 MB
 

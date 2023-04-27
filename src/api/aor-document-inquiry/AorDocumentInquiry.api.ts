@@ -7,7 +7,7 @@ export const AorDocumentInquiryApi = {
     recipientType: 'PF' | 'PG'
   ): Promise<AORInquiryResponse> =>
     apiClient
-      .get<AORInquiryResponse>(`/radd/aor/inquiry`, {
+      .get<AORInquiryResponse>(`/radd-web/aor/inquiry`, {
         params: { recipientTaxId, recipientType },
       })
       .then((response) => response.data),
