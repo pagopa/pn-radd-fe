@@ -2,7 +2,7 @@ const scanner = require('sonarqube-scanner');
 
 const options = {
   'sonar.organization': 'pagopa',
-  'sonar.projectKey': 'pagopa_pn-logextractor-fe',
+  'sonar.projectKey': 'pagopa_pagopa_pn-radd-fe',
 };
 
 if (typeof process.env.PR_NUM !== 'undefined') {
