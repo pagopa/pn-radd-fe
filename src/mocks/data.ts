@@ -98,7 +98,7 @@ type UploadResponses = {
 
 const UPLOAD: UploadResponses = {
   UPLOAD_OK: {
-    url: `${API_BASE_URL}/mock/upload-s3` + '',
+    url: `${API_BASE_URL}/upload-s3` + '',
     secret: 'secret',
     fileKey: 'testFileKey',
     status: {

@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios';
 import { v1 as uidv1 } from 'uuid';
 import { AppMessage, MessageType } from '../redux/app/types';
+import { ApiException } from '../api/exception/ApiException';
+import { ResponseStatus } from '../api/types';
 
 export const getErrorMessageByApiStatus = (status: number) => {
   switch (status) {
@@ -14,18 +16,22 @@ export const getErrorMessageByApiStatus = (status: number) => {
   }
 };
 
-type IError = Error | AxiosError | { status: { code: number; message: string } };
+type IError = Error | AxiosError | ApiException;
 
 export const createAppError = (error: IError) => {
   if (error instanceof AxiosError) {
     return handleAxiosError(error);
   }
 
+  if (error instanceof ApiException) { 
+    return handleApiError(error.error);
+  }
+
   if (error instanceof Error) {
     return handleRuntimeError();
   }
 
-  return handleApiResponse(error);
+  return createErrorMessage(getErrorMessageByApiStatus(500));
 };
 
 const createErrorMessage = (message: string, status?: number): AppMessage => ({
@@ -46,6 +52,6 @@ function handleRuntimeError() {
   return createErrorMessage(getErrorMessageByApiStatus(500));
 }
 
-function handleApiResponse(error: { status: { code: number; message: string } }) {
-  return createErrorMessage(error.status.message);
+function handleApiError(error: ResponseStatus) {
+  return createErrorMessage(error.message);
 }

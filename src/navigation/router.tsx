@@ -12,32 +12,32 @@ const DocumentInquiryAct = React.lazy(() => import('../pages/DocumentInquiryAct.
 const DocumentInquiryAor = React.lazy(() => import('../pages/DocumentInquiryAor.page'));
 
 const protectedRoutes = (children: Array<RouteObject>) => ({
-    element: <SessionGuard />,
-    children: [
-      {
-        element: <RouteGuard />,
-        children,
-      },
-    ],
-  });
+  element: <SessionGuard />,
+  children: [
+    {
+      element: <RouteGuard />,
+      children,
+    },
+  ],
+});
 
 const basicLayout = (children: Array<RouteObject>) => ({
-    element: (
-      <Suspense fallback={<LoadingPage />}>
-        <Layout />
-      </Suspense>
-    ),
-    children,
-  });
+  element: (
+    <Suspense fallback={<LoadingPage />}>
+      <Layout />
+    </Suspense>
+  ),
+  children,
+});
 
 const layoutWithSideMenu = (children: Array<RouteObject>) => ({
-    element: (
-      <Suspense fallback={<LoadingPage renderType="whole" />}>
-        <Layout showSideMenu />
-      </Suspense>
-    ),
-    children,
-  });
+  element: (
+    <Suspense fallback={<LoadingPage renderType="whole" />}>
+      <Layout showSideMenu />
+    </Suspense>
+  ),
+  children,
+});
 
 export const router = createBrowserRouter([
   basicLayout([

@@ -1,8 +1,43 @@
-import axios from 'axios';
-import { API_BASE_URL, AUTH_API_BASE_URL, DEV } from '../utils/const';
+import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { API_BASE_URL, DEV } from '../utils/const';
 import store from '../redux/store';
+import { ApiException } from './exception/ApiException';
 
-export const apiClient = axios.create({
+const isApiError = (response: AxiosResponse<any, any>) =>  response.data?.status?.code !== undefined && response.data?.status?.code !== 0 && response.data?.status?.code !== 2;
+
+const onRequest = (config: InternalAxiosRequestConfig) => {
+  const { uid, sessionToken } = store.getState().user.user;
+  if (sessionToken && config.headers) {
+    config.headers.Authorization = 'Bearer ' + sessionToken;
+    if(DEV) {
+      config.headers["x-pagopa-pn-uid"] = uid;
+    }
+    
+  }
+  return config;
+};
+
+const onRequestError = (error: AxiosError): Promise<AxiosError> => { 
+  throw new Error(error.message);
+};
+
+const onResponse = (response: AxiosResponse<any, any>) => {
+  if(isApiError(response)) {
+    throw new ApiException({ code: response.data.status.code, message: response.data.status.message });
+  }
+
+  return response;
+};
+
+const onResponseError = (error: AxiosError<any, any>) => Promise.reject(error);
+
+function setupInterceptors(axiosInstance: AxiosInstance): AxiosInstance {
+  axiosInstance.interceptors.request.use(onRequest, onRequestError);
+  axiosInstance.interceptors.response.use(onResponse, onResponseError);
+  return axiosInstance;
+}
+
+const apiClientInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -10,23 +45,11 @@ export const apiClient = axios.create({
 });
 
 export const authClient = axios.create({
-  baseURL: AUTH_API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-apiClient.interceptors.request.use(
-  (config) => {
-    const { uid, sessionToken } = store.getState().user.user;
-    if (sessionToken && config.headers) {
-      config.headers.Authorization = 'Bearer ' + sessionToken;
-      if(DEV) {
-        config.headers["x-pagopa-pn-uid"] = uid;
-      }
-      
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+export const apiClient = setupInterceptors(apiClientInstance);
+

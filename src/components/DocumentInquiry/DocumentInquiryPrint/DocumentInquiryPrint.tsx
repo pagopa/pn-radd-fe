@@ -1,10 +1,12 @@
 import { Grid, Paper, Box, Button, Alert } from '@mui/material';
 import { useState } from 'react';
+import { unstable_useBlocker as useBlocker } from 'react-router';
 import TitleBox from '../../Title/TitleBox';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { urlListSelector } from '../../../redux/document-inquiry/slice';
-import { completeTransaction } from '../../../redux/document-inquiry/actions';
+import { abortTransaction, completeTransaction } from '../../../redux/document-inquiry/actions';
 import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
+import ConfirmNavigation from '../../ConfirmNavigation/ConfirmNavigation';
 import AttachmentDownloader from './AttachmentDownloader';
 
 type Props = {
@@ -17,6 +19,7 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
   const [completedDownload, setCompletedDownload] = useState<Array<string>>([]);
   const dispatch = useAppDispatch();
   const attachments = useAppSelector(urlListSelector);
+  const blocker = useBlocker(true);
 
   const handleSubmit = () => {
     dispatch(completeTransaction({ inquiryType }))
@@ -31,6 +34,10 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
 
   const handleDownload = (url: string) => {
     setCompletedDownload([...completedDownload, url]);
+  };
+
+  const handleAbortTransaction = () => {
+    void dispatch(abortTransaction({ inquiryType }));
   };
 
   const canComplete = completedDownload.length === attachments.length;
@@ -70,6 +77,12 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
               Ho finito
             </Button>
           </Grid>
+
+          <ConfirmNavigation
+            blocker={blocker}
+            onConfirm={handleAbortTransaction}
+            message="Sei sicuro di voler uscire prima di aver stampato tutti i documenti?"
+          />
         </Box>
       </Paper>
     </Grid>

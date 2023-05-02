@@ -19,7 +19,7 @@ const DocumentInquiryAor = () => {
     setActiveStep((currentStep) => currentStep + 1);
   };
 
-  const steps = ['Dati del destinatario', 'Caricamento documenti', 'Allegati e attestazioni'];
+  const steps = ['Dati del destinatario', 'Caricamento documenti', 'Avvisi di avvenuta ricezione'];
 
   useEffect(
     () => () => {
@@ -36,7 +36,7 @@ const DocumentInquiryAor = () => {
     <>
       <Box py={3}>
         <Breadcrumb
-          currentLocationLabel="Avvisi avvenuta ricezione"
+          currentLocationLabel="Avvisi di avvenuta ricezione"
           linkLabel={<Fragment>Homepage</Fragment>}
           linkRoute={'/'}
         />
@@ -44,7 +44,7 @@ const DocumentInquiryAor = () => {
 
       <Stack spacing={2}>
         <Grid container item>
-          <TitleBox title={'Avvisi avvenuta ricezione'} variantTitle="h4" />
+          <TitleBox title={'Avvisi di avvenuta ricezione'} variantTitle="h4" />
         </Grid>
 
         <Grid container item>
