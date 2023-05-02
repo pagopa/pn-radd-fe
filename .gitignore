@@ -25,6 +25,8 @@ dist-ssr
 
 # testing
 /coverage
+test-report.xml
 
 #Env
 .env.local
+
