@@ -1,12 +1,13 @@
 import { rest } from 'msw';
-import { AUTH_API_BASE_URL, MOCK_API, API_BASE_URL } from '../utils/const';
+import { MOCK_API, MOCK_AUTH_API, API_BASE_URL } from '../utils/const';
 import { ActInquiryResponse } from '../api/types';
 import data from './data';
 
 const basePath = MOCK_API ? API_BASE_URL : '';
+const baseAuthPath = MOCK_AUTH_API ? API_BASE_URL : '';
 
 export const handlers = [
-  rest.post(`${AUTH_API_BASE_URL}/token-exchange`, async (req, res, ctx) => {
+  rest.post(`${baseAuthPath}/token-exchange`, async (req, res, ctx) => {
     const body = await req.json();
     if (body.authorizationToken === 'token-ko') {
       return res(ctx.delay(1500), ctx.status(401));
@@ -35,7 +36,7 @@ export const handlers = [
     const response = data.UPLOAD.UPLOAD_OK;
     return res(ctx.delay(1200), ctx.json(response));
   }),
-  rest.put(`${basePath}/upload-s3`, (req, res, ctx) => {
+  rest.put(`${API_BASE_URL}/upload-s3`, (req, res, ctx) => {
     const response = data.UPLOAD.S3_OK;
     return res(ctx.delay(1200), ctx.json(response));
   }),

@@ -11,6 +11,7 @@ import {
 import { S3UploadRequest } from '../../api/types';
 import { ActDocumentInquiryApi, AorDocumentInquiryApi, TransactionApi, UploadApi } from '../../api';
 import { setLoadingStatus } from '../app/slice';
+import { getWorkflowInfo } from '../../test-workflow';
 import { DocumentInquiryFile, DocumentInquiryForm, DocumentInquiryType } from './types';
 import { setInquiryFileData, setInquiryFormData, setTransactionData } from './slice';
 
@@ -80,31 +81,32 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
     const state = getState();
     const { checksum, bundleId, zip, inquiryType } = params;
     try {
-      const contentType = 'application/gzip';
+      const contentType = 'application/zip';
 
+      const workflowChecksum = getWorkflowInfo(state.documentInquiry.formData.recipientTaxId, "checksum", checksum);
       const { url, secret, fileKey } = await raddDocumentUpload({
         contentType,
-        checksum,
+        checksum: workflowChecksum,
         bundleId,
       });
 
       await s3Upload({ url: url ?? "", file: zip, secret });
 
-      const fileData: DocumentInquiryFile = { checksum, fileKey };
+      const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey };
 
       dispatch(setInquiryFileData(fileData));
 
       const { delegateTaxId, recipientTaxId, recipientType, qrCode } =
         state.documentInquiry.formData;
 
-      const operationId = uuidv4();
+      const operationId = getWorkflowInfo(recipientTaxId, "operationId", uuidv4());
       const operationDate = new Date().toISOString();
 
       const res = await TransactionApi.startTransaction(
         {
           operationId,
           operationDate,
-          checksum,
+          checksum: workflowChecksum,
           fileKey,
           recipientType,
           delegateTaxId,

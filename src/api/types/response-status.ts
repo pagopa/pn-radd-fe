@@ -23,13 +23,13 @@ export interface ResponseStatus {
    * @type {number}
    * @memberof ResponseStatus
    */
-  code?: ResponseStatusCodeEnum;
+  code: ResponseStatusCodeEnum;
   /**
    *
    * @type {string}
    * @memberof ResponseStatus
    */
-  message?: string;
+  message: string;
 }
 
 export const ResponseStatusCodeEnum = {
