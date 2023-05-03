@@ -14,7 +14,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { StartTransactionResponseStatus } from './start-transaction-response-status';
+import { ResponseStatus } from './response-status';
 
 /**
  * Response alla richiesta di avvio della transazione
@@ -30,8 +30,8 @@ export interface StartTransactionResponse {
   urlList?: Array<string>;
   /**
    *
-   * @type {StartTransactionResponseStatus}
+   * @type {ResponseStatus}
    * @memberof StartTransactionResponse
    */
-  status?: StartTransactionResponseStatus;
+  status: ResponseStatus;
 }

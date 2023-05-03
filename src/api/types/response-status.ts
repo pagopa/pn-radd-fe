@@ -30,6 +30,12 @@ export interface ResponseStatus {
    * @memberof ResponseStatus
    */
   message: string;
+  /**
+   * Tempo, espresso in ms comunicato  al chiamante, trascorso il quale è possibile effettuare un nuovo tentativo di avvio della transazione.
+   * @type {number}
+   * @memberof ResponseStatus
+   */
+  retryAfter?: number;
 }
 
 export const ResponseStatusCodeEnum = {

@@ -92,6 +92,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
 
   const form = useFormik<FormType>({
     initialValues: {
+      iun: '',
       recipientTaxId: '',
       delegateTaxId: '',
       recipientType: RecipientType.PERSONA_FISICA,

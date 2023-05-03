@@ -55,7 +55,7 @@ const ConfirmNavigation = ({
     );
   }
 
-  return <React.Fragment />;
+  return <p style={{ color: 'green' }}>Blocker is currently unblocked</p>;
 };
 
 export default ConfirmNavigation;

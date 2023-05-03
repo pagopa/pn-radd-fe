@@ -33,5 +33,5 @@ export interface ActInquiryResponse {
    * @type {ResponseStatus}
    * @memberof ActInquiryResponse
    */
-  status?: ResponseStatus;
+  status: ResponseStatus;
 }
