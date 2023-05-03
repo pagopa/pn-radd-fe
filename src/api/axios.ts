@@ -1,9 +1,8 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { API_BASE_URL, DEV } from '../utils/const';
 import store from '../redux/store';
+import { isApiError } from '../utils/api.utils';
 import { ApiException } from './exception/ApiException';
-
-const isApiError = (response: AxiosResponse<any, any>) =>  response.data?.status?.code !== undefined && response.data?.status?.code !== 0 && response.data?.status?.code !== 2;
 
 const onRequest = (config: InternalAxiosRequestConfig) => {
   const { uid, sessionToken } = store.getState().user.user;
@@ -22,8 +21,10 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 };
 
 const onResponse = (response: AxiosResponse<any, any>) => {
-  if(isApiError(response)) {
-    throw new ApiException({ code: response.data.status.code, message: response.data.status.message });
+  const { data } = response;
+  if(data && isApiError(data)) {
+    const { code, message } = data;
+    throw new ApiException({ code, message });
   }
 
   return response;

@@ -45,5 +45,5 @@ export interface DocumentUploadResponse {
    * @type {ResponseStatus}
    * @memberof DocumentUploadResponse
    */
-  status?: ResponseStatus;
+  status: ResponseStatus;
 }

@@ -33,5 +33,5 @@ export interface AORInquiryResponse {
    * @type {ResponseStatus}
    * @memberof AORInquiryResponse
    */
-  status?: ResponseStatus;
+  status: ResponseStatus;
 }

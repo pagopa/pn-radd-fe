@@ -14,7 +14,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TransactionResponseStatus } from './transaction-response-status';
+import { ResponseStatus } from './response-status';
 
 /**
  * Response alla richiesta di chiusura della transazione
@@ -24,8 +24,8 @@ import { TransactionResponseStatus } from './transaction-response-status';
 export interface CompleteTransactionResponse {
   /**
    *
-   * @type {TransactionResponseStatus}
+   * @type {ResponseStatus}
    * @memberof CompleteTransactionResponse
    */
-  status?: TransactionResponseStatus;
+  status: ResponseStatus;
 }
