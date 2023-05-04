@@ -23,7 +23,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 const onResponse = (response: AxiosResponse<any, any>) => {
   const { data } = response;
   if(data && isApiError(data)) {
-    const { code, message } = data;
+    const { code, message } = data.status;
     throw new ApiException({ code, message });
   }
 

@@ -201,7 +201,7 @@ function FileUpload({
   };
 
   const uploadFileHandler = (e: any) => {
-    void uploadFile((e.target as any).files);
+    void uploadFile((e.target as any).files[0]);
   };
 
   const chooseFileHandler = () => {
@@ -244,7 +244,7 @@ function FileUpload({
             type="file"
             sx={{ display: 'none' }}
             inputRef={uploadInputRef}
-            inputProps={{ accept, multiple: true }}
+            inputProps={{ accept }}
             onChange={uploadFileHandler}
             data-testid="fileInput"
           />
