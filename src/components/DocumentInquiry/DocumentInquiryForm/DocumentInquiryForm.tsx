@@ -209,7 +209,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                     color="primary"
                     variant="contained"
                     type="submit"
-                    disabled={!form.isValid}
+                    disabled={!form.dirty || !form.isValid || form.isSubmitting}
                   >
                     Continua
                   </Button>
