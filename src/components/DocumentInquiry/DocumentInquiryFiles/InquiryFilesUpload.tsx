@@ -35,7 +35,9 @@ const InquiryFilesUpload = ({ files, isDelegatePresent, onNext, onUpload, onRemo
 
     const fileTypes = Object.keys(files) as Array<DocumentType>;
     fileTypes.forEach((fileType) => {
-      zip.file(files[fileType]!.name, files[fileType]!);
+      if (files[fileType]) {
+        zip.file(files[fileType]!.name, files[fileType]!);
+      }
     });
 
     zip

@@ -4,10 +4,11 @@ import { Box } from '@mui/system';
 
 type Props = {
   src: string;
+  alt: string;
   onClose: () => void;
 };
 
-const ImageVisualizer = ({ src, onClose }: Props): React.ReactElement => (
+const ImageVisualizer = ({ src, alt, onClose }: Props): React.ReactElement => (
   <Modal
     open={true}
     onClose={onClose}
@@ -24,7 +25,7 @@ const ImageVisualizer = ({ src, onClose }: Props): React.ReactElement => (
           </Box>
           <Grid container justifyContent={'center'}>
             <Grid item>
-              <img src={src} width="100%" height="100%" />
+              <img src={src} alt={alt} width="100%" height="100%" />
             </Grid>
           </Grid>
         </Box>
