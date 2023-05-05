@@ -2,6 +2,8 @@ import { Grid, Paper, Box } from '@mui/material';
 import { useReducer } from 'react';
 import TitleBox from '../../Title/TitleBox';
 import { DocumentInquiryType } from '../../../redux/document-inquiry/types';
+import { useAppSelector } from '../../../redux/hooks';
+import { isDelegatePresentSelector } from '../../../redux/document-inquiry/slice';
 import InquiryFilesUpload from './InquiryFilesUpload';
 import InquiryFilesWaitTransaction from './InquiryFilesWaitTransaction';
 import {
@@ -39,6 +41,7 @@ const initialState: InquiryFilesState = {
 
 const DocumentInquiryFiles = ({ title, inquiryType, onConfirm }: Props) => {
   const [data, dispatch] = useReducer(inquiryFilesReducer, initialState);
+  const isDelegatePresent = useAppSelector(isDelegatePresentSelector);
 
   const goToWaitingPhase = (payload: WaitingPhasePayload) => {
     dispatch(waitingPhaseAction(payload));
@@ -68,6 +71,7 @@ const DocumentInquiryFiles = ({ title, inquiryType, onConfirm }: Props) => {
               onUpload={handleUpload}
               onRemove={handleRemove}
               files={data.files}
+              isDelegatePresent={isDelegatePresent}
             />
           )}
           {data.phase === Phases.WAITING_PHASE && (

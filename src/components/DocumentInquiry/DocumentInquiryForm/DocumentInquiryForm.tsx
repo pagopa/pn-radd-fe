@@ -41,23 +41,24 @@ enum RecipientType {
   PERSONA_GIURIDICA = 'PG',
 }
 
-const actInquiryValidationSchema = yup.object().shape({
-  iun: yup.string().required(defaultRequiredMessage('IUN')),
-  recipientTaxId: yup
-    .string()
-    .required(defaultRequiredMessage('Codice fiscale'))
-    .matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
-  delegateTaxId: yup.string().matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
-  recipientType: yup.string().required(defaultRequiredMessage('Tipologia destinatario')),
-});
-
 const aorInquiryValidationSchema = yup.object().shape({
   recipientTaxId: yup
     .string()
     .required(defaultRequiredMessage('Codice fiscale'))
-    .matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+    .when('recipientType', {
+      is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
+      then: (schema) =>
+        schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
+      otherwise: (schema) =>
+        schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+    }),
   delegateTaxId: yup.string().matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
   recipientType: yup.string().required(defaultRequiredMessage('Tipologia destinatario')),
+});
+
+const actInquiryValidationSchema = yup.object().shape({
+  iun: yup.string().required(defaultRequiredMessage('IUN')),
+  ...aorInquiryValidationSchema.fields,
 });
 
 const InfoIconWithTooltip = ({ title }: { title: string }) => (
@@ -87,6 +88,9 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        form.setSubmitting(false);
       });
   };
 
@@ -156,13 +160,13 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                       onChange={form.handleChange}
                     >
                       <FormControlLabel
-                        value={RecipientType.PERSONA_FISICA}
+                        value={'PF'}
                         control={<Radio />}
                         label={'Persona fisica'}
                         data-testid="recipientTypePf"
                       />
                       <FormControlLabel
-                        value={RecipientType.PERSONA_GIURIDICA}
+                        value={'PG'}
                         control={<Radio />}
                         label={'Persona giuridica'}
                         data-testid="recipientTypePf"
@@ -202,7 +206,6 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                 </Grid>
                 <Grid item xs={6}></Grid>
               </Grid>
-
               <Grid container direction={'row-reverse'} mt={3}>
                 <Grid item>
                   <Button
