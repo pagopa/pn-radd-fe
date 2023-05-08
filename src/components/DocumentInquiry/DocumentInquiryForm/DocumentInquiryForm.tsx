@@ -13,6 +13,7 @@ import {
   Typography,
   InputAdornment,
   Tooltip,
+  InputLabel,
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -120,7 +121,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
             <form onSubmit={form.handleSubmit}>
               <Grid container rowSpacing={2}>
                 {inquiryType === DocumentInquiryType.ACT && (
-                  <>
+                  <Grid container item>
                     <Grid item xs={6}>
                       <TextField
                         id="iun"
@@ -142,70 +143,86 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={6}></Grid>
-                  </>
+                  </Grid>
                 )}
-                <Grid item xs={6}>
-                  <FormControl margin="normal" fullWidth>
-                    <FormLabel id="recipient-type-label">
-                      <Typography fontWeight={600} fontSize={16}>
-                        Soggetto giuridico*
-                      </Typography>
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="recipient-type-label"
-                      name="recipientType"
-                      row
-                      value={form.values.recipientType}
+
+                <Grid container item>
+                  <Grid item xs={6}>
+                    <FormControl margin="normal" fullWidth>
+                      <FormLabel id="recipient-type-label">
+                        <Typography fontWeight={600} fontSize={16}>
+                          Soggetto giuridico*
+                        </Typography>
+                      </FormLabel>
+                      <RadioGroup
+                        aria-labelledby="recipient-type-label"
+                        name="recipientType"
+                        row
+                        value={form.values.recipientType}
+                        onChange={form.handleChange}
+                      >
+                        <FormControlLabel
+                          value={'PF'}
+                          control={<Radio />}
+                          label={'Persona fisica'}
+                          data-testid="recipientTypePf"
+                        />
+                        <FormControlLabel
+                          value={'PG'}
+                          control={<Radio />}
+                          label={'Persona giuridica'}
+                          data-testid="recipientTypePf"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+
+                <Grid container item>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="recipientTaxId"
+                      name="recipientTaxId"
+                      label={recipientTaxIdLabel}
+                      variant="outlined"
+                      value={form.values.recipientTaxId}
                       onChange={form.handleChange}
-                    >
-                      <FormControlLabel
-                        value={'PF'}
-                        control={<Radio />}
-                        label={'Persona fisica'}
-                        data-testid="recipientTypePf"
-                      />
-                      <FormControlLabel
-                        value={'PG'}
-                        control={<Radio />}
-                        label={'Persona giuridica'}
-                        data-testid="recipientTypePf"
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                      onBlur={form.handleBlur}
+                      error={form.touched.recipientTaxId && Boolean(form.errors.recipientTaxId)}
+                      helperText={form.touched.recipientTaxId && form.errors.recipientTaxId}
+                      fullWidth
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}></Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="recipientTaxId"
-                    name="recipientTaxId"
-                    label={recipientTaxIdLabel}
-                    variant="outlined"
-                    value={form.values.recipientTaxId}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    error={form.touched.recipientTaxId && Boolean(form.errors.recipientTaxId)}
-                    helperText={form.touched.recipientTaxId && form.errors.recipientTaxId}
-                    fullWidth
-                  />
+
+                <Grid container item>
+                  <Grid item xs={12}>
+                    <Typography fontWeight={600} variant="body1">
+                      Delegato
+                    </Typography>
+                    <Typography>
+                      Se la richiesta è fatta da un delegato, inserisci anche il suo Codice Fiscale.
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}></Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="delegateTaxId"
-                    name="delegateTaxId"
-                    label="Codice Fiscale delegato"
-                    variant="outlined"
-                    value={form.values.delegateTaxId}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    error={form.touched.delegateTaxId && Boolean(form.errors.delegateTaxId)}
-                    helperText={form.touched.delegateTaxId && form.errors.delegateTaxId}
-                    fullWidth
-                  />
+                <Grid container item>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="delegateTaxId"
+                      name="delegateTaxId"
+                      label="Codice Fiscale delegato"
+                      variant="outlined"
+                      value={form.values.delegateTaxId}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      error={form.touched.delegateTaxId && Boolean(form.errors.delegateTaxId)}
+                      helperText={form.touched.delegateTaxId && form.errors.delegateTaxId}
+                      fullWidth
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}></Grid>
               </Grid>
+
               <Grid container direction={'row-reverse'} mt={3}>
                 <Grid item>
                   <Button
