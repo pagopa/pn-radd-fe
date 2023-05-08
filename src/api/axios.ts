@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { API_BASE_URL, DEV } from '../utils/const';
-import store from '../redux/store';
+import { store } from '../redux/store';
 import { isApiError } from '../utils/api.utils';
 import { ApiException } from './exception/ApiException';
 

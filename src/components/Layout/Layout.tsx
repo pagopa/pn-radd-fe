@@ -33,7 +33,15 @@ const Layout = ({ showSideMenu = false }: Props) => {
         direction="column"
         sx={{ minHeight: '100vh' }} // 100vh per sticky footer
       >
-        <Header loggedUser={JWTUser} />
+        <Header
+          loggedUser={JWTUser}
+          onExitAction={() => {
+            console.log('User logout');
+          }}
+          onAssistanceClick={() => {
+            console.log('Clicked/Tapped on Assistance');
+          }}
+        />
 
         <Stack direction={{ lg: 'row' }} sx={{ flexGrow: 1 }}>
           {showSideMenu && (

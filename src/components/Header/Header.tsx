@@ -13,21 +13,22 @@ const pagoPAHeaderLink: RootLinkType = {
 
 type Props = {
   loggedUser: JwtUser;
+  /** Actions linked to user dropdown */
+  onAssistanceClick?: () => void;
+  /** Logout/exit action to apply */
+  onExitAction?: () => void;
 };
 
-const Header = ({ loggedUser }: Props) => (
+const Header = ({
+  loggedUser,
+  onExitAction = () => window.location.assign(''),
+  onAssistanceClick = () => {},
+}: Props) => (
   <HeaderAccount
     rootLink={pagoPAHeaderLink}
     loggedUser={loggedUser}
-    onAssistanceClick={() => {
-      console.log('Clicked/Tapped on Assistance');
-    }}
-    onLogin={() => {
-      console.log('User login');
-    }}
-    onLogout={() => {
-      console.log('User logout');
-    }}
+    onAssistanceClick={onAssistanceClick}
+    onLogout={onExitAction}
   />
 );
 

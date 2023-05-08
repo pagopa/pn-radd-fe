@@ -287,8 +287,8 @@ function FileUpload({
                 {(data.file.size / 1024).toFixed(2)}&nbsp;KB
               </Typography>
             </Box>
-            <IconButton onClick={removeFileHandler}>
-              <CloseIcon />
+            <IconButton onClick={removeFileHandler} data-testid={'remove-button'}>
+              <CloseIcon aria-label="remove file icon" />
             </IconButton>
           </Box>
         </Fragment>
