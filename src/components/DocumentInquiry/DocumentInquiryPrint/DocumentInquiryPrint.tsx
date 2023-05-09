@@ -61,7 +61,9 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
 
           <Grid container mt={2} mb={2}>
             <Grid item xs={12}>
-              <Alert severity="info">Assicurati di scaricare tutti i documenti.</Alert>
+              <Alert severity="info">
+                Prima di premere “Ho finito”, assicurati di avere scaricato tutti i documenti.
+              </Alert>
             </Grid>
           </Grid>
 

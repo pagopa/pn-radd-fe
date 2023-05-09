@@ -15,7 +15,7 @@ const USER: User = {
   uid: 'a6c1350d-1d69-4209-8bf8-31de58c79d6e',
   level: 'L2',
   iat: 1682079641,
-  exp: Math.floor(Date.now() / 1000) + 60 * 20, // 20 minutes
+  exp: Math.floor(Date.now() / 1000) + 60 * 30, // 30 minutes
   aud: 'portale.svil.pn.pagopa.it',
   iss: 'https://hub-login.spid.svil.pn.pagopa.it',
   jti: '_b4d10956e34cc4ffc812',

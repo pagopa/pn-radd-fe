@@ -9,10 +9,10 @@ export const getErrorMessageByApiStatus = (status: number) => {
     case 403:
       return 'Non sei in possesso delle autorizzazioni necessarie';
     case 404:
-      return 'Risorsa non trovata. Si prega di riprovare più tardi';
+      return 'Risorsa non trovata';
     case 500:
     default:
-      return 'Problemi con il servizio. Si prega di riprovare';
+      return 'Si è verificato un problema. Riprova tra qualche minuto';
   }
 };
 

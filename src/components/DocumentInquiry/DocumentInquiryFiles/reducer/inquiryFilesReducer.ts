@@ -51,7 +51,7 @@ export const inquiryFilesReducer = (state: InquiryFilesState, action: ActionsTyp
   switch (type) {
     case 'FILE_UPLOAD': {
       const { file, type } = payload;
-      return { ...state, files: { [type]: file } };
+      return { ...state, files: { ...state.files, [type]: file } };
     }
     case 'FILE_REMOVE':
       return { ...state, files: { [payload]: undefined } };

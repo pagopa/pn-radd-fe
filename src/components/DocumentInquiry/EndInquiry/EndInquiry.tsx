@@ -13,12 +13,12 @@ const EndInquiry = () => {
     <Box sx={{ minHeight: '300px', height: '100%', display: 'flex' }}>
       <Box sx={{ margin: 'auto', textAlign: 'center' }}>
         <IllusCompleted />
-        <Typography variant="body1" color="text.primary" sx={{ margin: '20px 0 10px 0' }}>
+        <Typography variant="h4" color="text.primary" sx={{ margin: '20px 0 10px 0' }}>
           Grazie!
         </Typography>
         <Typography variant="body2" color="text.primary">
           Puoi vedere le informazioni relative a questa ricerca nello{' '}
-          <Link href="/tbd">storico delle ricerche</Link>
+          <Link href="/tbd">storico delle ricerche.</Link>
         </Typography>
         <Button variant="contained" sx={{ marginTop: '30px' }} onClick={handleNavigateToHome}>
           Chiudi
