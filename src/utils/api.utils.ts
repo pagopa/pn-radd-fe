@@ -23,3 +23,6 @@ export const isApiError = (response: ApiResponse) =>  {
   // if the status code is not 0 and there is no retryAfter property, it means that the request failed
   return status && status.code !== 0 && !status.retryAfter;
 };
+
+
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

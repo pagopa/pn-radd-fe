@@ -17,6 +17,7 @@ const initialState: DocumentInquiryRequest = {
   fileData: {
     checksum: '',
     fileKey: '',
+    versionToken: '',
   },
   transactionData: {
     operationId: '',

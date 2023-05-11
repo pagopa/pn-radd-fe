@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createAppAsyncThunk } from '../thunk';
+import { sleep } from '../../utils/api.utils';
 import {
   AORInquiryResponse,
   AbortTransactionResponse,
@@ -90,9 +91,11 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
         bundleId,
       });
 
-      await s3Upload({ url: url ?? "", file: zip, secret });
+      const versionToken = await s3Upload({ url: url ?? "", file: zip, secret, sha256: workflowChecksum });
 
-      const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey };
+      await sleep(2000);
+
+      const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey, versionToken };
 
       dispatch(setInquiryFileData(fileData));
 
@@ -112,7 +115,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
           delegateTaxId,
           recipientTaxId,
           qrCode: qrCode ?? "",
-          versionToken: '',
+          versionToken,
         },
         inquiryType
       );
@@ -130,8 +133,8 @@ const raddDocumentUpload = async ({ contentType, bundleId, checksum }: UploadFil
   await UploadApi.documentUpload({ contentType, checksum, bundleId });
 
 type S3UploadArgs = S3UploadRequest & { url: string };
-const s3Upload = async ({ url, file, secret }: S3UploadArgs) =>
-  await UploadApi.s3Upload(url, { secret, file });
+const s3Upload = async ({ url, file, secret, sha256 }: S3UploadArgs) =>
+  await UploadApi.s3Upload(url, { secret, file, sha256 });
 
 type TransactionArgs = {
   inquiryType: DocumentInquiryType;

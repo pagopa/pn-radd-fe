@@ -1,4 +1,4 @@
-import { apiClient } from '../axios';
+import { apiClient, authClient } from '../axios';
 import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
 
 export const UploadApi = {
@@ -6,13 +6,15 @@ export const UploadApi = {
     apiClient
       .post(`/radd-web/documents/upload`, documentUploadRequest)
       .then((response) => response.data),
-  s3Upload: (presignedUrl: string, payload: S3UploadRequest) => {
-    const { file, secret } = payload;
+  s3Upload: (presignedUrl: string, payload: S3UploadRequest): Promise<string> => {
+    const { file, secret, sha256 } = payload;
     const config = {
       headers: {
-        secret,
+        "content-type": "application/zip",
+        "x-amz-meta-secret": secret,
+        "x-amz-checksum-sha256": sha256
       },
     };
-    return apiClient.put(presignedUrl, file, config).then((response) => response.data);
+    return authClient.put(presignedUrl, file, config).then((response) => response.headers["x-amz-version-id"]);
   },
 };
