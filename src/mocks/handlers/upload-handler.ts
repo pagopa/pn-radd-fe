@@ -12,7 +12,7 @@ export const enabledHandler = [
 const s3Handler = [
   rest.put(`${API_BASE_URL}/upload-s3`, (req, res, ctx) => {
     const response = data.UPLOAD.S3_OK;
-    return res(ctx.delay(1200), ctx.json(response));
+    return res(ctx.delay(1200), ctx.json(response), ctx.set('x-amz-version-id', 'test'));
   })
 ];
 
