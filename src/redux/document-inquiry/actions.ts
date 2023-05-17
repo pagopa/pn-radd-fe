@@ -93,7 +93,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
 
       const versionToken = await s3Upload({ url: url ?? "", file: zip, secret, sha256: workflowChecksum });
 
-      await sleep(2000);
+      await sleep(9000);
 
       const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey, versionToken };
 
@@ -161,7 +161,7 @@ export const startTransaction = createAppAsyncThunk<StartTransactionResponse, Tr
           recipientType,
           delegateTaxId,
           recipientTaxId,
-          qrCode: qrCode!,
+          qrCode,
           versionToken: '',
         },
         inquiryType
