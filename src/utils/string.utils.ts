@@ -1,4 +1,5 @@
 export const dataRegex = {
+  iun: /[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[\d]{6}-[A-Z]{1}-[\d]{1}/,
   phoneNumber: /^3\d{2}[. ]??\d{6,7}$/g,
   name: /^[A-Za-zÀ-ÿ-'" 0-9.]+$/,
   lettersAndNumbers: /^[A-Za-z0-9]+$/,

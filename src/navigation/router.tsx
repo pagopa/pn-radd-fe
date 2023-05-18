@@ -2,7 +2,8 @@ import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import NotFound from '../pages/NotFound.page';
 import LoadingPage from '../components/LoadingPage/LoadingPage';
-import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from './routes.const';
+import SearchInquiry from '../pages/SearchInquiry.page';
+import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR, SEARCH_INQUIRY } from './routes.const';
 import { SessionGuard } from './SessionGuard';
 import RouteGuard from './RouteGuard';
 
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
       {
         path: DOCUMENT_INQUIRY_AOR,
         element: <DocumentInquiryAor />,
+      },
+      {
+        path: SEARCH_INQUIRY,
+        element: <SearchInquiry />,
       },
     ]),
   ]),
