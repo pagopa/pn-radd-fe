@@ -9,33 +9,18 @@ import {
   RadioGroup,
   Typography,
   TextField,
-  TextFieldProps,
+  Button,
 } from '@mui/material';
 import currentLocale from 'date-fns/locale/it';
-// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { LocalizationProvider } from '@mui/lab';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DATE_FORMAT, today } from '../../utils/date.utils';
 import CustomDatePicker, { DatePickerTypes } from '../CustomDatePicker/CustomDatePicker';
 import { defaultRequiredMessage, dataRegex } from '../../utils/string.utils';
-
-type FormType = {
-  iun?: string;
-  operationId: string;
-  taxId: string;
-  searchType: SearchType;
-  from: string;
-  to: string;
-};
-
-enum SearchType {
-  IUN = 'IUN',
-  OPERATION_ID = 'OPERATION_ID',
-  TAX_ID = 'TAX_ID',
-}
+import { DocumentInquiryType } from '../../redux/document-inquiry/types';
+import { SearchType, InquirySearchForm } from '../../redux/inquiry-history/types';
 
 const formValidationSchema = yup.object().shape({
   iun: yup.string().when('searchType', {
@@ -46,8 +31,8 @@ const formValidationSchema = yup.object().shape({
     is: (searchType: SearchType) => searchType === SearchType.TAX_ID,
     then: (schema) =>
       schema
-        .required(defaultRequiredMessage('Id Operazione'))
-        .matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+        .required(defaultRequiredMessage('Codice Fiscale'))
+        .matches(RegExp(dataRegex.fiscalCode), 'Codice Fiscale invalido'),
   }),
   operationId: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.OPERATION_ID,
@@ -56,23 +41,30 @@ const formValidationSchema = yup.object().shape({
 });
 
 const SearchInquiryForm = () => {
-  const handleSubmit = (values: FormType) => {};
+  const handleSubmit = (values: InquirySearchForm) => {};
 
-  const form = useFormik<FormType>({
+  const form = useFormik<InquirySearchForm>({
     initialValues: {
+      inquiryType: DocumentInquiryType.ACT,
       iun: '',
       operationId: '',
       taxId: '',
       searchType: SearchType.IUN,
-      from: '',
-      to: '',
+      from: null,
+      to: null,
     },
     validationSchema: formValidationSchema,
     onSubmit: handleSubmit,
   });
 
   const handleSearchTypeChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    void form.setFieldValue('searchType', event.target.value as SearchType);
+    form.resetForm({
+      values: {
+        ...form.values,
+        inquiryType: form.values.inquiryType,
+        [event.target.name]: event.target.value,
+      },
+    });
   };
   return (
     <Grid item xs={12}>
@@ -80,9 +72,41 @@ const SearchInquiryForm = () => {
         <Box p={2}>
           <form onSubmit={form.handleSubmit}>
             <Grid container rowSpacing={2}>
-              <Grid container item justifyContent={'center'}>
+              <Grid container item>
                 <Grid item xs={10}>
-                  <FormControl margin="normal" fullWidth>
+                  <FormControl margin="none" fullWidth>
+                    <FormLabel id="search-type-label">
+                      <Typography fontWeight={600} fontSize={16}>
+                        Tipo richiesta:
+                      </Typography>
+                    </FormLabel>
+                    <RadioGroup
+                      aria-labelledby="inquiry-type-label"
+                      name="inquiryType"
+                      row
+                      value={form.values.inquiryType}
+                      onChange={form.handleChange}
+                    >
+                      <FormControlLabel
+                        value={DocumentInquiryType.ACT}
+                        control={<Radio />}
+                        label={'Documenti allegati e attestazioni opponibili a terzi'}
+                        data-testid="inquiryTypeAct"
+                      />
+                      <FormControlLabel
+                        value={DocumentInquiryType.AOR}
+                        control={<Radio />}
+                        label={'Avvisi di avvenuta ricezione'}
+                        data-testid="inquiryTypeAor"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid container item>
+                <Grid item xs={10}>
+                  <FormControl margin="none" fullWidth>
                     <FormLabel id="search-type-label">
                       <Typography fontWeight={600} fontSize={16}>
                         Ricerca per:
@@ -120,7 +144,7 @@ const SearchInquiryForm = () => {
 
               {form.values.searchType === SearchType.IUN && (
                 <Grid container item>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <TextField
                       id="iun"
                       name="iun"
@@ -139,7 +163,7 @@ const SearchInquiryForm = () => {
 
               {form.values.searchType === SearchType.OPERATION_ID && (
                 <Grid container item>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <TextField
                       id="operationId"
                       name="operationId"
@@ -157,7 +181,7 @@ const SearchInquiryForm = () => {
               )}
 
               {form.values.searchType === SearchType.TAX_ID && (
-                <Grid container item>
+                <Grid container item spacing={2}>
                   <Grid item xs={4}>
                     <TextField
                       id="taxId"
@@ -174,41 +198,77 @@ const SearchInquiryForm = () => {
                   </Grid>
                   <Grid item xs={4}>
                     <LocalizationProvider
-                      id="endDate"
-                      name="endDate"
                       dateAdapter={AdapterDateFns}
                       adapterLocale={currentLocale}
                     >
                       <CustomDatePicker
-                        label={'dal'}
-                        inputFormat={DATE_FORMAT}
+                        label={'Dal'}
+                        format={DATE_FORMAT}
                         value={form.values.from}
                         onChange={(value: DatePickerTypes) => {
                           form.setFieldValue('from', value || today).catch(() => 'error');
                         }}
-                        renderInput={(params: TextFieldProps) => (
-                          <TextField
-                            id="from"
-                            name="endDate"
-                            {...params}
-                            fullWidth
-                            size="small"
-                            aria-label={'Dal'}
-                            inputProps={{
-                              ...params.inputProps,
+                        slotProps={{
+                          textField: {
+                            name: 'from',
+                            id: 'from',
+                            fullWidth: true,
+                            inputProps: {
                               inputMode: 'text',
                               'aria-label': 'Dal',
                               type: 'text',
                               placeholder: 'gg/mm/aaaa',
-                            }}
-                          />
-                        )}
+                            },
+                          },
+                        }}
+                        disableFuture={true}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDateFns}
+                      adapterLocale={currentLocale}
+                    >
+                      <CustomDatePicker
+                        label={'Al'}
+                        format={DATE_FORMAT}
+                        value={form.values.to}
+                        onChange={(value: DatePickerTypes) => {
+                          form.setFieldValue('to', value || today).catch(() => 'error');
+                        }}
+                        slotProps={{
+                          textField: {
+                            name: 'to',
+                            id: 'to',
+                            fullWidth: true,
+                            inputProps: {
+                              inputMode: 'text',
+                              'aria-label': 'Al',
+                              type: 'text',
+                              placeholder: 'gg/mm/aaaa',
+                            },
+                          },
+                        }}
                         disableFuture={true}
                       />
                     </LocalizationProvider>
                   </Grid>
                 </Grid>
               )}
+            </Grid>
+
+            <Grid container direction={'row-reverse'} mt={3}>
+              <Grid item>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  disabled={!form.dirty || !form.isValid || form.isSubmitting}
+                >
+                  Cerca
+                </Button>
+              </Grid>
             </Grid>
           </form>
         </Box>

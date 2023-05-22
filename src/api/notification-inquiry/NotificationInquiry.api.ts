@@ -11,7 +11,7 @@ export const NotificationInquiryApi = {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient.get(`/radd-web/${domain}/operations/by-iun/${iun}`).then((res) => res.data);
   },
-  getTransactionByOperationId: (
+  getPracticesByOperationId: (
     operationId: string,
     inquiryType: DocumentInquiryType
   ): Promise<OperationResponse> => {
