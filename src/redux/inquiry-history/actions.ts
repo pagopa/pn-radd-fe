@@ -1,21 +1,36 @@
 import { NotificationInquiryApi } from '../../api';
-import { OperationResponse } from '../../api/types';
+import { FilterRequest, OperationsResponse } from '../../api/types';
 import { setLoadingStatus } from '../app/slice';
 import { DocumentInquiryType } from '../document-inquiry/types';
 import { createAppAsyncThunk } from '../thunk';
 import { InquirySearchForm } from './types';
 
-const searchByOperationId = async (id: string, inquiryType: DocumentInquiryType) => 
-    await NotificationInquiryApi.getPracticesByOperationId(id, inquiryType).then((res) => res);
+
+const searchByOperationId = async (id: string, inquiryType: DocumentInquiryType) => {
+    if(inquiryType === DocumentInquiryType.ACT) {
+        return await NotificationInquiryApi.getActTransactionByOperationId(id).then((res) => res);
+    } else if(inquiryType === DocumentInquiryType.AOR) {
+        return await NotificationInquiryApi.getAorTransactionByOperationId(id).then((res) => res);
+    }
+
+    throw new Error("Invalid Inquiry Type");
+};
+
+const searchByInternalId = async (internalId: string, inquiryType: DocumentInquiryType, filterRequest: FilterRequest) => {
+    if(inquiryType === DocumentInquiryType.ACT) {
+        return await NotificationInquiryApi.getActPracticesByInternalId(internalId, filterRequest).then((res) => res);
+    } else if(inquiryType === DocumentInquiryType.AOR) {
+        return await NotificationInquiryApi.getAorPracticesByInternalId(internalId, filterRequest).then((res) => res);
+    }
+    
+    throw new Error("Invalid Inquiry Type");
+};
 
 const searchByIun = async (iun: string, inquiryType: DocumentInquiryType) => 
     await NotificationInquiryApi.getPracticesByIun(iun, inquiryType).then((res) => res);
-
-const searchByInternalId = async (internalId: string, inquiryType: DocumentInquiryType, filterRequest: {from:string, to:string}) => 
-    await NotificationInquiryApi.getPracticesByInternalId(internalId, inquiryType, filterRequest).then((res) => res);
     
-export const startInquiry = createAppAsyncThunk<
-    OperationResponse,
+export const searchInquiry = createAppAsyncThunk<
+    OperationsResponse,
     InquirySearchForm
 >('startInquiry', async (params: InquirySearchForm, { rejectWithValue, dispatch }) => {
   try {

@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DocumentInquiryType } from "../document-inquiry/types";
 import { InquirySearchForm, SearchType } from "./types";
-import { OperationResponse } from "../../api/types";
+import { OperationsResponse } from "../../api/types";
 
 type InquiryHistoryState = {
     searchForm: InquirySearchForm;
-    resultSearch: OperationResponse;
+    resultSearch: OperationsResponse;
 }
 
 const initialState: InquiryHistoryState = {
@@ -19,7 +19,7 @@ const initialState: InquiryHistoryState = {
         to: null,
     },
     resultSearch: {
-        element: undefined,
+        operations: undefined,
         result: undefined,
         status: undefined,
     },

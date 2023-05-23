@@ -17,85 +17,85 @@
 /**
  * Dettagli della response Act
  * @export
- * @interface OperationActDetailResponse
+ * @interface OperationAorDetailResponse
  */
-export interface OperationActDetailResponse {
+export interface OperationAorDetailResponse {
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'operationStatus'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'operationType'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof OperationActDetailResponse
+     * @type {Array<string>}
+     * @memberof OperationAorDetailResponse
      */
-    'iun'?: string;
+    'iuns'?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'operationId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'fileKey'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'qrCode'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'recipientTaxId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'recipientType'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'delegateTaxId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'uid'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'operationStartDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'operationEndDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationAorDetailResponse
      */
     'errorReason'?: string;
 }

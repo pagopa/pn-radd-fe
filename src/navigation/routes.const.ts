@@ -2,4 +2,4 @@ export const HOMEPAGE = `/`;
 export const DOCUMENT_INQUIRY_ACT = `/richiesta/atti-opponibili-terzi`;
 export const DOCUMENT_INQUIRY_AOR = `/richiesta/avvisi-avvenuta-ricezione`;
 export const SEARCH_INQUIRY = `/storico-richieste`;
-export const FOUND_INQUIRIES = `/storico-richieste/risultato`;
+export const SEARCH_INQUIRY_RESULT = `/storico-richieste/risultato`;

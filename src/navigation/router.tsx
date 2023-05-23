@@ -2,8 +2,12 @@ import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import NotFound from '../pages/NotFound.page';
 import LoadingPage from '../components/LoadingPage/LoadingPage';
-import SearchInquiry from '../pages/SearchInquiry.page';
-import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR, SEARCH_INQUIRY } from './routes.const';
+import {
+  DOCUMENT_INQUIRY_ACT,
+  DOCUMENT_INQUIRY_AOR,
+  SEARCH_INQUIRY,
+  SEARCH_INQUIRY_RESULT,
+} from './routes.const';
 import { SessionGuard } from './SessionGuard';
 import RouteGuard from './RouteGuard';
 
@@ -11,6 +15,8 @@ const Layout = React.lazy(() => import('../components/Layout/Layout'));
 const Home = React.lazy(() => import('../pages/Home.page'));
 const DocumentInquiryAct = React.lazy(() => import('../pages/DocumentInquiryAct.page'));
 const DocumentInquiryAor = React.lazy(() => import('../pages/DocumentInquiryAor.page'));
+const SearchInquiry = React.lazy(() => import('../pages/SearchInquiry.page'));
+const SearchInquiryResult = React.lazy(() => import('../pages/SearchInquiry.page'));
 
 const protectedRoutes = (children: Array<RouteObject>) => ({
   element: <SessionGuard />,
@@ -66,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: SEARCH_INQUIRY,
         element: <SearchInquiry />,
+      },
+      {
+        path: SEARCH_INQUIRY_RESULT,
+        element: <SearchInquiryResult />,
       },
     ]),
   ]),

@@ -16,11 +16,15 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { useNavigate } from 'react-router-dom';
 import { DATE_FORMAT, today } from '../../utils/date.utils';
 import CustomDatePicker, { DatePickerTypes } from '../CustomDatePicker/CustomDatePicker';
 import { defaultRequiredMessage, dataRegex } from '../../utils/string.utils';
 import { DocumentInquiryType } from '../../redux/document-inquiry/types';
 import { SearchType, InquirySearchForm } from '../../redux/inquiry-history/types';
+import { useAppDispatch } from '../../redux/hooks';
+import { searchInquiry } from '../../redux/inquiry-history/actions';
+import { SEARCH_INQUIRY_RESULT } from '../../navigation/routes.const';
 
 const formValidationSchema = yup.object().shape({
   iun: yup.string().when('searchType', {
@@ -41,7 +45,18 @@ const formValidationSchema = yup.object().shape({
 });
 
 const SearchInquiryForm = () => {
-  const handleSubmit = (values: InquirySearchForm) => {};
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = (values: InquirySearchForm) => {
+    void dispatch(searchInquiry(values))
+      .unwrap()
+      .then((res) => {
+        if (res.result) {
+          navigate(SEARCH_INQUIRY_RESULT);
+        }
+      });
+  };
 
   const form = useFormik<InquirySearchForm>({
     initialValues: {
@@ -66,6 +81,7 @@ const SearchInquiryForm = () => {
       },
     });
   };
+
   return (
     <Grid item xs={12}>
       <Paper>
@@ -148,7 +164,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="iun"
                       name="iun"
-                      label={'IUN'}
+                      label={'IUN*'}
                       variant="outlined"
                       value={form.values.iun}
                       onChange={form.handleChange}
@@ -167,7 +183,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="operationId"
                       name="operationId"
-                      label={'Id Operazione'}
+                      label={'Id Operazione*'}
                       variant="outlined"
                       value={form.values.operationId}
                       onChange={form.handleChange}
@@ -186,7 +202,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="taxId"
                       name="taxId"
-                      label={'Codice Fiscale'}
+                      label={'Codice Fiscale*'}
                       variant="outlined"
                       value={form.values.taxId}
                       onChange={form.handleChange}

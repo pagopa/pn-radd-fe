@@ -57,10 +57,8 @@ const aorInquiryValidationSchema = yup.object().shape({
 });
 
 const actInquiryValidationSchema = yup.object().shape({
-  iun: yup
-    .string()
-    .required(defaultRequiredMessage('IUN'))
-    .matches(RegExp(dataRegex.iun), 'IUN invalido'),
+  iun: yup.string().required(defaultRequiredMessage('IUN')),
+  // .matches(RegExp(dataRegex.iun), 'IUN invalido'),
   ...aorInquiryValidationSchema.fields,
 });
 

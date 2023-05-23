@@ -15,87 +15,75 @@
 
 
 /**
- * Dettagli della response Act
+ * Dettagli pratiche recuperate
  * @export
- * @interface OperationActDetailResponse
+ * @interface OperationsDetailsResponse
  */
-export interface OperationActDetailResponse {
+export interface OperationsDetailsResponse {
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'operationStatus'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'operationType'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'iun'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'operationId'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'fileKey'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'qrCode'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
-     */
-    'recipientTaxId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'recipientType'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
-     */
-    'delegateTaxId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'uid'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'operationStartDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'operationEndDate'?: string;
     /**
      * 
      * @type {string}
-     * @memberof OperationActDetailResponse
+     * @memberof OperationsDetailsResponse
      */
     'errorReason'?: string;
 }
