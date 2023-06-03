@@ -54,7 +54,7 @@ export const inquiryFilesReducer = (state: InquiryFilesState, action: ActionsTyp
       return { ...state, files: { ...state.files, [type]: file } };
     }
     case 'FILE_REMOVE':
-      return { ...state, files: { [payload]: undefined } };
+      return { ...state, files: { ...state.files, [payload]: undefined } };
     case 'UPLOAD_PHASE':
       return { ...state, phase: Phases.UPLOAD_PHASE };
     case 'WAITING_PHASE': {

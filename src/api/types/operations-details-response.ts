@@ -37,7 +37,7 @@ export interface OperationsDetailsResponse {
      * @type {string}
      * @memberof OperationsDetailsResponse
      */
-    'iun'?: string;
+    'iuns'?: Array<string>;
     /**
      * 
      * @type {string}
@@ -61,7 +61,19 @@ export interface OperationsDetailsResponse {
      * @type {string}
      * @memberof OperationsDetailsResponse
      */
+    'recipientTaxId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OperationsDetailsResponse
+     */
     'recipientType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OperationsDetailsResponse
+     */
+    'delegateTaxId'?: string;
     /**
      * 
      * @type {string}

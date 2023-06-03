@@ -1,17 +1,20 @@
 import { Box, Stack, Grid } from '@mui/material';
-import { Fragment } from 'react';
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import TitleBox from '../components/Title/TitleBox';
 import SearchInquiryForm from '../components/SearchInquiryForm/SearchInquiryForm';
+import { HOMEPAGE } from '../navigation/routes.const';
+
+const breadcrumbsLinks = [
+  {
+    linkLabel: 'Homepage',
+    linkRoute: HOMEPAGE,
+  },
+];
 
 const SearchInquiry = () => (
   <>
     <Box py={3}>
-      <Breadcrumb
-        currentLocationLabel="Storico delle richieste"
-        linkLabel={<Fragment>Homepage</Fragment>}
-        linkRoute={'/'}
-      />
+      <Breadcrumb currentLocationLabel="Storico delle richieste" links={breadcrumbsLinks} />
     </Box>
 
     <Stack spacing={2}>

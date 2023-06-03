@@ -3,11 +3,13 @@ import { handler as transactionHandler } from './transaction-handler';
 import { handler as uploadHandler } from './upload-handler';
 import { handler as actDocumentHandler } from './act-document-inquiry-handler';
 import { handler as aorDocumentHandler } from './aor-document-inquiry-handler';
+import { handler as notificationInquiryHandler } from './notification-inquiry-handlers';
 
 export const handlers = [
   ...authHandler,
   ...transactionHandler,
   ...uploadHandler,
   ...actDocumentHandler,
-  ...aorDocumentHandler
+  ...aorDocumentHandler,
+  ...notificationInquiryHandler,
 ];

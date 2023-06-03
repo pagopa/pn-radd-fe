@@ -44,6 +44,16 @@ const formValidationSchema = yup.object().shape({
   }),
 });
 
+const initialValues = {
+  inquiryType: DocumentInquiryType.ACT,
+  iun: '',
+  operationId: '',
+  taxId: '',
+  searchType: SearchType.IUN,
+  from: null,
+  to: null,
+};
+
 const SearchInquiryForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -55,19 +65,14 @@ const SearchInquiryForm = () => {
         if (res.result) {
           navigate(SEARCH_INQUIRY_RESULT);
         }
+      })
+      .finally(() => {
+        form.setSubmitting(false);
       });
   };
 
   const form = useFormik<InquirySearchForm>({
-    initialValues: {
-      inquiryType: DocumentInquiryType.ACT,
-      iun: '',
-      operationId: '',
-      taxId: '',
-      searchType: SearchType.IUN,
-      from: null,
-      to: null,
-    },
+    initialValues,
     validationSchema: formValidationSchema,
     onSubmit: handleSubmit,
   });
@@ -75,9 +80,9 @@ const SearchInquiryForm = () => {
   const handleSearchTypeChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     form.resetForm({
       values: {
-        ...form.values,
+        ...initialValues,
         inquiryType: form.values.inquiryType,
-        [event.target.name]: event.target.value,
+        searchType: SearchType[event.target.value as keyof typeof SearchType],
       },
     });
   };
@@ -138,7 +143,7 @@ const SearchInquiryForm = () => {
                       <FormControlLabel
                         value={SearchType.IUN}
                         control={<Radio />}
-                        label={'IUN'}
+                        label={'Codice IUN'}
                         data-testid="recipientTypeIun"
                       />
                       <FormControlLabel
@@ -150,7 +155,7 @@ const SearchInquiryForm = () => {
                       <FormControlLabel
                         value={SearchType.TAX_ID}
                         control={<Radio />}
-                        label={'Codice Fiscale'}
+                        label={'Codice Fiscale destinatario'}
                         data-testid="recipientTypeTaxId"
                       />
                     </RadioGroup>
@@ -164,7 +169,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="iun"
                       name="iun"
-                      label={'IUN*'}
+                      label={'Codice IUN*'}
                       variant="outlined"
                       value={form.values.iun}
                       onChange={form.handleChange}
@@ -202,7 +207,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="taxId"
                       name="taxId"
-                      label={'Codice Fiscale*'}
+                      label={'Codice Fiscale destinatario*'}
                       variant="outlined"
                       value={form.values.taxId}
                       onChange={form.handleChange}

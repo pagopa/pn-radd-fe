@@ -35,13 +35,14 @@ export const searchInquiry = createAppAsyncThunk<
 >('startInquiry', async (params: InquirySearchForm, { rejectWithValue, dispatch }) => {
   try {
     dispatch(setLoadingStatus());
+    const { inquiryType, iun, operationId, taxId, from, to } = params;
     switch (params.searchType) {
         case 'IUN':
-            return await searchByIun(params.iun!, params.inquiryType);
+            return await searchByIun(iun, inquiryType);
         case 'OPERATION_ID':
-            return await searchByOperationId(params.operationId, params.inquiryType);
+            return await searchByOperationId(operationId, inquiryType);
         case 'TAX_ID':
-            return await searchByInternalId(params.taxId, params.inquiryType, {from: params.from!.toISOString(), to: params.to!.toISOString()});
+            return await searchByInternalId(taxId, inquiryType, {from: from ? from.toISOString() : undefined, to: to ? to.toISOString() : undefined});
         default:
             throw new Error('Invalid search type');
     }

@@ -7,7 +7,7 @@ export enum SearchType {
 };
 export type InquirySearchForm = {
     inquiryType: DocumentInquiryType;
-    iun?: string;
+    iun: string;
     operationId: string;
     taxId: string;
     searchType: SearchType;

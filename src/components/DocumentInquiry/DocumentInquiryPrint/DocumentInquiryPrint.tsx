@@ -16,27 +16,23 @@ type Props = {
 };
 
 const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
-  // const [isPendingTransaction, setIsPendingTransaction] = useState(true);
+  const [isPendingTransaction, setIsPendingTransaction] = useState(true);
   const [completedDownload, setCompletedDownload] = useState<Array<string>>([]);
   const dispatch = useAppDispatch();
   const attachments = useAppSelector(urlListSelector);
-  // const blocker = useBlocker(isPendingTransaction);
+  const blocker = useBlocker(isPendingTransaction);
 
-  // useEffect(() => {
-  //   // if (blocker.state === 'blocked' && !isPendingTransaction) {
-  //   //   blocker.reset();
-  //   // }
-  //   if (!isPendingTransaction) {
-  //     blocker?.proceed?.();
-  //     onConfirm();
-  //   }
-  // }, [isPendingTransaction, blocker]);
+  useEffect(() => {
+    if (!isPendingTransaction) {
+      onConfirm();
+    }
+  }, [isPendingTransaction, blocker]);
 
   const handleSubmit = () => {
     dispatch(completeTransaction({ inquiryType }))
       .unwrap()
       .then(() => {
-        onConfirm();
+        setIsPendingTransaction(false);
       })
       .catch((err) => {
         console.log(err);
@@ -47,9 +43,9 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
     setCompletedDownload([...completedDownload, url]);
   };
 
-  // const handleAbortTransaction = () => {
-  //   void dispatch(abortTransaction({ inquiryType }));
-  // };
+  const handleAbortTransaction = () => {
+    void dispatch(abortTransaction({ inquiryType }));
+  };
 
   const canComplete = completedDownload.length === attachments.length;
 
@@ -91,11 +87,11 @@ const DocumentInquiryPrint = ({ title, inquiryType, onConfirm }: Props) => {
             </Button>
           </Grid>
 
-          {/* <ConfirmNavigation
+          <ConfirmNavigation
             blocker={blocker}
             onConfirm={handleAbortTransaction}
             message="Sei sicuro di voler uscire prima di aver stampato tutti i documenti?"
-          /> */}
+          />
         </Box>
       </Paper>
     </Grid>

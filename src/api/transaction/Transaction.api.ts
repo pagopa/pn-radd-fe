@@ -10,6 +10,15 @@ import {
   CompleteTransactionResponse,
 } from '../types';
 
+export const START_TRANSACTION_PATH = `/radd-web/:domain/transaction/start`;
+export const GET_START_TRANSACTION_PATH = (domain: string) => START_TRANSACTION_PATH.replace(":domain", domain);
+
+export const COMPLETE_TRANSACTION_PATH = `/radd-web/:domain/transaction/complete`;
+export const GET_COMPLETE_TRANSACTION_PATH = (domain: string) => COMPLETE_TRANSACTION_PATH.replace(":domain", domain);
+
+export const ABORT_TRANSACTION_PATH = `/radd-web/:domain/transaction/abort`;
+export const GET_ABORT_TRANSACTION_PATH = (domain: string) => ABORT_TRANSACTION_PATH.replace(":domain", domain);
+
 export const TransactionApi = {
   startTransaction: (
     startTransactionRequest: StartTransactionRequest,
@@ -17,7 +26,7 @@ export const TransactionApi = {
   ): Promise<StartTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<StartTransactionResponse>(`/radd-web/${domain}/transaction/start`, startTransactionRequest)
+      .post<StartTransactionResponse>(GET_START_TRANSACTION_PATH(domain), startTransactionRequest)
       .then((response) => response.data);
   },
   completeTransaction: (
@@ -27,7 +36,7 @@ export const TransactionApi = {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
       .post<CompleteTransactionResponse>(
-        `/radd-web/${domain}/transaction/complete`,
+        GET_COMPLETE_TRANSACTION_PATH(domain),
         completeTransactionRequest
       )
       .then((response) => response.data);
@@ -38,7 +47,7 @@ export const TransactionApi = {
   ): Promise<AbortTransactionResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
     return apiClient
-      .post<AbortTransactionResponse>(`/radd-web/${domain}/transaction/abort`, abortTransactionRequest)
+      .post<AbortTransactionResponse>(GET_ABORT_TRANSACTION_PATH(domain), abortTransactionRequest)
       .then((response) => response.data);
   },
 };

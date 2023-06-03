@@ -1,4 +1,4 @@
-import { ReactNode, RefAttributes } from 'react';
+import { RefAttributes } from 'react';
 import { Link, LinkProps, useNavigate } from 'react-router-dom';
 import { Breadcrumbs, Stack, styled, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -21,18 +21,20 @@ const BreadcrumbLink = (props: LinkProps & RefAttributes<HTMLAnchorElement>) => 
 type PnBreadcrumbProps = {
   goBackAction?: () => void;
   goBackLabel?: string;
-  linkProps?: LinkProps & RefAttributes<HTMLAnchorElement>;
-  linkRoute: string;
-  linkLabel: ReactNode;
+  links: Array<BreadcrumbsLinkProps>;
   currentLocationLabel: string;
+};
+
+type BreadcrumbsLinkProps = {
+  linkLabel: string;
+  linkRoute: string;
+  linkProps?: LinkProps & RefAttributes<HTMLAnchorElement>;
 };
 
 const Breadcrumb = ({
   goBackAction,
   goBackLabel = 'Indietro',
-  linkProps,
-  linkRoute,
-  linkLabel,
+  links,
   currentLocationLabel,
 }: PnBreadcrumbProps) => {
   const navigate = useNavigate();
@@ -52,9 +54,11 @@ const Breadcrumb = ({
         {goBackLabel}
       </ButtonNaked>
       <Breadcrumbs aria-label="breadcrumb">
-        <BreadcrumbLink to={linkRoute} {...linkProps}>
-          {linkLabel}
-        </BreadcrumbLink>
+        {links.map(({ linkLabel, linkProps, linkRoute }) => (
+          <BreadcrumbLink to={linkRoute} {...linkProps} key={linkRoute}>
+            {linkLabel}
+          </BreadcrumbLink>
+        ))}
         <Typography
           color="text.primary"
           fontWeight={600}
