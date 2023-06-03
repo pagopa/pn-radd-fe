@@ -6,7 +6,6 @@ import {
   DOCUMENT_INQUIRY_ACT,
   DOCUMENT_INQUIRY_AOR,
   SEARCH_INQUIRY,
-  SEARCH_INQUIRY_DETAIL,
   SEARCH_INQUIRY_RESULT,
 } from './routes.const';
 import { SessionGuard } from './SessionGuard';
@@ -18,7 +17,6 @@ const DocumentInquiryAct = React.lazy(() => import('../pages/DocumentInquiryAct.
 const DocumentInquiryAor = React.lazy(() => import('../pages/DocumentInquiryAor.page'));
 const SearchInquiry = React.lazy(() => import('../pages/SearchInquiry.page'));
 const SearchInquiryResult = React.lazy(() => import('../pages/SearchInquiryResult.page'));
-const SearchInquiryDetail = React.lazy(() => import('../pages/SearchInquiryDetail.page'));
 
 const protectedRoutes = (children: Array<RouteObject>) => ({
   element: <SessionGuard />,
@@ -78,10 +76,6 @@ export const router = createBrowserRouter([
       {
         path: SEARCH_INQUIRY_RESULT,
         element: <SearchInquiryResult />,
-      },
-      {
-        path: SEARCH_INQUIRY_DETAIL,
-        element: <SearchInquiryDetail />,
       },
     ]),
   ]),
