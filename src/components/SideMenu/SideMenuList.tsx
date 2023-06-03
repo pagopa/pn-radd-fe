@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import { Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import { SideMenuItem } from '../../types/SideMenuItem';
+import { SideMenuItem } from './SideMenuItem';
 import SideMenuListItem from './SideMenuListItem';
 
 type Props = {

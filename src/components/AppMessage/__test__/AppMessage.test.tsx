@@ -1,5 +1,5 @@
 import { MessageType } from '../../../redux/app/types';
-import { defaultPreloadedState, fireEvent, render, screen, waitFor } from '../../../test-utils';
+import { defaultPreloadedState, fireEvent, render, waitFor } from '../../../test-utils';
 import { LEAVING_APP_MESSAGE } from '../../../utils/string.utils';
 import AppMessage from '../AppMessage';
 
