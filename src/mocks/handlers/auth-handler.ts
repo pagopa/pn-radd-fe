@@ -1,9 +1,10 @@
 import { rest } from 'msw';
 import { MOCK_AUTH_API, API_BASE_URL } from '../../utils/const';
 import data from '../data';
+import { TOKEN_EXCHANGE_PATH } from '../../api';
 
 const enabledHandler = [
-  rest.post(`${API_BASE_URL}/token-exchange`, async (req, res, ctx) => {
+  rest.post(`${API_BASE_URL}${TOKEN_EXCHANGE_PATH}`, async (req, res, ctx) => {
     const body = await req.json();
     if (body.authorizationToken === 'token-ko') {
       return res(ctx.delay(1500), ctx.status(401));

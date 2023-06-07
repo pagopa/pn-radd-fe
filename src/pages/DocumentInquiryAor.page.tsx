@@ -1,5 +1,5 @@
 import { Box, Grid, Stack } from '@mui/material';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DocumentInquiryType } from '../redux/document-inquiry/types';
 import { useAppDispatch } from '../redux/hooks';
 import { reset } from '../redux/document-inquiry/slice';
@@ -10,6 +10,14 @@ import Stepper from '../components/Stepper/Stepper';
 import TitleBox from '../components/Title/TitleBox';
 import EndInquiry from '../components/DocumentInquiry/EndInquiry/EndInquiry';
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
+import { HOMEPAGE } from '../navigation/routes.const';
+
+const breadcrumbsLinks = [
+  {
+    linkLabel: 'Homepage',
+    linkRoute: HOMEPAGE,
+  },
+];
 
 const DocumentInquiryAor = () => {
   const dispatch = useAppDispatch();
@@ -35,11 +43,7 @@ const DocumentInquiryAor = () => {
   return (
     <>
       <Box py={3}>
-        <Breadcrumb
-          currentLocationLabel="Avvisi di avvenuta ricezione"
-          linkLabel={<Fragment>Homepage</Fragment>}
-          linkRoute={'/'}
-        />
+        <Breadcrumb currentLocationLabel="Avvisi di avvenuta ricezione" links={breadcrumbsLinks} />
       </Box>
 
       <Stack spacing={2}>

@@ -13,9 +13,8 @@ import {
   Typography,
   InputAdornment,
   Tooltip,
-  InputLabel,
+  Paper,
 } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { dataRegex, defaultRequiredMessage } from '../../../utils/string.utils';
 import { useAppDispatch } from '../../../redux/hooks';
@@ -59,6 +58,7 @@ const aorInquiryValidationSchema = yup.object().shape({
 
 const actInquiryValidationSchema = yup.object().shape({
   iun: yup.string().required(defaultRequiredMessage('IUN')),
+  // .matches(RegExp(dataRegex.iun), 'IUN invalido'),
   ...aorInquiryValidationSchema.fields,
 });
 

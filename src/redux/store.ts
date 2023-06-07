@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import appReducer from './app/slice';
 import userReducer from './user/slice';
 import documentInquiryReducer from './document-inquiry/slice';
+import inquiryHistoryReducer from './inquiry-history/slice';
 
 const store = configureStore({
   reducer: {
     app: appReducer,
     user: userReducer,
     documentInquiry: documentInquiryReducer,
+    inquiryHistory: inquiryHistoryReducer,
   },
 });
 

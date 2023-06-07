@@ -1,7 +1,11 @@
 import { Box, Card, CardActions, CardContent, Fab, Grid, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from 'react-router-dom';
-import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR } from '../navigation/routes.const';
+import {
+  DOCUMENT_INQUIRY_ACT,
+  DOCUMENT_INQUIRY_AOR,
+  SEARCH_INQUIRY,
+} from '../navigation/routes.const';
 import TitleBox from '../components/Title/TitleBox';
 
 const titleMessage = 'Che documenti vuoi ottenere?';
@@ -69,6 +73,33 @@ const Home = () => {
                   }}
                   color="primary"
                   aria-label="Vai a Avvisi di avvenuta ricezione"
+                >
+                  <ArrowForwardIcon />
+                </Fab>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={6} style={{ display: 'flex' }}>
+            <Card
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                width: '100%',
+              }}
+            >
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Storico delle richieste
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Fab
+                  onClick={() => {
+                    navigate(SEARCH_INQUIRY);
+                  }}
+                  color="primary"
+                  aria-label="Vai a Storico delle richieste"
                 >
                   <ArrowForwardIcon />
                 </Fab>
