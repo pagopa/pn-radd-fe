@@ -1,9 +1,10 @@
 import { rest } from 'msw';
 import { MOCK_API, API_BASE_URL } from '../../utils/const';
 import data from '../data';
+import { DOCUMENT_UPLOAD_PATH } from '../../api';
 
 export const enabledHandler = [
-  rest.post(`${API_BASE_URL}/radd-web/documents/upload`, (req, res, ctx) => {
+  rest.post(`${API_BASE_URL}${DOCUMENT_UPLOAD_PATH}`, (req, res, ctx) => {
     const response = data.UPLOAD.UPLOAD_OK;
     return res(ctx.delay(1200), ctx.json(response));
   })

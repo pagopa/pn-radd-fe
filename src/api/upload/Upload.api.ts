@@ -1,10 +1,11 @@
 import { apiClient, authClient } from '../axios';
+import { DOCUMENT_UPLOAD_PATH } from '../routes/upload.routes';
 import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
 
 export const UploadApi = {
   documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
     apiClient
-      .post(`/radd-web/documents/upload`, documentUploadRequest)
+      .post(DOCUMENT_UPLOAD_PATH, documentUploadRequest)
       .then((response) => response.data),
   s3Upload: (presignedUrl: string, payload: S3UploadRequest): Promise<string> => {
     const { file, secret, sha256 } = payload;

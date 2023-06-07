@@ -1,0 +1,1 @@
+export const DOCUMENT_UPLOAD_PATH = `/radd-web/documents/upload`;

@@ -2,9 +2,10 @@ import { rest } from 'msw';
 import { MOCK_API, API_BASE_URL } from '../../utils/const';
 import { ActInquiryResponse } from '../../api/types';
 import data from '../data';
+import { ACT_DOCUMENT_INQUIRY_PATH } from '../../api';
 
 export const enabledHandler = [
-  rest.get(`${API_BASE_URL}/radd-web/act/inquiry`, (req, res, ctx) => {
+  rest.get(`${API_BASE_URL}${ACT_DOCUMENT_INQUIRY_PATH}`, (req, res, ctx) => {
     const qrCode = req.url.searchParams.get('qrCode') ?? '404';
     if (qrCode === '404') {
       return res(ctx.delay(1200), ctx.status(404));
