@@ -20,7 +20,7 @@ export const getDefaultMenuItems = (): Array<SideMenuItem> => [
     ],
   },
   {
-    label: 'Storico delle richieste',
+    label: 'Richieste precedenti',
     route: SEARCH_INQUIRY,
   }
 ];

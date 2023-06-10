@@ -18,8 +18,8 @@ const EndInquiry = () => {
           Grazie!
         </Typography>
         <Typography variant="body2" color="text.primary">
-          Puoi vedere le informazioni relative a questa ricerca nello{' '}
-          <Link href={SEARCH_INQUIRY}>storico delle ricerche.</Link>
+          Puoi vedere le informazioni relative a questa ricerca{' '}
+          <Link href={SEARCH_INQUIRY}>qui.</Link>
         </Typography>
         <Button variant="contained" sx={{ marginTop: '30px' }} onClick={handleNavigateToHome}>
           Chiudi

@@ -37,7 +37,7 @@ export const getColorByOperationStatus = (status?: string) => {
 
 export const decodeOperationStatus = (status?: string) => {
     switch(status) {
-        case "STARTED": return "In corso";
+        case "STARTED": return "Iniziata";
         case "COMPLETED": return "Completata";
         case "ABORTED": return "Errore";
         default: return "primary";
