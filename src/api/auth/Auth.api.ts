@@ -1,10 +1,11 @@
 import { User } from '../../redux/user/types';
 import { authClient } from '../axios';
+import { TOKEN_EXCHANGE_PATH } from '../routes/auth.routes';
 
 export const AuthApi = {
   exchangeToken: (spidToken: string): Promise<User> =>
     authClient
-      .post<User>(`/token-exchange`, { authorizationToken: spidToken })
+      .post<User>(TOKEN_EXCHANGE_PATH, { authorizationToken: spidToken })
       .then((response) => ({
         sessionToken: response.data.sessionToken,
         email: response.data.email,

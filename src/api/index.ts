@@ -3,3 +3,8 @@ export * from './aor-document-inquiry/AorDocumentInquiry.api';
 export * from './transaction/Transaction.api';
 export * from './upload/Upload.api';
 export * from './notification-inquiry/NotificationInquiry.api';
+export * from './routes/notification-inquiry.routes';
+export * from './routes/transaction.routes';
+export * from './routes/upload.routes';
+export * from './routes/document-inquiry.routes';
+export * from './routes/auth.routes';

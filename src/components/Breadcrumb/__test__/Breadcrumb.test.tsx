@@ -5,13 +5,18 @@ describe('BreadcrumbLink Component', () => {
   const backActionHandlerMock = jest.fn();
 
   it('renders breadcrumb link', () => {
+    const breadcrumbsLinks = [
+      {
+        linkLabel: 'mocked-label',
+        linkRoute: 'mocked-route',
+      },
+    ];
     // render component
     const result = render(
       <Breadcrumb
         goBackAction={backActionHandlerMock}
         goBackLabel={'mocked-back-label'}
-        linkRoute={'mocked-route'}
-        linkLabel={'mocked-label'}
+        links={breadcrumbsLinks}
         currentLocationLabel={'mocked-current-label'}
       />
     );

@@ -1,7 +1,10 @@
 import { DocumentInquiryType } from '../../redux/document-inquiry/types';
 import { getDomainByInquiryType } from '../../utils/api.utils';
 import { apiClient } from '../axios';
-import { FilterRequest, OperationResponse, OperationsResponse } from '../types';
+import { NotificationInquiryConverter } from '../converters/NotificationInquiryConverter';
+import { GET_PRACTICES_BY_IUN_PATH, GET_TRANSACTION_BY_OPERATION_ID_PATH, GET_PRACTICES_BY_INTERNAL_ID_PATH } from '../routes/notification-inquiry.routes';
+import { FilterRequest, OperationsResponse } from '../types';
+
 
 export const NotificationInquiryApi = {
   getPracticesByIun: (
@@ -9,23 +12,28 @@ export const NotificationInquiryApi = {
     inquiryType: DocumentInquiryType
   ): Promise<OperationsResponse> => {
     const domain = getDomainByInquiryType(inquiryType);
-    return apiClient.get(`/radd-web/${domain}/operations/by-iun/${iun}`).then((res) => res.data);
+    return apiClient.get(GET_PRACTICES_BY_IUN_PATH(domain, iun)).then((res) => res.data);
   },
-  getTransactionByOperationId: (
-    operationId: string,
-    inquiryType: DocumentInquiryType
-  ): Promise<OperationResponse> => {
-    const domain = getDomainByInquiryType(inquiryType);
-    return apiClient.get(`/radd-web/${domain}/operations/by-id/${operationId}`).then((res) => res.data);
-  },
-  getPracticesByInternalId: (
+  getActTransactionByOperationId:(
+    operationId: string
+  ): Promise<OperationsResponse> => apiClient.get(GET_TRANSACTION_BY_OPERATION_ID_PATH(operationId, "act"))
+      .then((res) => NotificationInquiryConverter.operationActResponseToOperationsResponse(res.data)),
+  getAorTransactionByOperationId:
+  (
+    operationId: string
+  ): Promise<OperationsResponse> => apiClient.get(GET_TRANSACTION_BY_OPERATION_ID_PATH(operationId, "aor"))
+      .then((res) => NotificationInquiryConverter.operationAorResponseToOperationsResponse(res.data)),
+  getActPracticesByInternalId:(
     internalId: string,
-    inquiryType: DocumentInquiryType,
     filterRequest?: FilterRequest
-  ): Promise<OperationResponse> => {
-    const domain = getDomainByInquiryType(inquiryType);
-    return apiClient
-      .post(`/radd-web/${domain}/operations/by-internalId/${internalId}`, filterRequest)
-      .then((res) => res.data);
-  },
+  ): Promise<OperationsResponse> => apiClient
+      .post(GET_PRACTICES_BY_INTERNAL_ID_PATH(internalId, "act"), filterRequest)
+      .then((res) => NotificationInquiryConverter.operationsActDetailsToOperationsResponse(res.data)),
+  getAorPracticesByInternalId:(
+    internalId: string,
+    filterRequest?: FilterRequest
+  ): Promise<OperationsResponse> => apiClient
+      .post(GET_PRACTICES_BY_INTERNAL_ID_PATH(internalId, "aor"), filterRequest)
+      .then((res) => NotificationInquiryConverter.operationsAorDetailsToOperationsResponse(res.data)),
 };
+

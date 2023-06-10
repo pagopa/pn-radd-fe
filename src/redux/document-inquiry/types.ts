@@ -8,6 +8,7 @@ export type DocumentInquiryForm = {
 export type DocumentInquiryFile = {
   checksum: string;
   fileKey: string;
+  versionToken: string;
 };
 
 export type DocumentInquiryTransaction = {

@@ -1,18 +1,25 @@
-import { apiClient } from '../axios';
-import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
+import { apiClient, authClient } from '../axios';
+import { DOCUMENT_UPLOAD_PATH, GET_DOCUMENT_READY_PATH } from '../routes/upload.routes';
+import { DocumentReadyResponse, DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
 
 export const UploadApi = {
   documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
     apiClient
-      .post(`/radd-web/documents/upload`, documentUploadRequest)
+      .post(DOCUMENT_UPLOAD_PATH, documentUploadRequest)
       .then((response) => response.data),
-  s3Upload: (presignedUrl: string, payload: S3UploadRequest) => {
-    const { file, secret } = payload;
+  documentReady: (fileKey: string): Promise<DocumentReadyResponse> =>
+    apiClient
+      .get(GET_DOCUMENT_READY_PATH(fileKey))
+      .then((response) => response.data),
+  s3Upload: (presignedUrl: string, payload: S3UploadRequest): Promise<string> => {
+    const { file, secret, sha256 } = payload;
     const config = {
       headers: {
-        secret,
+        "content-type": "application/zip",
+        "x-amz-meta-secret": secret,
+        "x-amz-checksum-sha256": sha256
       },
     };
-    return apiClient.put(presignedUrl, file, config).then((response) => response.data);
+    return authClient.put(presignedUrl, file, config).then((response) => response.headers["x-amz-version-id"]);
   },
 };

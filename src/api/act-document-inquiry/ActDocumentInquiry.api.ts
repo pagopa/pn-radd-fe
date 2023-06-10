@@ -1,4 +1,5 @@
 import { apiClient } from '../axios';
+import { ACT_DOCUMENT_INQUIRY_PATH } from '../routes/document-inquiry.routes';
 import { ActInquiryResponse } from '../types';
 
 export const ActDocumentInquiryApi = {
@@ -8,7 +9,7 @@ export const ActDocumentInquiryApi = {
     qrCode: string
   ): Promise<ActInquiryResponse> =>
     apiClient
-      .get<ActInquiryResponse>(`/radd-web/act/inquiry`, {
+      .get<ActInquiryResponse>(ACT_DOCUMENT_INQUIRY_PATH, {
         params: { recipientTaxId, recipientType, qrCode },
       })
       .then((response) => response.data),
