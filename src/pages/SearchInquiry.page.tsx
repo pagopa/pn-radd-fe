@@ -11,15 +11,16 @@ const breadcrumbsLinks = [
   },
 ];
 
+const title = 'Richieste precedenti';
 const SearchInquiry = () => (
   <>
     <Box py={3}>
-      <Breadcrumb currentLocationLabel="Storico delle richieste" links={breadcrumbsLinks} />
+      <Breadcrumb currentLocationLabel={title} links={breadcrumbsLinks} />
     </Box>
 
     <Stack spacing={2}>
       <Grid container item>
-        <TitleBox title={'Storico delle richieste'} variantTitle="h4" />
+        <TitleBox title={title} variantTitle="h4" />
       </Grid>
 
       <SearchInquiryForm />
