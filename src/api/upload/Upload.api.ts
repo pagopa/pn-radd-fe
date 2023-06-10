@@ -1,11 +1,15 @@
 import { apiClient, authClient } from '../axios';
-import { DOCUMENT_UPLOAD_PATH } from '../routes/upload.routes';
-import { DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
+import { DOCUMENT_UPLOAD_PATH, GET_DOCUMENT_READY_PATH } from '../routes/upload.routes';
+import { DocumentReadyResponse, DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
 
 export const UploadApi = {
   documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
     apiClient
       .post(DOCUMENT_UPLOAD_PATH, documentUploadRequest)
+      .then((response) => response.data),
+  documentReady: (fileKey: string): Promise<DocumentReadyResponse> =>
+    apiClient
+      .get(GET_DOCUMENT_READY_PATH(fileKey))
       .then((response) => response.data),
   s3Upload: (presignedUrl: string, payload: S3UploadRequest): Promise<string> => {
     const { file, secret, sha256 } = payload;

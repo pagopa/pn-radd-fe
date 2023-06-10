@@ -2,6 +2,7 @@ import {
   AORInquiryResponse,
   AbortTransactionResponse,
   ActInquiryResponse,
+  DocumentReadyResponse,
   DocumentUploadResponse,
   OperationActResponse,
   OperationAorResponse,
@@ -100,6 +101,8 @@ const AOR_INQUIRY_RESPONSES: AORInquiryResponses = {
 type UploadResponses = {
   UPLOAD_OK: DocumentUploadResponse;
   S3_OK: any;
+  DOCUMENT_READY_OK: DocumentReadyResponse;
+  DOCUMENT_READY_KO: DocumentReadyResponse;
 };
 
 const UPLOAD: UploadResponses = {
@@ -113,6 +116,14 @@ const UPLOAD: UploadResponses = {
     },
   },
   S3_OK: {},
+  DOCUMENT_READY_OK: {
+    fileKey: "test",
+    ready: true
+  },
+  DOCUMENT_READY_KO: {
+    fileKey: "test",
+    ready: false
+  },
 };
 
 type TransactionResponses = {

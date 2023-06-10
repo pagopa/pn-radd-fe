@@ -26,3 +26,38 @@ export const isApiError = (response: ApiResponse) =>  {
 
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/* eslint-disable functional/no-let,no-async-promise-executor */
+export const recursivePolling = (apiFn: () => Promise<any>, successVerifierFn: (apiResponse: any) => boolean, retryNumber: number = 5, delay: number = 1000) => 
+  new Promise(async (res, rej) => {
+    const handleApiCall = async () => await apiFn();
+    
+    let internalCounter = 1;
+    let timeoutId: NodeJS.Timeout;
+    const handleRecursion = async () => {
+      if(timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      try {
+        const apiResponse =  await handleApiCall();
+        if(successVerifierFn(apiResponse)) {
+          res(apiResponse);
+          return;
+        }
+      } catch(error) {
+        rej();
+        return;
+      }
+      
+      if(internalCounter === retryNumber) {
+        rej();
+        return;
+      }
+      internalCounter++;
+      timeoutId = setTimeout(handleRecursion, delay);
+    };
+    
+    await handleRecursion();
+    
+  });
+/* eslint-enable functional/no-let,no-async-promise-executor */

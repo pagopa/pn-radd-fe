@@ -1,11 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createAppAsyncThunk } from '../thunk';
-import { sleep } from '../../utils/api.utils';
+import { recursivePolling } from '../../utils/api.utils';
 import {
   AORInquiryResponse,
   AbortTransactionResponse,
   ActInquiryResponse,
   CompleteTransactionResponse,
+  DocumentReadyResponse,
   DocumentUploadRequest,
   StartTransactionResponse,
 } from '../../api/types';
@@ -93,7 +94,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
 
       const versionToken = await s3Upload({ url: url ?? "", file: zip, secret, sha256: workflowChecksum });
 
-      await sleep(9000);
+      await verifyDocumentReady(fileKey);
 
       const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey, versionToken };
 
@@ -135,6 +136,12 @@ const raddDocumentUpload = async ({ contentType, bundleId, checksum }: UploadFil
 type S3UploadArgs = S3UploadRequest & { url: string };
 const s3Upload = async ({ url, file, secret, sha256 }: S3UploadArgs) =>
   await UploadApi.s3Upload(url, { secret, file, sha256 });
+
+const verifyDocumentReady = async (fileKey: string) => {
+  const apiFn = () => UploadApi.documentReady(fileKey);
+  const successVerifierFn = (res: DocumentReadyResponse) => res.ready;
+  await recursivePolling(apiFn, successVerifierFn);
+};
 
 type TransactionArgs = {
   inquiryType: DocumentInquiryType;

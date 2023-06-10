@@ -19,3 +19,4 @@ export * from './operations-response';
 export * from './response-status';
 export * from './start-transaction-response';
 export * from './s3-upload-request';
+export * from './document-ready-response';
