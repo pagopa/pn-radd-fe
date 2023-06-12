@@ -38,6 +38,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/jest-axe": "^3.5.5",
     "@types/uuid": "^9.0.1",
+    "axios-mock-adapter": "^1.21.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-react": "^7.32.2",

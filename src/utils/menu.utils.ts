@@ -1,6 +1,6 @@
 import MailIcon from '@mui/icons-material/Mail';
-import { SideMenuItem } from '../types/SideMenuItem';
 import { DOCUMENT_INQUIRY_ACT, DOCUMENT_INQUIRY_AOR, SEARCH_INQUIRY } from '../navigation/routes.const';
+import { SideMenuItem } from '../components/SideMenu/SideMenuItem';
 
 export const getDefaultMenuItems = (): Array<SideMenuItem> => [
   {

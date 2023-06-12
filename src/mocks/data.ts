@@ -26,6 +26,8 @@ const USER: User = {
   aud: 'portale.svil.pn.pagopa.it',
   iss: 'https://hub-login.spid.svil.pn.pagopa.it',
   jti: '_b4d10956e34cc4ffc812',
+  email: 'c.colombo@pagopa.it',
+  mobile_phone: '3222212210',
   sessionToken:
     'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEzMWFhN2ZjLTQ3NjktNDA0ZS1hNzg4LWMzZmVlOTc3ZTJkOSJ9.eyJpYXQiOjE2ODIwNzk2NTEsImV4cCI6MTY4MjA4Mjg1MSwidWlkIjoiYTZjMTM1MGQtMWQ2OS00MjA5LThiZjgtMzFkZTU4Yzc5ZDZlIiwiaXNzIjoiaHR0cHM6Ly93ZWJhcGkuc3ZpbC5wbi5wYWdvcGEuaXQiLCJhdWQiOiJ3ZWJhcGkuc3ZpbC5wbi5wYWdvcGEuaXQiLCJqdGkiOiJfYjRkMTA5NTZlMzRjYzRmZmM4MTIifQ.W8MOgBMf5Q8HhpkrUscrkPTI6uAqgHCAROMFRj-MyQfYieUaq6RYRtaRxYG61AXRMvGRfTm4-1Tw6ltSNbgZaesQmWprpTdfv986b6GGioytng12XsKTpEn1ZpGiraYSDIev31HeaRPaGziVdqWHEzUKF6Uo4WwCQkfAzvgftj22UrP2mP9QU_1sjkRp-xxd3qiLUqDxXsIhDgVVltL3SMo1aaSyQD0KjAdLaSLE85gw1UA4vyCPEKf29AVU1W5Xp-sS1lCBAtpr7Vjr-XouBEhGNIiI8ZI8zRs6lzkwOUZeWtCMzt1W9PXNnxuYPvQiqkPkzKxNn2NyePtNVDmrSg',
 };

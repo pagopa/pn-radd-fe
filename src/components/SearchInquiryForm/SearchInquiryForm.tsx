@@ -112,13 +112,13 @@ const SearchInquiryForm = () => {
                         value={DocumentInquiryType.ACT}
                         control={<Radio />}
                         label={'Documenti allegati e attestazioni opponibili a terzi'}
-                        data-testid="inquiryTypeAct"
+                        data-testid="inquiryType"
                       />
                       <FormControlLabel
                         value={DocumentInquiryType.AOR}
                         control={<Radio />}
                         label={'Avvisi di avvenuta ricezione'}
-                        data-testid="inquiryTypeAor"
+                        data-testid="inquiryType"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -144,19 +144,19 @@ const SearchInquiryForm = () => {
                         value={SearchType.IUN}
                         control={<Radio />}
                         label={'Codice IUN'}
-                        data-testid="recipientTypeIun"
+                        data-testid="searchType"
                       />
                       <FormControlLabel
                         value={SearchType.OPERATION_ID}
                         control={<Radio />}
                         label={'ID operazione'}
-                        data-testid="recipientTypeOperationId"
+                        data-testid="searchType"
                       />
                       <FormControlLabel
                         value={SearchType.TAX_ID}
                         control={<Radio />}
                         label={'Codice Fiscale destinatario'}
-                        data-testid="recipientTypeTaxId"
+                        data-testid="searchType"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -188,7 +188,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="operationId"
                       name="operationId"
-                      label={'Id Operazione*'}
+                      label={'ID operazione*'}
                       variant="outlined"
                       value={form.values.operationId}
                       onChange={form.handleChange}

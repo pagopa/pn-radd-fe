@@ -40,7 +40,7 @@ export const decodeOperationStatus = (status?: string) => {
         case "STARTED": return "Iniziata";
         case "COMPLETED": return "Completata";
         case "ABORTED": return "Errore";
-        default: return "primary";
+        default: return "";
     }
 };
 
