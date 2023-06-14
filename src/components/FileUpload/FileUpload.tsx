@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useReducer, useRef } from 'react';
+import { Fragment, ReactNode, useEffect, useReducer, useRef } from 'react';
 
 import { Alert, Box, IconButton, Input, LinearProgress, Typography } from '@mui/material';
 
@@ -13,7 +13,18 @@ import {
   formatBytes,
 } from '../../utils/file.utils';
 import ImageOverview from '../Image/ImageOverview';
-import OrientedBox from './OrientedBlock';
+
+const OrientedBox = ({ vertical, children }: { vertical: boolean; children: ReactNode }) => (
+  <Box
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    flexDirection={vertical ? 'column' : 'row'}
+    margin="auto"
+  >
+    {children}
+  </Box>
+);
 
 type Props = {
   uploadText: string;

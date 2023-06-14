@@ -30,8 +30,8 @@ export const getColorByOperationStatus = (status?: string) => {
     switch(status) {
         case "STARTED": return "warning";
         case "COMPLETED": return "success";
-        case "ABORTED": return "error";
-        default: return "primary";
+        case "ERROR": return "error";
+        default: return undefined;
     }
 };
 
@@ -39,7 +39,7 @@ export const decodeOperationStatus = (status?: string) => {
     switch(status) {
         case "STARTED": return "Iniziata";
         case "COMPLETED": return "Completata";
-        case "ABORTED": return "Errore";
+        case "ERROR": return "Errore";
         default: return "";
     }
 };

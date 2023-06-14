@@ -9,7 +9,7 @@ import {
   DialogContent,
   Chip,
 } from '@mui/material';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import TitleBox from '../components/Title/TitleBox';
@@ -115,6 +115,9 @@ const SearchInquiryResult = () => {
       label: 'Stato',
       width: '20%',
       getCellLabel(value: string) {
+        if (!value) {
+          return <Fragment />;
+        }
         const color = getColorByOperationStatus(value);
         const label = decodeOperationStatus(value);
         return <Chip label={label} color={color} />;
