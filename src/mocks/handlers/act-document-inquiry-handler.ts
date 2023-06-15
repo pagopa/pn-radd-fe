@@ -8,7 +8,7 @@ export const enabledHandler = [
   rest.get(`${API_BASE_URL}${ACT_DOCUMENT_INQUIRY_PATH}`, (req, res, ctx) => {
     const qrCode = req.url.searchParams.get('qrCode') ?? '404';
     if (qrCode === '404') {
-      return res(ctx.delay(1200), ctx.status(404));
+      return res(ctx.delay(500), ctx.status(404));
     }
 
     const MAP_QR_CODE_TO_RESPONSE : {[key:string]: ActInquiryResponse} = {
@@ -20,7 +20,7 @@ export const enabledHandler = [
     
     const response = MAP_QR_CODE_TO_RESPONSE[qrCode] ?? data.ACT_INQUIRY_RESPONSES.ACT_INQUIRY_OK;
 
-    return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+    return res(ctx.delay(500), ctx.status(200), ctx.json(response));
   })
 ];
 

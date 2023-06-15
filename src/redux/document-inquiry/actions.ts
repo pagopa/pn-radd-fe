@@ -140,7 +140,7 @@ const s3Upload = async ({ url, file, secret, sha256 }: S3UploadArgs) =>
 const verifyDocumentReady = async (fileKey: string) => {
   const apiFn = () => UploadApi.documentReady(fileKey);
   const successVerifierFn = (res: DocumentReadyResponse) => res.ready;
-  await recursivePolling(apiFn, successVerifierFn);
+  await recursivePolling(apiFn, successVerifierFn, 10, 2000);
 };
 
 type TransactionArgs = {

@@ -7,7 +7,7 @@ export const enabledHandler = [
   rest.get(`${API_BASE_URL}${AOR_DOCUMENT_INQUIRY_PATH}`, (req, res, ctx) => {
     const response = data.AOR_INQUIRY_RESPONSES.AOR_INQUIRY_OK;
 
-    return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+    return res(ctx.delay(500), ctx.status(200), ctx.json(response));
   }),
 ];
 

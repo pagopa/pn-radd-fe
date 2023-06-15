@@ -7,7 +7,7 @@ import { ApiException } from './exception/ApiException';
 const onRequest = (config: InternalAxiosRequestConfig) => {
   const { uid, sessionToken } = store.getState().user.user;
   if (sessionToken && config.headers) {
-    config.headers.Authorization = 'Bearer ' + sessionToken;
+    config.headers.Authorization = `Bearer ${sessionToken}`;
     if(DEV) {
       config.headers["x-pagopa-pn-uid"] = uid;
     }

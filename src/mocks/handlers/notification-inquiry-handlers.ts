@@ -14,7 +14,7 @@ export const enabledHandler = [
         };
         const response = MAP_IUN_TO_ERROR_RESPONSE[iun as string] ?? data.NOTIFICATION_INQUIRY.INQUIRY_BY_IUN_OK;
 
-        return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+        return res(ctx.delay(500), ctx.status(200), ctx.json(response));
     }),
     rest.get(`${API_BASE_URL}${TRANSACTION_BY_OPERATION_ID_PATH}`, (req, res, ctx) => {
         const { operationId, domain } = req.params;
@@ -26,7 +26,7 @@ export const enabledHandler = [
             };
 
             const response = MAP_OPERATION_ID_TO_ACT_ERROR_RESPONSE[operationId as string] ?? data.NOTIFICATION_INQUIRY.INQUIRY_ACT_BY_OPERATION_ID_OK;
-            return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+            return res(ctx.delay(500), ctx.status(200), ctx.json(response));
         } else if(domain === 'aor') {
             const MAP_OPERATION_ID_TO_AOR_ERROR_RESPONSE : {[key:string]: OperationAorResponse} = {
                 "67d8a1f225f24c13a05e00a0d8a8aaba": data.NOTIFICATION_INQUIRY.INQUIRY_AOR_BY_OPERATION_ID_KO,
@@ -34,10 +34,10 @@ export const enabledHandler = [
             };
 
             const response = MAP_OPERATION_ID_TO_AOR_ERROR_RESPONSE[operationId as string] ?? data.NOTIFICATION_INQUIRY.INQUIRY_AOR_BY_OPERATION_ID_OK;
-            return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+            return res(ctx.delay(500), ctx.status(200), ctx.json(response));
         }
                 
-        return res(ctx.delay(1200), ctx.status(400));
+        return res(ctx.delay(500), ctx.status(400));
     }),
     rest.post(`${API_BASE_URL}${PRACTICES_BY_INTERNAL_ID_PATH}`, (req, res, ctx) => {
         const { internalId, domain } = req.params;
@@ -49,7 +49,7 @@ export const enabledHandler = [
             };
 
             const response = MAP_INTERNAL_ID_TO_ACT_ERROR_RESPONSE[internalId as string] ?? data.NOTIFICATION_INQUIRY.INQUIRY_ACT_BY_INTERNAL_ID_OK;
-            return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+            return res(ctx.delay(500), ctx.status(200), ctx.json(response));
         } else if(domain === 'aor') {
             const MAP_INTERNAL_ID_TO_AOR_ERROR_RESPONSE : {[key:string]: OperationAorResponse} = {
                 "RFRGRZ66E21H751B": data.NOTIFICATION_INQUIRY.INQUIRY_AOR_BY_INTERNAL_ID_KO,
@@ -57,10 +57,10 @@ export const enabledHandler = [
             };
 
             const response = MAP_INTERNAL_ID_TO_AOR_ERROR_RESPONSE[internalId as string] ?? data.NOTIFICATION_INQUIRY.INQUIRY_AOR_BY_INTERNAL_ID_OK;
-            return res(ctx.delay(1200), ctx.status(200), ctx.json(response));
+            return res(ctx.delay(500), ctx.status(200), ctx.json(response));
         }
                 
-        return res(ctx.delay(1200), ctx.status(400));
+        return res(ctx.delay(500), ctx.status(400));
     }),
 ];
 

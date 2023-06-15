@@ -32,7 +32,7 @@ const searchByIun = async (iun: string, inquiryType: DocumentInquiryType) =>
 export const searchInquiry = createAppAsyncThunk<
     OperationsResponse,
     InquirySearchForm
->('startInquiry', async (params: InquirySearchForm, { rejectWithValue, dispatch }) => {
+>('searchInquiry', async (params: InquirySearchForm, { rejectWithValue, dispatch }) => {
   try {
     dispatch(setLoadingStatus());
     const { inquiryType, iun, operationId, taxId, from, to } = params;
