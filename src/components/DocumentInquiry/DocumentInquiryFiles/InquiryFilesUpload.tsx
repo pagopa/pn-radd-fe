@@ -66,6 +66,7 @@ const InquiryFilesUpload = ({ files, isDelegatePresent, onNext, onUpload, onRemo
         <Grid item xs={10}>
           <Typography fontWeight={600}>Documento di riconoscimento del destinatario*</Typography>
           <FileUpload
+            id="recipient-id"
             uploadText="Trascina qui il documento oppure"
             accept={ALLOWED_MIME_TYPES}
             maxFileSize={MAX_FILE_SIZE}
@@ -85,6 +86,7 @@ const InquiryFilesUpload = ({ files, isDelegatePresent, onNext, onUpload, onRemo
           <Grid item xs={10}>
             <Typography fontWeight={600}>Documento di riconoscimento del delegato*</Typography>
             <FileUpload
+              id="delegate-id"
               uploadText="Trascina qui il documento oppure"
               accept={ALLOWED_MIME_TYPES}
               maxFileSize={MAX_FILE_SIZE}
@@ -105,6 +107,7 @@ const InquiryFilesUpload = ({ files, isDelegatePresent, onNext, onUpload, onRemo
           <Grid item xs={10}>
             <Typography fontWeight={600}>Modulo di delega*</Typography>
             <FileUpload
+              id="delegate-act"
               uploadText="Trascina qui il documento oppure"
               maxFileSize={MAX_FILE_SIZE}
               accept={ALLOWED_MIME_TYPES}

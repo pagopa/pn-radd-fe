@@ -33,7 +33,7 @@ export const startInquiry = createAppAsyncThunk<
       const inquiryRes = await ActDocumentInquiryApi.actDocumentInquiry(
         recipientTaxId,
         recipientType,
-        qrCode ?? '',
+        qrCode ?? ''
       );
 
       const inquiryFormData = {
@@ -85,14 +85,23 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
     try {
       const contentType = 'application/zip';
 
-      const workflowChecksum = getWorkflowInfo(state.documentInquiry.formData.recipientTaxId, "checksum", checksum);
+      const workflowChecksum = getWorkflowInfo(
+        state.documentInquiry.formData.recipientTaxId,
+        'checksum',
+        checksum
+      );
       const { url, secret, fileKey } = await raddDocumentUpload({
         contentType,
         checksum: workflowChecksum,
         bundleId,
       });
 
-      const versionToken = await s3Upload({ url: url ?? "", file: zip, secret, sha256: workflowChecksum });
+      const versionToken = await s3Upload({
+        url: url ?? '',
+        file: zip,
+        secret,
+        sha256: workflowChecksum,
+      });
 
       await verifyDocumentReady(fileKey);
 
@@ -103,7 +112,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
       const { delegateTaxId, recipientTaxId, recipientType, qrCode } =
         state.documentInquiry.formData;
 
-      const operationId = getWorkflowInfo(recipientTaxId, "operationId", uuidv4());
+      const operationId = getWorkflowInfo(recipientTaxId, 'operationId', uuidv4());
       const operationDate = new Date().toISOString();
 
       const res = await TransactionApi.startTransaction(
@@ -115,7 +124,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
           recipientType,
           delegateTaxId,
           recipientTaxId,
-          qrCode: qrCode ?? "",
+          qrCode: qrCode ?? '',
           versionToken,
         },
         inquiryType

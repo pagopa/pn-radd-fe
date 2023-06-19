@@ -30,4 +30,10 @@ export interface FilterRequest {
    * @memberof FilterRequest
    */
   to?: string;
+  /**
+   * Tipologia Soggetto (PF/PG).
+   * @type {string}
+   * @memberof FilterRequest
+   */
+  recipientType?: string;
 }

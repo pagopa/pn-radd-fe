@@ -2,6 +2,10 @@ import { fireEvent, waitFor, RenderResult } from '@testing-library/react';
 
 import { render } from '../../../test-utils';
 import FileUpload from '../FileUpload';
+import { createMockedBlob, createMockedFile, uploadMockedFile } from './test-util';
+import { formatBytes } from '../../../utils/file.utils';
+
+const maxFileSize = 2048;
 
 describe('FileUpload Component', () => {
   let result: RenderResult;
@@ -13,7 +17,7 @@ describe('FileUpload Component', () => {
   (file as any).name = 'Mocked file';
 
   async function testFileUploading() {
-    const fileInput = result.queryByTestId('fileInput');
+    const fileInput = result.queryByTestId('file-input-id');
     expect(fileInput).toBeInTheDocument();
     const input = fileInput?.querySelector('input');
     fireEvent.change(input!, { target: { files: [file] } });
@@ -30,8 +34,10 @@ describe('FileUpload Component', () => {
     // render component
     result = render(
       <FileUpload
+        id="id"
         uploadText="Mocked upload text"
         accept={['text/plain']}
+        maxFileSize={2048}
         uploadFn={mockUploadFn}
         onFileUploaded={mockUploadFileHandler}
         onRemoveFile={mockRemoveFileHandler}
@@ -55,7 +61,7 @@ describe('FileUpload Component', () => {
   });
 
   it('uploads file (wrong format)', async () => {
-    const fileInput = result.queryByTestId('fileInput');
+    const fileInput = result.queryByTestId('file-input-id');
     expect(fileInput).toBeInTheDocument();
     const input = fileInput?.querySelector('input');
     fireEvent.change(input!, {
@@ -67,6 +73,25 @@ describe('FileUpload Component', () => {
       expect(result.container).toHaveTextContent(
         /Estensione file non supportata. Riprovare con un altro file./i
       );
+    });
+  });
+
+  it('uploads file (error max size)', async () => {
+    const fileInput = result.queryByTestId('file-input-id');
+    expect(fileInput).toBeInTheDocument();
+    const input = fileInput?.querySelector('input');
+    let blob = createMockedBlob('text/plain', 3000);
+    fireEvent.change(input!, {
+      target: { files: [blob] },
+    });
+
+    const errorMessage = `Dimensione file non supportata (max ${formatBytes(
+      maxFileSize
+    )}). Riprovare con un altro file.`;
+    await waitFor(() => {
+      expect(mockUploadFn).not.toBeCalled();
+      expect(result.container).toHaveTextContent(/Mocked upload text/i);
+      expect(result.container).toHaveTextContent(errorMessage);
     });
   });
 

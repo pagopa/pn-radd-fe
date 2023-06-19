@@ -1,25 +1,28 @@
 import { apiClient, authClient } from '../axios';
 import { DOCUMENT_UPLOAD_PATH, GET_DOCUMENT_READY_PATH } from '../routes/upload.routes';
-import { DocumentReadyResponse, DocumentUploadRequest, DocumentUploadResponse, S3UploadRequest } from '../types';
+import {
+  DocumentReadyResponse,
+  DocumentUploadRequest,
+  DocumentUploadResponse,
+  S3UploadRequest,
+} from '../types';
 
 export const UploadApi = {
   documentUpload: (documentUploadRequest: DocumentUploadRequest): Promise<DocumentUploadResponse> =>
-    apiClient
-      .post(DOCUMENT_UPLOAD_PATH, documentUploadRequest)
-      .then((response) => response.data),
+    apiClient.post(DOCUMENT_UPLOAD_PATH, documentUploadRequest).then((response) => response.data),
   documentReady: (fileKey: string): Promise<DocumentReadyResponse> =>
-    apiClient
-      .get(GET_DOCUMENT_READY_PATH(fileKey))
-      .then((response) => response.data),
+    apiClient.get(GET_DOCUMENT_READY_PATH(fileKey)).then((response) => response.data),
   s3Upload: (presignedUrl: string, payload: S3UploadRequest): Promise<string> => {
     const { file, secret, sha256 } = payload;
     const config = {
       headers: {
-        "content-type": "application/zip",
-        "x-amz-meta-secret": secret,
-        "x-amz-checksum-sha256": sha256
+        'content-type': 'application/zip',
+        'x-amz-meta-secret': secret,
+        'x-amz-checksum-sha256': sha256,
       },
     };
-    return authClient.put(presignedUrl, file, config).then((response) => response.headers["x-amz-version-id"]);
+    return authClient
+      .put(presignedUrl, file, config)
+      .then((response) => response.headers['x-amz-version-id']);
   },
 };

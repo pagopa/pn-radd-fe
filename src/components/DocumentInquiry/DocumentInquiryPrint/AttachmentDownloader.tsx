@@ -12,14 +12,22 @@ type Props = {
 
 const AttachmentDownloader = ({ fileName, fileUrl, clicked, onDownload }: Props) => {
   const linkAction = (
-    <Link underline="none" href={fileUrl} onClick={() => onDownload(fileUrl)} target="_blank">
+    <Link
+      underline="none"
+      href={fileUrl}
+      onClick={() => onDownload(fileUrl)}
+      target="_blank"
+      data-testid={'download-link'}
+    >
       <span style={{ display: 'flex', alignItems: 'center' }}>
         Scarica <FileDownloadIcon />
       </span>
     </Link>
   );
 
-  const checkedAction = <DoneIcon color="success" aria-label="Download effettuato" />;
+  const checkedAction = (
+    <DoneIcon color="success" aria-label="Download effettuato" data-testid={'done-download'} />
+  );
 
   const action = clicked ? checkedAction : linkAction;
 

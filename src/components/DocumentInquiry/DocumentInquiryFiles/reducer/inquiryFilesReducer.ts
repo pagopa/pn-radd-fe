@@ -60,10 +60,6 @@ export const inquiryFilesReducer = (state: InquiryFilesState, action: ActionsTyp
     case 'WAITING_PHASE': {
       return { ...state, phase: Phases.WAITING_PHASE, uploadData: payload };
     }
-    default: {
-      console.error('Invalid Phase');
-      return state;
-    }
   }
 };
 

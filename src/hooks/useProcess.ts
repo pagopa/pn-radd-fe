@@ -54,10 +54,9 @@ export function useProcess<T>(sequence: Array<T>) {
 
   /* eslint-disable-next-line arrow-body-style */
   const mustProceedToStep = useCallback(
-    (step: STEP_TYPE) => (
-        fullSequence.indexOf(currentSituation.step) === fullSequence.indexOf(step) - 1 &&
-        !currentSituation.isActive
-      ),
+    (step: STEP_TYPE) =>
+      fullSequence.indexOf(currentSituation.step) === fullSequence.indexOf(step) - 1 &&
+      !currentSituation.isActive,
     [currentSituation]
   );
 

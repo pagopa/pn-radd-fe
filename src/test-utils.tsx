@@ -1,6 +1,11 @@
 import { fireEvent, render, RenderOptions, waitFor } from '@testing-library/react';
 import { ReactElement, ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  createMemoryRouter,
+  RouterProvider,
+} from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { PreloadedState, EnhancedStore, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
@@ -9,6 +14,7 @@ import appReducer from './redux/app/slice';
 import userReducer from './redux/user/slice';
 import documentInquiryReducer from './redux/document-inquiry/slice';
 import inquiryHistoryReducer from './redux/inquiry-history/slice';
+import { router } from './navigation/router';
 
 // const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
 //   render(ui, { wrapper: AllTheProviders, ...options });
@@ -45,6 +51,45 @@ const customRender = (
     );
   };
   return { store, ...render(ui, { wrapper: AllTheProviders, ...renderOptions }) };
+};
+
+export const renderWithRouter = (
+  ui: ReactElement,
+  {
+    preloadedState,
+    // Automatically create a store instance if no store was passed in
+    store = configureStore({
+      reducer: {
+        app: appReducer,
+        user: userReducer,
+        documentInquiry: documentInquiryReducer,
+        inquiryHistory: inquiryHistoryReducer,
+      },
+      preloadedState,
+    }),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) => {
+  const routes = [
+    {
+      element: ui,
+      path: '/',
+    },
+  ];
+  const mockedRouterWithInitialRoute = createBrowserRouter(routes);
+  window.history.pushState({}, 'Test page', '/');
+
+  const AllTheProviders = ({ children }: { children: ReactNode }) => {
+    return <Provider store={store}>{children}</Provider>;
+  };
+
+  return {
+    store,
+    ...render(<RouterProvider router={mockedRouterWithInitialRoute} />, {
+      wrapper: AllTheProviders,
+      ...renderOptions,
+    }),
+  };
 };
 
 export const defaultPreloadedState = realStore.getState();

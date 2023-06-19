@@ -12,14 +12,14 @@ export const enabledHandler = [
     const rnd = Math.random() * 3;
     const response = rnd > 2 ? data.UPLOAD.DOCUMENT_READY_OK : data.UPLOAD.DOCUMENT_READY_KO;
     return res(ctx.delay(500), ctx.json(response));
-  })
+  }),
 ];
 
 const s3Handler = [
   rest.put(`${API_BASE_URL}/upload-s3`, (req, res, ctx) => {
     const response = data.UPLOAD.S3_OK;
     return res(ctx.delay(500), ctx.json(response), ctx.set('x-amz-version-id', 'test'));
-  })
+  }),
 ];
 
 export const handler = MOCK_API ? [...enabledHandler, ...s3Handler] : [...s3Handler];

@@ -69,6 +69,17 @@
   "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!axios)/"
+    ],
+    "collectCoverageFrom": [
+      "!**/types/**.ts",
+      "!**/types.ts",
+      "!/src/api/axios.ts",
+      "!/src/api/index.ts",
+      "!**/router.tsx",
+      "!**const.ts",
+      "!**/mocks/**.ts",
+      "!**/App.tsx",
+      "!**/index.tsx"
     ]
   },
   "browserslist": {

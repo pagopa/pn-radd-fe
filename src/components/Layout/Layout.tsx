@@ -1,9 +1,9 @@
+import { ErrorInfo } from 'react';
 import { Box, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { getDefaultMenuItems } from '../../utils/menu.utils';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { handleEventTrackingCallbackAppCrash } from '../../utils/log.utils';
 import { Spinner } from '../Spinner/Spinner';
 import AppMessage from '../AppMessage/AppMessage';
 import SideMenu from '../SideMenu/SideMenu';
@@ -26,6 +26,10 @@ const Layout = ({ showSideMenu = false }: Props) => {
   };
 
   const menuItems = getDefaultMenuItems();
+
+  const handleEventTrackingCallbackAppCrash = (e: Error, eInfo: ErrorInfo) => {
+    console.error('CRASH: ', e, eInfo);
+  };
 
   return (
     <ErrorBoundary eventTrackingCallback={handleEventTrackingCallbackAppCrash}>

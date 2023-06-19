@@ -1,4 +1,4 @@
 export interface DocumentReadyResponse {
-    fileKey: string,
-    ready: boolean
+  fileKey: string;
+  ready: boolean;
 }

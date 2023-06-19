@@ -1,7 +1,11 @@
 import { DocumentInquiryType } from '../../redux/document-inquiry/types';
 import { getDomainByInquiryType } from '../../utils/api.utils';
 import { apiClient } from '../axios';
-import { GET_START_TRANSACTION_PATH, GET_COMPLETE_TRANSACTION_PATH, GET_ABORT_TRANSACTION_PATH } from '../routes/transaction.routes';
+import {
+  GET_START_TRANSACTION_PATH,
+  GET_COMPLETE_TRANSACTION_PATH,
+  GET_ABORT_TRANSACTION_PATH,
+} from '../routes/transaction.routes';
 import {
   AbortTransactionRequest,
   AbortTransactionResponse,

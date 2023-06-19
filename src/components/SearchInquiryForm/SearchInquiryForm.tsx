@@ -26,6 +26,11 @@ import { useAppDispatch } from '../../redux/hooks';
 import { searchInquiry } from '../../redux/inquiry-history/actions';
 import { SEARCH_INQUIRY_RESULT } from '../../navigation/routes.const';
 
+enum RecipientType {
+  PERSONA_FISICA = 'PF',
+  PERSONA_GIURIDICA = 'PG',
+}
+
 const formValidationSchema = yup.object().shape({
   iun: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.IUN,
@@ -52,6 +57,7 @@ const initialValues = {
   searchType: SearchType.IUN,
   from: null,
   to: null,
+  recipientType: RecipientType.PERSONA_FISICA,
 };
 
 const SearchInquiryForm = () => {
@@ -203,6 +209,37 @@ const SearchInquiryForm = () => {
 
               {form.values.searchType === SearchType.TAX_ID && (
                 <>
+                  <Grid container item>
+                    <Grid item xs={6}>
+                      <FormControl margin="normal" fullWidth>
+                        <FormLabel id="recipient-type-label">
+                          <Typography fontWeight={600} fontSize={16}>
+                            Soggetto giuridico*
+                          </Typography>
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="recipient-type-label"
+                          name="recipientType"
+                          row
+                          value={form.values.recipientType}
+                          onChange={form.handleChange}
+                        >
+                          <FormControlLabel
+                            value={RecipientType.PERSONA_FISICA}
+                            control={<Radio />}
+                            label={'Persona fisica'}
+                            data-testid="recipientTypePf"
+                          />
+                          <FormControlLabel
+                            value={RecipientType.PERSONA_GIURIDICA}
+                            control={<Radio />}
+                            label={'Persona giuridica'}
+                            data-testid="recipientTypePf"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                   <Grid container item spacing={2}>
                     <Grid item xs={4}>
                       <TextField

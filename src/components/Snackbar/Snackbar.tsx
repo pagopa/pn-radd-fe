@@ -34,8 +34,14 @@ const Snackbar = ({ id, message, type, duration, onClose }: Props) => {
       autoHideDuration={duration}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       TransitionComponent={TransitionDown}
+      data-testid="snackbar-container"
     >
-      <Alert severity={getColor.get(type)} sx={{ width: '100%' }} action={action}>
+      <Alert
+        severity={getColor.get(type)}
+        sx={{ width: '100%' }}
+        action={action}
+        data-testid="snackbar-alert"
+      >
         {message}
       </Alert>
     </Toast>

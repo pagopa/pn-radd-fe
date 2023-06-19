@@ -2,7 +2,7 @@ import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import { NavLink } from 'react-router-dom';
 
-import { SideMenuItem } from './SideMenuItem';
+import { SideMenuItem } from './types';
 
 type Props = {
   item: SideMenuItem;

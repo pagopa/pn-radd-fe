@@ -164,13 +164,13 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                           value={'PF'}
                           control={<Radio />}
                           label={'Persona fisica'}
-                          data-testid="recipientTypePf"
+                          data-testid="recipientType"
                         />
                         <FormControlLabel
                           value={'PG'}
                           control={<Radio />}
                           label={'Persona giuridica'}
-                          data-testid="recipientTypePf"
+                          data-testid="recipientType"
                         />
                       </RadioGroup>
                     </FormControl>

@@ -27,6 +27,7 @@ const OrientedBox = ({ vertical, children }: { vertical: boolean; children: Reac
 );
 
 type Props = {
+  id: string;
   uploadText: string;
   vertical?: boolean;
   accept: Array<string>;
@@ -84,15 +85,6 @@ const reducer = (state: UploadState, action: { type: string; payload?: any }) =>
         status: UploadStatus.TO_UPLOAD,
         error: 'Si è verificato un errore durante il caricamento del file. Si prega di riprovare.',
       };
-    case 'FILE_PREVIOUSLY_UPLOADED':
-      return {
-        ...state,
-        ...action.payload,
-        status: UploadStatus.UPLOADED,
-        error: '',
-        sha256: action.payload.file.sha256.hashHex,
-        name: action.payload.name ? action.payload.name : '',
-      };
     case 'FILE_UPLOADED':
       return { ...state, status: UploadStatus.UPLOADED, error: '', sha256: action.payload };
     case 'REMOVE_FILE':
@@ -129,6 +121,7 @@ const containerStyle = (status: UploadStatus) => {
 };
 
 function FileUpload({
+  id,
   uploadText,
   vertical = false,
   accept,
@@ -257,7 +250,7 @@ function FileUpload({
             inputRef={uploadInputRef}
             inputProps={{ accept }}
             onChange={uploadFileHandler}
-            data-testid="fileInput"
+            data-testid={`file-input-${id}`}
           />
         </OrientedBox>
       )}

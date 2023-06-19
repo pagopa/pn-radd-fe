@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 
-import { SideMenuItem } from '../SideMenuItem';
+import { SideMenuItem } from '../types';
 import { render } from '../../../test-utils';
 import SideMenuList from '../SideMenuList';
 import { sideMenuItems } from './test-utils';
@@ -35,8 +35,6 @@ describe('SideMenuList', () => {
     await testMenuItem(ul, sideMenuItems.length, sideMenuItems);
   });
 
-  // TODO questo test periodicamente fallisce ma solo in locale! non riesco a capire perchè
-  // ---> ipotesi?
   it.skip('Open and close sub menu', async () => {
     const ul = screen.getByRole('navigation');
     const buttons = await within(ul).findAllByRole('button');
