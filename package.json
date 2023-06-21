@@ -36,12 +36,15 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
+    "@types/jest-axe": "^3.5.5",
     "@types/uuid": "^9.0.1",
+    "axios-mock-adapter": "^1.21.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-sonarjs": "^0.19.0",
     "file-saver": "^2.0.5",
+    "jest-axe": "^7.0.1",
     "jest-sonar-reporter": "^2.0.0",
     "msw": "^1.2.1",
     "prettier": "^2.8.7",
@@ -61,6 +64,22 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
+    ],
+    "collectCoverageFrom": [
+      "!**/types/**.ts",
+      "!**/types.ts",
+      "!/src/api/axios.ts",
+      "!/src/api/index.ts",
+      "!**/router.tsx",
+      "!**const.ts",
+      "!**/mocks/**.ts",
+      "!**/App.tsx",
+      "!**/index.tsx"
     ]
   },
   "browserslist": {

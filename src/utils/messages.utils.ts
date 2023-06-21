@@ -23,7 +23,7 @@ export const createAppError = (error: IError) => {
     return handleAxiosError(error);
   }
 
-  if (error instanceof ApiException) { 
+  if (error instanceof ApiException) {
     return handleApiError(error.error);
   }
 

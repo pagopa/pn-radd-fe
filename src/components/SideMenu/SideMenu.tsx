@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { SideMenuItem } from '../../types/SideMenuItem';
+import { SideMenuItem } from './types';
 import SideMenuList from './SideMenuList';
 
 type Props = {

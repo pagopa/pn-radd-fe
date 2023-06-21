@@ -8,9 +8,9 @@ import {
 } from '../navigation/routes.const';
 import TitleBox from '../components/Title/TitleBox';
 
-const titleMessage = 'Che documenti vuoi ottenere?';
+const titleMessage = 'Cosa vuoi fare?';
 const subTitleMessage =
-  'Seleziona il tipo di documenti che vuoi ottenere: allegati della notifica e attestazioni opponibili a terzi o avvisi di avvenuta ricezione.';
+  'Seleziona i documenti che vuoi ottenere o consulta le richieste precedenti.';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -33,10 +33,11 @@ const Home = () => {
                 flexDirection: 'column',
                 width: '100%',
               }}
+              data-testid="act-request-card"
             >
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  Documenti allegati della notifica e attestazioni opponibili a terzi
+                  Ottenere documenti allegati della notifica e attestazioni opponibili a terzi
                 </Typography>
               </CardContent>
               <CardActions>
@@ -45,7 +46,8 @@ const Home = () => {
                     navigate(DOCUMENT_INQUIRY_ACT);
                   }}
                   color="primary"
-                  aria-label="Vai a Documenti allegati della notifica e attestazioni opponibili a terzi"
+                  aria-label="Vai alla pagina Ottenere documenti allegati della notifica e attestazioni opponibili a terzi"
+                  data-testid="act-request-button"
                 >
                   <ArrowForwardIcon />
                 </Fab>
@@ -60,10 +62,11 @@ const Home = () => {
                 flexDirection: 'column',
                 width: '100%',
               }}
+              data-testid="aor-request-card"
             >
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  Avvisi di avvenuta ricezione
+                  Ottenere avvisi di avvenuta ricezione
                 </Typography>
               </CardContent>
               <CardActions>
@@ -72,7 +75,8 @@ const Home = () => {
                     navigate(DOCUMENT_INQUIRY_AOR);
                   }}
                   color="primary"
-                  aria-label="Vai a Avvisi di avvenuta ricezione"
+                  aria-label="Vai alla pagina Ottenere avvisi di avvenuta ricezione"
+                  data-testid="aor-request-button"
                 >
                   <ArrowForwardIcon />
                 </Fab>
@@ -87,10 +91,11 @@ const Home = () => {
                 flexDirection: 'column',
                 width: '100%',
               }}
+              data-testid="previous-requests-card"
             >
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  Storico delle richieste
+                  Consultare le richieste precedenti
                 </Typography>
               </CardContent>
               <CardActions>
@@ -99,7 +104,8 @@ const Home = () => {
                     navigate(SEARCH_INQUIRY);
                   }}
                   color="primary"
-                  aria-label="Vai a Storico delle richieste"
+                  aria-label="Vai alla pagina Consultare le richieste precedenti"
+                  data-testid="previous-requests-button"
                 >
                   <ArrowForwardIcon />
                 </Fab>

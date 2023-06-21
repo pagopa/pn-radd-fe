@@ -9,17 +9,17 @@ type Props = {
 };
 
 const ImageVisualizer = ({ src, alt, onClose }: Props): React.ReactElement => (
-  <Modal
-    open={true}
-    onClose={onClose}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
+  <Modal open={true} onClose={onClose} aria-labelledby="image-visualizer">
     <Grid container justifyContent={'center'}>
       <Grid item xs={8}>
         <Box>
           <Box display="flex" justifyContent="flex-end" margin="auto">
-            <IconButton sx={{ backgroundColor: 'white' }} color="primary" onClick={onClose}>
+            <IconButton
+              sx={{ backgroundColor: 'white' }}
+              color="primary"
+              onClick={onClose}
+              data-testid="close-btn-image-visualizer"
+            >
               <CloseIcon />
             </IconButton>
           </Box>

@@ -10,10 +10,11 @@ type Props = {
   operation?: OperationsDetailsResponse;
 };
 
-type DefaultItem = { type: 'default'; label: string; value?: string };
+type DefaultItem = { type: 'default'; label: string; value?: string; showIfEmpty?: boolean };
 type CustomItem = {
   type: 'custom';
   component: (detail: OperationsDetailsResponse) => React.ReactNode;
+  showIfEmpty?: boolean;
 };
 type ItemSchema = DefaultItem | CustomItem;
 
@@ -36,10 +37,9 @@ const CopyableListItem = ({ label, value }: CopyableListItemProps) => {
           <ContentCopyIcon />
         </IconButton>
       }
-      key={label}
       divider
     >
-      <ListItemText primary={label} secondary={value} />
+      <ListItemText primary={label} secondary={value} data-testid={`list-item-${label}`} />
     </ListItem>
   );
 };
@@ -58,12 +58,14 @@ const OperationDetail = ({ operation }: Props) => {
     {
       type: 'custom',
       component: ({ operationId }) => (
-        <CopyableListItem label={'ID operazione'} value={operationId!} />
+        <CopyableListItem label={'ID operazione'} value={operationId!} key={'ID operazione'} />
       ),
     },
     {
       type: 'custom',
-      component: ({ iuns }) => <CopyableListItem label={'Codice IUN'} value={iuns!.join(' ')} />,
+      component: ({ iuns }) => (
+        <CopyableListItem label={'Codice IUN'} value={iuns!.join(' ')} key={'Codice IUN'} />
+      ),
     },
     {
       type: 'default',
@@ -85,7 +87,7 @@ const OperationDetail = ({ operation }: Props) => {
       component({ operationStatus }) {
         const label = decodeOperationStatus(operationStatus);
         return (
-          <ListItem divider key="Stato">
+          <ListItem divider key="Stato" data-testid={`list-item-${label}`}>
             <ListItemText primary={'Stato'} secondary={label} />
           </ListItem>
         );
@@ -95,19 +97,30 @@ const OperationDetail = ({ operation }: Props) => {
       type: 'default',
       label: 'Errore',
       value: operation.errorReason,
+      showIfEmpty: false,
     },
   ];
+
+  const renderDefault = (item: DefaultItem) => {
+    if (!item.showIfEmpty && !item.value) {
+      return <Fragment />;
+    }
+
+    return (
+      <ListItem divider key={item.label}>
+        <ListItemText
+          primary={item.label}
+          secondary={item.value}
+          data-testid={`list-item-${item.label}`}
+        />
+      </ListItem>
+    );
+  };
 
   return (
     <List>
       {detailSchema.map((item) =>
-        item.type === 'custom' ? (
-          item.component(operation)
-        ) : (
-          <ListItem divider key={item.label}>
-            <ListItemText primary={item.label} secondary={item.value} />
-          </ListItem>
-        )
+        item.type === 'custom' ? item.component(operation) : renderDefault(item)
       )}
     </List>
   );

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useReducer, useRef } from 'react';
+import { Fragment, ReactNode, useEffect, useReducer, useRef } from 'react';
 
 import { Alert, Box, IconButton, Input, LinearProgress, Typography } from '@mui/material';
 
@@ -13,9 +13,21 @@ import {
   formatBytes,
 } from '../../utils/file.utils';
 import ImageOverview from '../Image/ImageOverview';
-import OrientedBox from './OrientedBlock';
+
+const OrientedBox = ({ vertical, children }: { vertical: boolean; children: ReactNode }) => (
+  <Box
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    flexDirection={vertical ? 'column' : 'row'}
+    margin="auto"
+  >
+    {children}
+  </Box>
+);
 
 type Props = {
+  id: string;
   uploadText: string;
   vertical?: boolean;
   accept: Array<string>;
@@ -73,15 +85,6 @@ const reducer = (state: UploadState, action: { type: string; payload?: any }) =>
         status: UploadStatus.TO_UPLOAD,
         error: 'Si è verificato un errore durante il caricamento del file. Si prega di riprovare.',
       };
-    case 'FILE_PREVIOUSLY_UPLOADED':
-      return {
-        ...state,
-        ...action.payload,
-        status: UploadStatus.UPLOADED,
-        error: '',
-        sha256: action.payload.file.sha256.hashHex,
-        name: action.payload.name ? action.payload.name : '',
-      };
     case 'FILE_UPLOADED':
       return { ...state, status: UploadStatus.UPLOADED, error: '', sha256: action.payload };
     case 'REMOVE_FILE':
@@ -118,6 +121,7 @@ const containerStyle = (status: UploadStatus) => {
 };
 
 function FileUpload({
+  id,
   uploadText,
   vertical = false,
   accept,
@@ -246,7 +250,7 @@ function FileUpload({
             inputRef={uploadInputRef}
             inputProps={{ accept }}
             onChange={uploadFileHandler}
-            data-testid="fileInput"
+            data-testid={`file-input-${id}`}
           />
         </OrientedBox>
       )}
@@ -287,8 +291,8 @@ function FileUpload({
                 {(data.file.size / 1024).toFixed(2)}&nbsp;KB
               </Typography>
             </Box>
-            <IconButton onClick={removeFileHandler}>
-              <CloseIcon />
+            <IconButton onClick={removeFileHandler} data-testid={'remove-button'}>
+              <CloseIcon aria-label="remove file icon" />
             </IconButton>
           </Box>
         </Fragment>

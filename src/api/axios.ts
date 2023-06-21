@@ -1,28 +1,27 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { API_BASE_URL, DEV } from '../utils/const';
-import store from '../redux/store';
+import { store } from '../redux/store';
 import { isApiError } from '../utils/api.utils';
 import { ApiException } from './exception/ApiException';
 
 const onRequest = (config: InternalAxiosRequestConfig) => {
   const { uid, sessionToken } = store.getState().user.user;
   if (sessionToken && config.headers) {
-    config.headers.Authorization = 'Bearer ' + sessionToken;
-    if(DEV) {
-      config.headers["x-pagopa-pn-uid"] = uid;
+    config.headers.Authorization = `Bearer ${sessionToken}`;
+    if (DEV) {
+      config.headers['x-pagopa-pn-uid'] = uid;
     }
-    
   }
   return config;
 };
 
-const onRequestError = (error: AxiosError): Promise<AxiosError> => { 
+const onRequestError = (error: AxiosError): Promise<AxiosError> => {
   throw new Error(error.message);
 };
 
 const onResponse = (response: AxiosResponse<any, any>) => {
   const { data } = response;
-  if(data && isApiError(data)) {
+  if (data && isApiError(data)) {
     const { code, message } = data.status;
     throw new ApiException({ code, message });
   }
@@ -53,4 +52,3 @@ export const authClient = axios.create({
 });
 
 export const apiClient = setupInterceptors(apiClientInstance);
-

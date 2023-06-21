@@ -76,7 +76,9 @@ export const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15 MB
 export const isFileImage = (file: File): boolean => file.type.split('/')[0] === 'image';
 
 export const formatBytes = (bytes: number, decimals = 2): string => {
-  if (bytes === 0) {return '0 Bytes';}
+  if (bytes === 0) {
+    return '0 Bytes';
+  }
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;

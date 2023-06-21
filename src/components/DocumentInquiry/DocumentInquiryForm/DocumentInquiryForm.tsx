@@ -58,7 +58,6 @@ const aorInquiryValidationSchema = yup.object().shape({
 
 const actInquiryValidationSchema = yup.object().shape({
   iun: yup.string().required(defaultRequiredMessage('IUN')),
-  // .matches(RegExp(dataRegex.iun), 'IUN invalido'),
   ...aorInquiryValidationSchema.fields,
 });
 
@@ -165,13 +164,13 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                           value={'PF'}
                           control={<Radio />}
                           label={'Persona fisica'}
-                          data-testid="recipientTypePf"
+                          data-testid="recipientType"
                         />
                         <FormControlLabel
                           value={'PG'}
                           control={<Radio />}
                           label={'Persona giuridica'}
-                          data-testid="recipientTypePf"
+                          data-testid="recipientType"
                         />
                       </RadioGroup>
                     </FormControl>

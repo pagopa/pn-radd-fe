@@ -4,7 +4,7 @@ import userReducer from './user/slice';
 import documentInquiryReducer from './document-inquiry/slice';
 import inquiryHistoryReducer from './inquiry-history/slice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     app: appReducer,
     user: userReducer,
@@ -15,5 +15,3 @@ const store = configureStore({
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-
-export default store;

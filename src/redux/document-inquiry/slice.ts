@@ -47,7 +47,8 @@ export const urlListSelector = (state: RootState) => state.documentInquiry.trans
 export const operationIdSelector = (state: RootState) =>
   state.documentInquiry.transactionData.operationId;
 
-export const isDelegatePresentSelector = (state: RootState) => !!state.documentInquiry.formData.delegateTaxId;
+export const isDelegatePresentSelector = (state: RootState) =>
+  !!state.documentInquiry.formData.delegateTaxId;
 
 const { actions, reducer } = slice;
 

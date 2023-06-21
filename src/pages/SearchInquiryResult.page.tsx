@@ -9,24 +9,17 @@ import {
   DialogContent,
   Chip,
 } from '@mui/material';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import TitleBox from '../components/Title/TitleBox';
 import Table from '../components/Table/Table';
 import { HOMEPAGE, SEARCH_INQUIRY } from '../navigation/routes.const';
 import { Column, Item } from '../components/Table/types';
 import { useAppSelector } from '../redux/hooks';
-import {
-  inquiryResultSearchSelector,
-  inquirySearchDataSelector,
-} from '../redux/inquiry-history/slice';
+import { inquiryResultSearchSelector } from '../redux/inquiry-history/slice';
 import { formatString } from '../utils/date.utils';
-import {
-  decodeInquiryType,
-  decodeOperationStatus,
-  getColorByOperationStatus,
-} from '../utils/decode.utils';
-
+import { decodeOperationStatus, getColorByOperationStatus } from '../utils/decode.utils';
 import OperationDetail from '../components/OperationDetail/OperationDetail';
 
 const breadcrumbsLinks = [
@@ -35,7 +28,7 @@ const breadcrumbsLinks = [
     linkRoute: HOMEPAGE,
   },
   {
-    linkLabel: 'Storico delle richieste',
+    linkLabel: 'Richieste precedenti',
     linkRoute: SEARCH_INQUIRY,
   },
 ];
@@ -62,7 +55,6 @@ const SearchInquiryResult = () => {
   const selectedOperation = selectedOperationId
     ? operations?.filter((op) => op.operationId === selectedOperationId)[0]
     : undefined;
-  const searchData = useAppSelector(inquirySearchDataSelector);
 
   const handleRowClick = (operationId: string) => {
     setDetailDialogData({ openDialog: true, selectedOperationId: operationId });
@@ -123,6 +115,9 @@ const SearchInquiryResult = () => {
       label: 'Stato',
       width: '20%',
       getCellLabel(value: string) {
+        if (!value) {
+          return <Fragment />;
+        }
         const color = getColorByOperationStatus(value);
         const label = decodeOperationStatus(value);
         return <Chip label={label} color={color} />;
@@ -144,15 +139,19 @@ const SearchInquiryResult = () => {
   return (
     <>
       <Box py={3}>
-        <Breadcrumb currentLocationLabel="Risultato ricerca" links={breadcrumbsLinks} />
+        <Breadcrumb currentLocationLabel="Risultati della ricerca" links={breadcrumbsLinks} />
       </Box>
 
       <Stack spacing={2}>
-        <Grid container item>
-          <TitleBox
-            title={`Risultato ricerca ${decodeInquiryType(searchData.inquiryType)}`}
-            variantTitle="h4"
-          />
+        <Grid container justifyContent={'space-between'}>
+          <Grid item>
+            <TitleBox title={`Risultati della ricerca`} variantTitle="h4" />
+          </Grid>
+          <Grid item>
+            <Link to={SEARCH_INQUIRY}>
+              <Button variant="outlined">Nuova ricerca</Button>
+            </Link>
+          </Grid>
         </Grid>
 
         <Grid item xs={12}>

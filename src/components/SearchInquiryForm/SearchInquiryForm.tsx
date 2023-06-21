@@ -26,6 +26,11 @@ import { useAppDispatch } from '../../redux/hooks';
 import { searchInquiry } from '../../redux/inquiry-history/actions';
 import { SEARCH_INQUIRY_RESULT } from '../../navigation/routes.const';
 
+enum RecipientType {
+  PERSONA_FISICA = 'PF',
+  PERSONA_GIURIDICA = 'PG',
+}
+
 const formValidationSchema = yup.object().shape({
   iun: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.IUN,
@@ -52,6 +57,7 @@ const initialValues = {
   searchType: SearchType.IUN,
   from: null,
   to: null,
+  recipientType: RecipientType.PERSONA_FISICA,
 };
 
 const SearchInquiryForm = () => {
@@ -98,7 +104,7 @@ const SearchInquiryForm = () => {
                   <FormControl margin="none" fullWidth>
                     <FormLabel id="search-type-label">
                       <Typography fontWeight={600} fontSize={16}>
-                        Tipo richiesta:
+                        Tipo richiesta
                       </Typography>
                     </FormLabel>
                     <RadioGroup
@@ -112,13 +118,13 @@ const SearchInquiryForm = () => {
                         value={DocumentInquiryType.ACT}
                         control={<Radio />}
                         label={'Documenti allegati e attestazioni opponibili a terzi'}
-                        data-testid="inquiryTypeAct"
+                        data-testid="inquiryType"
                       />
                       <FormControlLabel
                         value={DocumentInquiryType.AOR}
                         control={<Radio />}
                         label={'Avvisi di avvenuta ricezione'}
-                        data-testid="inquiryTypeAor"
+                        data-testid="inquiryType"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -130,7 +136,7 @@ const SearchInquiryForm = () => {
                   <FormControl margin="none" fullWidth>
                     <FormLabel id="search-type-label">
                       <Typography fontWeight={600} fontSize={16}>
-                        Ricerca per:
+                        Cerca per:
                       </Typography>
                     </FormLabel>
                     <RadioGroup
@@ -144,19 +150,19 @@ const SearchInquiryForm = () => {
                         value={SearchType.IUN}
                         control={<Radio />}
                         label={'Codice IUN'}
-                        data-testid="recipientTypeIun"
+                        data-testid="searchType"
                       />
                       <FormControlLabel
                         value={SearchType.OPERATION_ID}
                         control={<Radio />}
-                        label={'Id Operazione'}
-                        data-testid="recipientTypeOperationId"
+                        label={'ID operazione'}
+                        data-testid="searchType"
                       />
                       <FormControlLabel
                         value={SearchType.TAX_ID}
                         control={<Radio />}
                         label={'Codice Fiscale destinatario'}
-                        data-testid="recipientTypeTaxId"
+                        data-testid="searchType"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -188,7 +194,7 @@ const SearchInquiryForm = () => {
                     <TextField
                       id="operationId"
                       name="operationId"
-                      label={'Id Operazione*'}
+                      label={'ID operazione*'}
                       variant="outlined"
                       value={form.values.operationId}
                       onChange={form.handleChange}
@@ -202,80 +208,122 @@ const SearchInquiryForm = () => {
               )}
 
               {form.values.searchType === SearchType.TAX_ID && (
-                <Grid container item spacing={2}>
-                  <Grid item xs={4}>
-                    <TextField
-                      id="taxId"
-                      name="taxId"
-                      label={'Codice Fiscale destinatario*'}
-                      variant="outlined"
-                      value={form.values.taxId}
-                      onChange={form.handleChange}
-                      onBlur={form.handleBlur}
-                      error={form.touched.taxId && Boolean(form.errors.taxId)}
-                      helperText={form.touched.taxId && form.errors.taxId}
-                      fullWidth
-                    />
+                <>
+                  <Grid container item>
+                    <Grid item xs={6}>
+                      <FormControl margin="normal" fullWidth>
+                        <FormLabel id="recipient-type-label">
+                          <Typography fontWeight={600} fontSize={16}>
+                            Soggetto giuridico*
+                          </Typography>
+                        </FormLabel>
+                        <RadioGroup
+                          aria-labelledby="recipient-type-label"
+                          name="recipientType"
+                          row
+                          value={form.values.recipientType}
+                          onChange={form.handleChange}
+                        >
+                          <FormControlLabel
+                            value={RecipientType.PERSONA_FISICA}
+                            control={<Radio />}
+                            label={'Persona fisica'}
+                            data-testid="recipientTypePf"
+                          />
+                          <FormControlLabel
+                            value={RecipientType.PERSONA_GIURIDICA}
+                            control={<Radio />}
+                            label={'Persona giuridica'}
+                            data-testid="recipientTypePf"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDateFns}
-                      adapterLocale={currentLocale}
-                    >
-                      <CustomDatePicker
-                        label={'Dal'}
-                        format={DATE_FORMAT}
-                        value={form.values.from}
-                        onChange={(value: DatePickerTypes) => {
-                          form.setFieldValue('from', value || today).catch(() => 'error');
-                        }}
-                        slotProps={{
-                          textField: {
-                            name: 'from',
-                            id: 'from',
-                            fullWidth: true,
-                            inputProps: {
-                              inputMode: 'text',
-                              'aria-label': 'Dal',
-                              type: 'text',
-                              placeholder: 'gg/mm/aaaa',
-                            },
-                          },
-                        }}
-                        disableFuture={true}
+                  <Grid container item spacing={2}>
+                    <Grid item xs={4}>
+                      <TextField
+                        id="taxId"
+                        name="taxId"
+                        label={'Codice Fiscale destinatario*'}
+                        variant="outlined"
+                        value={form.values.taxId}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                        error={form.touched.taxId && Boolean(form.errors.taxId)}
+                        helperText={form.touched.taxId && form.errors.taxId}
+                        fullWidth
                       />
-                    </LocalizationProvider>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDateFns}
-                      adapterLocale={currentLocale}
-                    >
-                      <CustomDatePicker
-                        label={'Al'}
-                        format={DATE_FORMAT}
-                        value={form.values.to}
-                        onChange={(value: DatePickerTypes) => {
-                          form.setFieldValue('to', value || today).catch(() => 'error');
-                        }}
-                        slotProps={{
-                          textField: {
-                            name: 'to',
-                            id: 'to',
-                            fullWidth: true,
-                            inputProps: {
-                              inputMode: 'text',
-                              'aria-label': 'Al',
-                              type: 'text',
-                              placeholder: 'gg/mm/aaaa',
+                  <Grid container item>
+                    <Grid item xs={12}>
+                      <Typography fontWeight={600} variant="body1">
+                        Periodo della richiesta
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container item spacing={2}>
+                    <Grid item xs={4}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={currentLocale}
+                      >
+                        <CustomDatePicker
+                          label={'Dal'}
+                          format={DATE_FORMAT}
+                          value={form.values.from}
+                          onChange={(value: DatePickerTypes) => {
+                            form.setFieldValue('from', value || today).catch(() => 'error');
+                          }}
+                          slotProps={{
+                            textField: {
+                              name: 'from',
+                              id: 'from',
+                              fullWidth: true,
+                              inputProps: {
+                                inputMode: 'text',
+                                'aria-label': 'Dal',
+                                type: 'text',
+                                placeholder: 'gg/mm/aaaa',
+                              },
                             },
-                          },
-                        }}
-                        disableFuture={true}
-                      />
-                    </LocalizationProvider>
+                          }}
+                          disableFuture={true}
+                        />
+                      </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={currentLocale}
+                      >
+                        <CustomDatePicker
+                          label={'Al'}
+                          format={DATE_FORMAT}
+                          value={form.values.to}
+                          onChange={(value: DatePickerTypes) => {
+                            form.setFieldValue('to', value || today).catch(() => 'error');
+                          }}
+                          slotProps={{
+                            textField: {
+                              name: 'to',
+                              id: 'to',
+                              fullWidth: true,
+                              inputProps: {
+                                inputMode: 'text',
+                                'aria-label': 'Al',
+                                type: 'text',
+                                placeholder: 'gg/mm/aaaa',
+                              },
+                            },
+                          }}
+                          disableFuture={true}
+                        />
+                      </LocalizationProvider>
+                    </Grid>
                   </Grid>
-                </Grid>
+                </>
               )}
             </Grid>
 

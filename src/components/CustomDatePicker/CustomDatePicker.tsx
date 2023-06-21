@@ -24,20 +24,6 @@ const CustomDatePicker = (
         return 'Scegli data';
       },
     }}
-    // deprecated leftArrowButtonText="Vai al mese precedente"
-    // deprecated rightArrowButtonText="Vai al mese successivo"
-    // getViewSwitchingButtonText={(view: CalendarPickerView) =>
-    //   view === 'year'
-    //     ? "modalità di scelta dell'anno attiva, passa alla modalità calendario"
-    //     : "modalità calendario attiva, passa alla modalità di scelta dell'anno"
-    // }
-    // getOpenDialogAriaText={(value: Date, utils: any) => {
-    //   if (value instanceof Date && !isNaN(value.getTime())) {
-    //     const date = utils.format(utils.date(value), 'fullDate');
-    //     return `Scegli data, la data selezionata è ${date}`;
-    //   }
-    //   return 'Scegli data';
-    // }}
   />
 );
 

@@ -1,11 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createAppAsyncThunk } from '../thunk';
-import { sleep } from '../../utils/api.utils';
+import { recursivePolling } from '../../utils/api.utils';
 import {
   AORInquiryResponse,
   AbortTransactionResponse,
   ActInquiryResponse,
   CompleteTransactionResponse,
+  DocumentReadyResponse,
   DocumentUploadRequest,
   StartTransactionResponse,
 } from '../../api/types';
@@ -32,7 +33,7 @@ export const startInquiry = createAppAsyncThunk<
       const inquiryRes = await ActDocumentInquiryApi.actDocumentInquiry(
         recipientTaxId,
         recipientType,
-        qrCode ?? '',
+        qrCode ?? ''
       );
 
       const inquiryFormData = {
@@ -84,16 +85,25 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
     try {
       const contentType = 'application/zip';
 
-      const workflowChecksum = getWorkflowInfo(state.documentInquiry.formData.recipientTaxId, "checksum", checksum);
+      const workflowChecksum = getWorkflowInfo(
+        state.documentInquiry.formData.recipientTaxId,
+        'checksum',
+        checksum
+      );
       const { url, secret, fileKey } = await raddDocumentUpload({
         contentType,
         checksum: workflowChecksum,
         bundleId,
       });
 
-      const versionToken = await s3Upload({ url: url ?? "", file: zip, secret, sha256: workflowChecksum });
+      const versionToken = await s3Upload({
+        url: url ?? '',
+        file: zip,
+        secret,
+        sha256: workflowChecksum,
+      });
 
-      await sleep(9000);
+      await verifyDocumentReady(fileKey);
 
       const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey, versionToken };
 
@@ -102,7 +112,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
       const { delegateTaxId, recipientTaxId, recipientType, qrCode } =
         state.documentInquiry.formData;
 
-      const operationId = getWorkflowInfo(recipientTaxId, "operationId", uuidv4());
+      const operationId = getWorkflowInfo(recipientTaxId, 'operationId', uuidv4());
       const operationDate = new Date().toISOString();
 
       const res = await TransactionApi.startTransaction(
@@ -114,7 +124,7 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
           recipientType,
           delegateTaxId,
           recipientTaxId,
-          qrCode: qrCode ?? "",
+          qrCode: qrCode ?? '',
           versionToken,
         },
         inquiryType
@@ -135,6 +145,12 @@ const raddDocumentUpload = async ({ contentType, bundleId, checksum }: UploadFil
 type S3UploadArgs = S3UploadRequest & { url: string };
 const s3Upload = async ({ url, file, secret, sha256 }: S3UploadArgs) =>
   await UploadApi.s3Upload(url, { secret, file, sha256 });
+
+const verifyDocumentReady = async (fileKey: string) => {
+  const apiFn = () => UploadApi.documentReady(fileKey);
+  const successVerifierFn = (res: DocumentReadyResponse) => res.ready;
+  await recursivePolling(apiFn, successVerifierFn, 10, 2000);
+};
 
 type TransactionArgs = {
   inquiryType: DocumentInquiryType;

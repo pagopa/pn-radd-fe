@@ -1,6 +1,7 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-export const DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+export const DATE_FORMAT = 'dd/MM/yyyy';
+export const FULL_DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss';
 
 const DATE_FORMAT_TIMEZONE = "yyyy-MM-dd'T'00:mm:ss.SSS'Z'";
 
@@ -11,9 +12,9 @@ export function formatToTimezoneString(date: Date): string {
 }
 
 export function formatString(date?: string): string {
-  if(!date) {
-    return "";
+  if (!date) {
+    return '';
   }
 
-  return format(new Date(date), DATE_FORMAT);
+  return format(new Date(date), FULL_DATE_FORMAT);
 }

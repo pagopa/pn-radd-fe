@@ -1,9 +1,9 @@
+import { ErrorInfo } from 'react';
 import { Box, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { getDefaultMenuItems } from '../../utils/menu.utils';
 
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { handleEventTrackingCallbackAppCrash } from '../../utils/log.utils';
 import { Spinner } from '../Spinner/Spinner';
 import AppMessage from '../AppMessage/AppMessage';
 import SideMenu from '../SideMenu/SideMenu';
@@ -27,13 +27,25 @@ const Layout = ({ showSideMenu = false }: Props) => {
 
   const menuItems = getDefaultMenuItems();
 
+  const handleEventTrackingCallbackAppCrash = (e: Error, eInfo: ErrorInfo) => {
+    console.error('CRASH: ', e, eInfo);
+  };
+
   return (
     <ErrorBoundary eventTrackingCallback={handleEventTrackingCallbackAppCrash}>
       <Stack
         direction="column"
         sx={{ minHeight: '100vh' }} // 100vh per sticky footer
       >
-        <Header loggedUser={JWTUser} />
+        <Header
+          loggedUser={JWTUser}
+          onExitAction={() => {
+            console.log('User logout');
+          }}
+          onAssistanceClick={() => {
+            console.log('Clicked/Tapped on Assistance');
+          }}
+        />
 
         <Stack direction={{ lg: 'row' }} sx={{ flexGrow: 1 }}>
           {showSideMenu && (
