@@ -2,14 +2,14 @@ import { render } from '../../../test-utils';
 import SessionModal from '../SessionModal';
 
 describe('test SessionModal component', () => {
-  test('renders the component without confirm button', () => {
+  it('renders the component without confirm button', () => {
     const result = render(<SessionModal open title={'Test title'} message={'test message'} />);
 
     expect(result.baseElement).toHaveTextContent(/test title/i);
     expect(result.baseElement).toHaveTextContent(/test message/i);
   });
 
-  test('renders the full component with custom label', () => {
+  it('renders the full component with custom label', () => {
     const result = render(
       <SessionModal
         open
@@ -25,7 +25,7 @@ describe('test SessionModal component', () => {
     expect(result.baseElement).toHaveTextContent(/confirm/i);
   });
 
-  test('renders the full component with default label', () => {
+  it('renders the full component with default label', () => {
     const result = render(
       <SessionModal open title={'Test title'} message={'test message'} onConfirm={() => {}} />
     );
@@ -35,7 +35,7 @@ describe('test SessionModal component', () => {
     expect(result.baseElement).toHaveTextContent(/riprova/i);
   });
 
-  test('renders the full component in mobile view', () => {
+  it('renders the full component in mobile view', () => {
     const result = render(
       <SessionModal
         open

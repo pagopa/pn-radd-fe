@@ -16,7 +16,7 @@ describe('SideMenu', () => {
 
   expect.extend(toHaveNoViolations);
 
-  it.skip('sidemenu accesibility', async () => {
+  it('sidemenu accesibility', async () => {
     const { container } = render(<SideMenu menuItems={sideMenuItems} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
