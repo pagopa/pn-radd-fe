@@ -52,7 +52,9 @@ const aorInquiryValidationSchema = yup.object().shape({
       otherwise: (schema) =>
         schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
     }),
-  delegateTaxId: yup.string().matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+  delegateTaxId: yup
+    .string()
+    .matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
   recipientType: yup.string().required(defaultRequiredMessage('Tipologia destinatario')),
 });
 
@@ -209,7 +211,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                     <TextField
                       id="delegateTaxId"
                       name="delegateTaxId"
-                      label="Codice Fiscale delegato"
+                      label="Codice Fiscale o Partita IVA delegato"
                       variant="outlined"
                       value={form.values.delegateTaxId}
                       onChange={form.handleChange}

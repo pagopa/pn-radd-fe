@@ -39,9 +39,13 @@ const formValidationSchema = yup.object().shape({
   taxId: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.TAX_ID,
     then: (schema) =>
-      schema
-        .required(defaultRequiredMessage('Codice Fiscale'))
-        .matches(RegExp(dataRegex.fiscalCode), 'Codice Fiscale invalido'),
+      schema.when('recipientType', {
+        is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
+        then: (schema) =>
+          schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
+        otherwise: (schema) =>
+          schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+      }),
   }),
   operationId: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.OPERATION_ID,
@@ -92,6 +96,11 @@ const SearchInquiryForm = () => {
       },
     });
   };
+
+  const recipientTaxIdLabel =
+    form.values.recipientType === RecipientType.PERSONA_FISICA
+      ? 'Codice Fiscale destinatario*'
+      : 'Codice Fiscale o Partita IVA destinatario*';
 
   return (
     <Grid item xs={12}>
@@ -245,7 +254,7 @@ const SearchInquiryForm = () => {
                       <TextField
                         id="taxId"
                         name="taxId"
-                        label={'Codice Fiscale destinatario*'}
+                        label={recipientTaxIdLabel}
                         variant="outlined"
                         value={form.values.taxId}
                         onChange={form.handleChange}
@@ -274,7 +283,7 @@ const SearchInquiryForm = () => {
                           format={DATE_FORMAT}
                           value={form.values.from}
                           onChange={(value: DatePickerTypes) => {
-                            form.setFieldValue('from', value || today).catch(() => 'error');
+                            form.setFieldValue('from', value).catch(() => 'error');
                           }}
                           slotProps={{
                             textField: {
@@ -303,7 +312,7 @@ const SearchInquiryForm = () => {
                           format={DATE_FORMAT}
                           value={form.values.to}
                           onChange={(value: DatePickerTypes) => {
-                            form.setFieldValue('to', value || today).catch(() => 'error');
+                            form.setFieldValue('to', value).catch(() => 'error');
                           }}
                           slotProps={{
                             textField: {

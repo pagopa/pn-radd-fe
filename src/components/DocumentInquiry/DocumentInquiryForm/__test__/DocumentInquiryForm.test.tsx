@@ -40,7 +40,7 @@ describe('DocumentInquiryForm ACT', () => {
 
     checkRadioElements(form!, 'recipientType', ['Persona fisica', 'Persona giuridica']);
     checkFormElements(form!, 'recipientTaxId', 'Codice Fiscale destinatario*');
-    checkFormElements(form!, 'delegateTaxId', 'Codice Fiscale delegato');
+    checkFormElements(form!, 'delegateTaxId', 'Codice Fiscale o Partita IVA delegato');
 
     const confirmButton = screen.getByRole('button', { name: 'Continua' });
     expect(confirmButton).toBeDisabled();
@@ -89,7 +89,7 @@ describe('DocumentInquiryForm AOR', () => {
 
     checkRadioElements(form!, 'recipientType', ['Persona fisica', 'Persona giuridica']);
     checkFormElements(form!, 'recipientTaxId', 'Codice Fiscale destinatario*');
-    checkFormElements(form!, 'delegateTaxId', 'Codice Fiscale delegato');
+    checkFormElements(form!, 'delegateTaxId', 'Codice Fiscale o Partita IVA delegato');
 
     const confirmButton = screen.getByRole('button', { name: 'Continua' });
     expect(confirmButton).toBeDisabled();

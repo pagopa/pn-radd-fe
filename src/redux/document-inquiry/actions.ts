@@ -13,7 +13,6 @@ import {
 import { S3UploadRequest } from '../../api/types';
 import { ActDocumentInquiryApi, AorDocumentInquiryApi, TransactionApi, UploadApi } from '../../api';
 import { setLoadingStatus } from '../app/slice';
-import { getWorkflowInfo } from '../../test-workflow';
 import { DocumentInquiryFile, DocumentInquiryForm, DocumentInquiryType } from './types';
 import { setInquiryFileData, setInquiryFormData, setTransactionData } from './slice';
 
@@ -84,15 +83,10 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
     const { checksum, bundleId, zip, inquiryType } = params;
     try {
       const contentType = 'application/zip';
-
-      const workflowChecksum = getWorkflowInfo(
-        state.documentInquiry.formData.recipientTaxId,
-        'checksum',
-        checksum
-      );
+      
       const { url, secret, fileKey } = await raddDocumentUpload({
         contentType,
-        checksum: workflowChecksum,
+        checksum,
         bundleId,
       });
 
@@ -100,26 +94,26 @@ export const uploadFileAndStartTransaction = createAppAsyncThunk<
         url: url ?? '',
         file: zip,
         secret,
-        sha256: workflowChecksum,
+        sha256: checksum,
       });
 
       await verifyDocumentReady(fileKey);
 
-      const fileData: DocumentInquiryFile = { checksum: workflowChecksum, fileKey, versionToken };
+      const fileData: DocumentInquiryFile = { checksum, fileKey, versionToken };
 
       dispatch(setInquiryFileData(fileData));
 
       const { delegateTaxId, recipientTaxId, recipientType, qrCode } =
         state.documentInquiry.formData;
 
-      const operationId = getWorkflowInfo(recipientTaxId, 'operationId', uuidv4());
+      const operationId = uuidv4();
       const operationDate = new Date().toISOString();
 
       const res = await TransactionApi.startTransaction(
         {
           operationId,
           operationDate,
-          checksum: workflowChecksum,
+          checksum,
           fileKey,
           recipientType,
           delegateTaxId,
