@@ -18,7 +18,7 @@ import { HOMEPAGE, SEARCH_INQUIRY } from '../navigation/routes.const';
 import { Column, Item } from '../components/Table/types';
 import { useAppSelector } from '../redux/hooks';
 import { inquiryResultSearchSelector } from '../redux/inquiry-history/slice';
-import { formatString } from '../utils/date.utils';
+import { formatIsoString } from '../utils/date.utils';
 import { decodeOperationStatus, getColorByOperationStatus } from '../utils/decode.utils';
 import OperationDetail from '../components/OperationDetail/OperationDetail';
 
@@ -69,7 +69,7 @@ const SearchInquiryResult = () => {
       label: 'Data richiesta',
       width: '20%',
       getCellLabel(value: string) {
-        return formatString(value);
+        return formatIsoString(value);
       },
       onClick(row: Item) {
         handleRowClick(String(row.operationId));

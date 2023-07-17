@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
-export const DATE_FORMAT = 'dd/MM/yyyy';
-export const FULL_DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss';
+export const IT_DATE_FORMAT = 'dd/MM/yyyy';
+export const IT_FULL_DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss';
 
 const DATE_FORMAT_TIMEZONE = "yyyy-MM-dd'T'00:mm:ss.SSS'Z'";
 
@@ -11,10 +11,18 @@ export function formatToTimezoneString(date: Date): string {
   return format(date, DATE_FORMAT_TIMEZONE);
 }
 
-export function formatString(date?: string): string {
-  if (!date) {
+/**
+ * 
+ * @param isoStringDate string which represents a date in iso format eg(2011-08-12T20:17:46.384Z)
+ * @param outputFormat output format desired (if not passed, dd/MM/yyyy format is used )
+ * @returns formatted date
+ */
+export function formatIsoString(isoStringDate?: string, outputFormat = IT_FULL_DATE_FORMAT): string {
+  if (!isoStringDate) {
     return '';
   }
 
-  return format(new Date(date), FULL_DATE_FORMAT);
+  const OUTPUT_FORMAT = outputFormat ?? IT_FULL_DATE_FORMAT;
+
+  return format(new Date(isoStringDate), OUTPUT_FORMAT);
 }

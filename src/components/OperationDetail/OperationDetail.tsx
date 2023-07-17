@@ -4,7 +4,7 @@ import { IconButton, List, ListItem, ListItemText } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { OperationsDetailsResponse } from '../../api/types/operations-details-response';
 import { decodeOperationStatus, decodeRecipientType } from '../../utils/decode.utils';
-import { formatString } from '../../utils/date.utils';
+import { formatIsoString } from '../../utils/date.utils';
 
 type Props = {
   operation?: OperationsDetailsResponse;
@@ -53,7 +53,7 @@ const OperationDetail = ({ operation }: Props) => {
     {
       type: 'default',
       label: 'Data della richiesta',
-      value: formatString(operation.operationStartDate),
+      value: formatIsoString(operation.operationStartDate),
     },
     {
       type: 'custom',
