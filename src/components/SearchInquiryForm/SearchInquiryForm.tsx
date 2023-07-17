@@ -17,7 +17,7 @@ import * as yup from 'yup';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useNavigate } from 'react-router-dom';
-import { DATE_FORMAT, today } from '../../utils/date.utils';
+import { IT_DATE_FORMAT } from '../../utils/date.utils';
 import CustomDatePicker, { DatePickerTypes } from '../CustomDatePicker/CustomDatePicker';
 import { defaultRequiredMessage, dataRegex } from '../../utils/string.utils';
 import { DocumentInquiryType } from '../../redux/document-inquiry/types';
@@ -280,7 +280,7 @@ const SearchInquiryForm = () => {
                       >
                         <CustomDatePicker
                           label={'Dal'}
-                          format={DATE_FORMAT}
+                          format={IT_DATE_FORMAT}
                           value={form.values.from}
                           onChange={(value: DatePickerTypes) => {
                             form.setFieldValue('from', value).catch(() => 'error');
@@ -309,7 +309,7 @@ const SearchInquiryForm = () => {
                       >
                         <CustomDatePicker
                           label={'Al'}
-                          format={DATE_FORMAT}
+                          format={IT_DATE_FORMAT}
                           value={form.values.to}
                           onChange={(value: DatePickerTypes) => {
                             form.setFieldValue('to', value).catch(() => 'error');

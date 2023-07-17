@@ -1,6 +1,6 @@
 import data from '../../../mocks/data';
 import { render } from '../../../test-utils';
-import { formatString } from '../../../utils/date.utils';
+import { formatIsoString } from '../../../utils/date.utils';
 import OperationDetail from '../OperationDetail';
 
 describe('OperationDetail Component', () => {
@@ -12,6 +12,6 @@ describe('OperationDetail Component', () => {
     const { operationId, recipientTaxId, operationStartDate } = operation;
     expect(result.getByText(operationId!));
     expect(result.getByText(recipientTaxId!));
-    expect(result.getByText(formatString(operationStartDate!)));
+    expect(result.getByText(formatIsoString(operationStartDate!)));
   });
 });

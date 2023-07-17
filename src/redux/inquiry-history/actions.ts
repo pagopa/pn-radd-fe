@@ -1,3 +1,4 @@
+import { endOfDay } from 'date-fns';
 import { NotificationInquiryApi } from '../../api';
 import { FilterRequest, OperationsResponse } from '../../api/types';
 import { setLoadingStatus } from '../app/slice';
@@ -51,7 +52,7 @@ export const searchInquiry = createAppAsyncThunk<OperationsResponse, InquirySear
           return await searchByInternalId(taxId, inquiryType, {
             recipientType,
             from: from ? from.toISOString() : undefined,
-            to: to ? to.toISOString() : undefined,
+            to: to ? endOfDay(to).toISOString() : undefined,
           });
         default:
           throw new Error('Invalid search type');
