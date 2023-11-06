@@ -59,7 +59,7 @@ const aorInquiryValidationSchema = yup.object().shape({
 });
 
 const actInquiryValidationSchema = yup.object().shape({
-  iun: yup.string().required(defaultRequiredMessage('IUN')),
+  iun: yup.string().required(defaultRequiredMessage('Codice QR')),
   ...aorInquiryValidationSchema.fields,
 });
 
