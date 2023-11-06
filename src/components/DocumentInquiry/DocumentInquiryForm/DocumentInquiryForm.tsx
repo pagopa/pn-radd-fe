@@ -127,7 +127,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                       <TextField
                         id="iun"
                         name="iun"
-                        label="Codice IUN*"
+                        label="Codice QR*"
                         variant="outlined"
                         value={form.values.iun}
                         onChange={form.handleChange}
@@ -135,6 +135,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                         error={form.touched.iun && Boolean(form.errors.iun)}
                         helperText={form.touched.iun && form.errors.iun}
                         fullWidth
+                        /*
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="end">
@@ -142,6 +143,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                             </InputAdornment>
                           ),
                         }}
+                        */
                       />
                     </Grid>
                   </Grid>
