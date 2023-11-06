@@ -36,7 +36,7 @@ describe('DocumentInquiryForm ACT', () => {
 
   it('should render clean form', () => {
     const form = result.container.querySelector('form');
-    checkFormElements(form!, 'iun', 'Codice IUN*');
+    checkFormElements(form!, 'iun', 'Codice QR*');
 
     checkRadioElements(form!, 'recipientType', ['Persona fisica', 'Persona giuridica']);
     checkFormElements(form!, 'recipientTaxId', 'Codice Fiscale destinatario*');
