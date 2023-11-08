@@ -38,7 +38,14 @@ const formValidationSchema = yup.object().shape({
   }),
   taxId: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.TAX_ID,
-    then: (schema) => schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+    then: (schema) =>
+      schema.when('recipientType', {
+        is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
+        then: (schema) =>
+          schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale invalido'),
+        otherwise: (schema) =>
+          schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+      }),
   }),
   operationId: yup.string().when('searchType', {
     is: (searchType: SearchType) => searchType === SearchType.OPERATION_ID,

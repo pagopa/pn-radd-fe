@@ -45,8 +45,16 @@ const aorInquiryValidationSchema = yup.object().shape({
   recipientTaxId: yup
     .string()
     .required(defaultRequiredMessage('Codice fiscale'))
-    .matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
-  delegateTaxId: yup.string().matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+    .when('recipientType', {
+      is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
+      then: (schema) =>
+        schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale invalido'),
+      otherwise: (schema) =>
+        schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+    }),
+  delegateTaxId: yup
+    .string()
+    .matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale invalido'),
   recipientType: yup.string().required(defaultRequiredMessage('Tipologia destinatario')),
 });
 
