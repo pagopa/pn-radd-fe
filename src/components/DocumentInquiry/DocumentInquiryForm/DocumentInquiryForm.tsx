@@ -45,16 +45,8 @@ const aorInquiryValidationSchema = yup.object().shape({
   recipientTaxId: yup
     .string()
     .required(defaultRequiredMessage('Codice fiscale'))
-    .when('recipientType', {
-      is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
-      then: (schema) =>
-        schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
-      otherwise: (schema) =>
-        schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
-    }),
-  delegateTaxId: yup
-    .string()
-    .matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
+    .matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
+  delegateTaxId: yup.string().matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
   recipientType: yup.string().required(defaultRequiredMessage('Tipologia destinatario')),
 });
 
@@ -106,11 +98,6 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
     validationSchema: formValidationSchema,
     onSubmit: handleSubmit,
   });
-
-  const recipientTaxIdLabel =
-    form.values.recipientType === RecipientType.PERSONA_FISICA
-      ? 'Codice Fiscale destinatario*'
-      : 'Codice Fiscale o Partita IVA destinatario*';
 
   return (
     <>
@@ -186,7 +173,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                     <TextField
                       id="recipientTaxId"
                       name="recipientTaxId"
-                      label={recipientTaxIdLabel}
+                      label={'Codice Fiscale destinatario*'}
                       variant="outlined"
                       value={form.values.recipientTaxId}
                       onChange={form.handleChange}
@@ -213,7 +200,7 @@ const DocumentInquiryForm = ({ onConfirm, inquiryType, title }: Props) => {
                     <TextField
                       id="delegateTaxId"
                       name="delegateTaxId"
-                      label="Codice Fiscale o Partita IVA delegato"
+                      label="Codice Fiscale delegato"
                       variant="outlined"
                       value={form.values.delegateTaxId}
                       onChange={form.handleChange}
