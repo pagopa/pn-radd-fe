@@ -42,7 +42,7 @@ const formValidationSchema = yup.object().shape({
       schema.when('recipientType', {
         is: (recipientType: RecipientType) => recipientType === RecipientType.PERSONA_GIURIDICA,
         then: (schema) =>
-          schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale o P.IVA invalido'),
+          schema.matches(RegExp(dataRegex.fiscalCodeOrPiva), 'Codice fiscale invalido'),
         otherwise: (schema) =>
           schema.matches(RegExp(dataRegex.fiscalCode), 'Codice fiscale invalido'),
       }),
@@ -96,11 +96,6 @@ const SearchInquiryForm = () => {
       },
     });
   };
-
-  const recipientTaxIdLabel =
-    form.values.recipientType === RecipientType.PERSONA_FISICA
-      ? 'Codice Fiscale destinatario*'
-      : 'Codice Fiscale o Partita IVA destinatario*';
 
   return (
     <Grid item xs={12}>
@@ -254,7 +249,7 @@ const SearchInquiryForm = () => {
                       <TextField
                         id="taxId"
                         name="taxId"
-                        label={recipientTaxIdLabel}
+                        label={'Codice Fiscale destinatario*'}
                         variant="outlined"
                         value={form.values.taxId}
                         onChange={form.handleChange}
